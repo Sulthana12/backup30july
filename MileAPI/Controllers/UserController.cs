@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using MileAPI.Interfaces;
 using MileDALibrary.Models;
 
 namespace MileAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -15,6 +15,7 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetUserDetails")]
+        [Route("/")]
         public IActionResult GetUserInformation(string PhoneNumber, string Password)
         {
             try
