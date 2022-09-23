@@ -10,5 +10,10 @@ namespace MileDALibrary.Interfaces
     public interface IUserRepository
     {
         List<LoginDetails> GetUserInformation(string PhoneNumber, string Password);
+
+        List<CountryDetails> GetCountryDetails();
+
+        List<StateDetails> GetStateDetails();
+
     }
 }

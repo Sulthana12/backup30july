@@ -54,5 +54,46 @@ namespace MileDALibrary.DataRepository
 
             return UserResponse;
         }
+
+        public List<CountryDetails> GetCountryDetails()
+        {
+            List<CountryDetails> countryDetails = new List<CountryDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparams = new List<DbParameter>();
+            dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrcountry", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparams, SQL_Helper.ExecutionType.Procedure);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                countryDetails = (from DataRow dr in dt.Rows
+                               select new CountryDetails()
+                               {
+                                   Country_name = dr["country_name"].ToString(),
+                                   Country_id = Convert.ToInt32(dr["country_id"])
+                               }).ToList();
+            }
+
+            return countryDetails;
+        }
+
+        public List<StateDetails> GetStateDetails()
+        {
+            List<StateDetails> stateDetails = new List<StateDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparams = new List<DbParameter>();
+            dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrstate", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparams, SQL_Helper.ExecutionType.Procedure);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                stateDetails = (from DataRow dr in dt.Rows
+                                select new StateDetails()
+                                {
+                                    State_name = dr["state_name"].ToString(),
+                                    State_id = Convert.ToInt32(dr["state_id"]),
+                                    Country_id = Convert.ToInt32(dr["country_id"]),
+                                }).ToList();
+            }
+
+            return stateDetails;
+        }
     }
 }

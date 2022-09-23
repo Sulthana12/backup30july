@@ -6,6 +6,7 @@ using MileDALibrary.Models;
 namespace MileAPI.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -15,7 +16,6 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetUserDetails")]
-        [Route("/")]
         public IActionResult GetUserInformation(string PhoneNumber, string Password)
         {
             try
@@ -25,12 +25,52 @@ namespace MileAPI.Controllers
                 {
                     return Unauthorized("Authentication Failed");
                 }
+                if(result.Count == 0)
+                {
+                    return NotFound("Invalid Mobile No/Password");
+                }
                 return Ok(result);
             }
             catch (Exception)
             {
                 return NotFound("Not Found");
             }   
+        }
+
+        [HttpGet("GetCountryDetails")]
+        public IActionResult GetCountryNames()
+        {
+            try
+            {
+                List<CountryDetails> result = _userService.GetCountryDetails();
+                if (result == null)
+                {
+                    return Unauthorized("Authentication Failed");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("Not Found");
+            }
+        }
+
+        [HttpGet("GetStateDetails")]
+        public IActionResult GetStateDetails()
+        {
+            try
+            {
+                List<StateDetails> result = _userService.GetStateDetails();
+                if (result == null)
+                {
+                    return Unauthorized("Authentication Failed");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("Not Found");
+            }
         }
     }
 }

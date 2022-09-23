@@ -12,9 +12,20 @@ namespace MileAPI.DataServices
         {
             _userRepository = userRepository;
         }
+
         public List<LoginDetails> GetUserInformation(string PhoneNumber, string Password)
         {
             return _userRepository.GetUserInformation(PhoneNumber, Password);
+        }
+
+        public List<CountryDetails> GetCountryDetails()
+        {
+            return _userRepository.GetCountryDetails();
+        }
+
+        public List<StateDetails> GetStateDetails()
+        {
+            return _userRepository.GetStateDetails();
         }
     }
 }
