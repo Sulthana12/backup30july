@@ -15,5 +15,10 @@ namespace MileDALibrary.Interfaces
 
         List<StateDetails> GetStateDetails();
 
+        List<DistrictDetails> GetDistrictDetails(int stateId, int countryId);
+
+        List<VehicleDetails> GetVehicleDetails();
+
+        List<GenderDetails> GetGenderDetails(string settingsName);
     }
 }

@@ -38,18 +38,18 @@ namespace MileDALibrary.DataRepository
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = PhoneNumber, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_password", Value = Password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
-            
+
             if (dt != null && dt.Rows.Count > 0)
             {
                 UserResponse = (from DataRow dr in dt.Rows
-                          select new LoginDetails()
-                          {
-                              User_id = Convert.ToInt32(dr["user_id"]),
-                              Phone_num = dr["phone_num"].ToString(),
-                              Email_id = dr["email_id"].ToString(),
-                              User_type_flg = dr["user_type_flg"].ToString(),
-                              Name = dr["name"].ToString(),                        
-                          }).ToList();
+                                select new LoginDetails()
+                                {
+                                    User_id = Convert.ToInt32(dr["user_id"]),
+                                    Phone_num = dr["phone_num"].ToString(),
+                                    Email_id = dr["email_id"].ToString(),
+                                    User_type_flg = dr["user_type_flg"].ToString(),
+                                    Name = dr["name"].ToString(),
+                                }).ToList();
             }
 
             return UserResponse;
@@ -65,11 +65,11 @@ namespace MileDALibrary.DataRepository
             if (dt != null && dt.Rows.Count > 0)
             {
                 countryDetails = (from DataRow dr in dt.Rows
-                               select new CountryDetails()
-                               {
-                                   Country_name = dr["country_name"].ToString(),
-                                   Country_id = Convert.ToInt32(dr["country_id"])
-                               }).ToList();
+                                  select new CountryDetails()
+                                  {
+                                      Country_name = dr["country_name"].ToString(),
+                                      Country_id = Convert.ToInt32(dr["country_id"])
+                                  }).ToList();
             }
 
             return countryDetails;
@@ -94,6 +94,79 @@ namespace MileDALibrary.DataRepository
             }
 
             return stateDetails;
+        }
+
+        public List<DistrictDetails> GetDistrictDetails(int stateId, int countryId)
+        {
+            List<DistrictDetails> UserResponse = new List<DistrictDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrdistrict", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@state_id", Value = stateId, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@country_id", Value = countryId, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new DistrictDetails()
+                                {
+                                    District_id = Convert.ToInt32(dr["district_id"]),
+                                    District_name = dr["district_name"].ToString(),
+                                    State_id = Convert.ToInt32(dr["state_id"]),
+                                    State_name = dr["state_name"].ToString(),
+                                    Country_id = Convert.ToInt32(dr["country_id"]),
+                                    Country_name = dr["country_name"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
+        }
+
+        public List<VehicleDetails> GetVehicleDetails()
+        {
+            List<VehicleDetails> VehicleDetails = new List<VehicleDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparams = new List<DbParameter>();
+            dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrvehicles", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparams, SQL_Helper.ExecutionType.Procedure);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                VehicleDetails = (from DataRow dr in dt.Rows
+                                  select new VehicleDetails()
+                                  {
+                                      Vehicle_type_id = Convert.ToInt32(dr["vehicle_type_id"]),
+                                      Vehicle_type_name = dr["vehicle_type_name"].ToString(),
+                                      En_flg = dr["en_flg"].ToString(),
+                                  }).ToList();
+            }
+
+            return VehicleDetails;
+        }
+
+        public List<GenderDetails> GetGenderDetails(string settingsName)
+        {
+            List<GenderDetails> UserResponse = new List<GenderDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrgender", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@settings_name", Value = settingsName, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new GenderDetails()
+                                {
+                                    Settings_id = Convert.ToInt32(dr["settings_id"]),
+                                    Settings_name = dr["settings_name"].ToString(),
+                                    Settings_value = dr["settings_value"].ToString(),
+                                    Setting_desc = dr["setting_desc"].ToString(),
+                                    En_flg = dr["en_flg"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
         }
     }
 }

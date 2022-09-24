@@ -27,5 +27,20 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetStateDetails();
         }
+
+        public List<DistrictDetails> GetDistrictDetails(int stateId, int countryId)
+        {
+            return _userRepository.GetDistrictDetails(stateId, countryId);
+        }
+
+        public List<VehicleDetails> GetVehicleDetails()
+        {
+            return _userRepository.GetVehicleDetails();
+        }
+
+        public List<GenderDetails> GetGenderDetails(string settingsName)
+        {
+            return _userRepository.GetGenderDetails(settingsName);
+        }
     }
 }

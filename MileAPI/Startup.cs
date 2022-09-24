@@ -57,7 +57,7 @@ namespace MileAPI
 
             app.UseHealthChecks("/health");
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

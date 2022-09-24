@@ -16,6 +16,7 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetUserDetails")]
+        //[Route("/")]
         public IActionResult GetUserInformation(string PhoneNumber, string Password)
         {
             try
@@ -38,6 +39,7 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetCountryDetails")]
+        //[Route("/")]
         public IActionResult GetCountryNames()
         {
             try
@@ -56,11 +58,69 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetStateDetails")]
+        //[Route("/")]
         public IActionResult GetStateDetails()
         {
             try
             {
                 List<StateDetails> result = _userService.GetStateDetails();
+                if (result == null)
+                {
+                    return Unauthorized("Authentication Failed");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("Not Found");
+            }
+        }
+
+        [HttpGet("GetDistrictDetails")]
+        //[Route("/")]
+        public IActionResult GetDistrictDetails(int stateId, int countryId)
+        {
+            try
+            {
+                List<DistrictDetails> result = _userService.GetDistrictDetails(stateId, countryId);
+                if (result == null)
+                {
+                    return Unauthorized("Authentication Failed");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("Not Found");
+            }
+        }
+
+        [HttpGet("GetVehicleDetails")]
+        //[Route("/")]
+        public IActionResult GetVehicleDetails()
+        {
+            try
+            {
+                List<VehicleDetails> result = _userService.GetVehicleDetails();
+                if (result == null)
+                {
+                    return Unauthorized("Authentication Failed");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("Not Found");
+            }
+        }
+
+        [HttpGet("GetGenderDetails")]
+        //[Route("/")]
+        public IActionResult GetGenderDetails(string settingsName)
+        {
+            try
+            {
+                List<GenderDetails> result = _userService.GetGenderDetails(settingsName);
                 if (result == null)
                 {
                     return Unauthorized("Authentication Failed");
