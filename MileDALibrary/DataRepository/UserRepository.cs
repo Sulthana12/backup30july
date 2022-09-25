@@ -168,5 +168,36 @@ namespace MileDALibrary.DataRepository
 
             return UserResponse;
         }
+
+        public int UpdateProfileDetails(UpdateProfile updateProfile)
+        {
+            int insertRowsCount = 0;
+            try
+            {
+                if (updateProfile != null)
+                {
+                    Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
+                    DataTable dt = new DataTable();
+
+                    List<DbParameter> dbparams = new List<DbParameter>();
+                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "updateprofile", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@email_id", Value = updateProfile.Email_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = updateProfile.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = updateProfile.User_Password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);
+
+                    insertRowsCount = insertRowsCount + result["RowsAffected"];
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+            if (insertRowsCount != 0)
+                return 1;
+            else
+                return 0;
+        }
     }
 }

@@ -132,5 +132,20 @@ namespace MileAPI.Controllers
                 return NotFound("Not Found");
             }
         }
+
+        [HttpPost("PostUpdatedProfileDetails")]
+        public IActionResult UpdateProfileDetails([FromBody] UpdateProfile updateProfile)
+        {
+            int result = _userService.UpdateProfileDetails(updateProfile);
+            if (result == 1)
+            {
+                return Ok(new { data = "Updated Successfully" });
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
     }
 }

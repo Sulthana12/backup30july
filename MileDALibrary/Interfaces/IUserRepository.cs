@@ -20,5 +20,7 @@ namespace MileDALibrary.Interfaces
         List<VehicleDetails> GetVehicleDetails();
 
         List<GenderDetails> GetGenderDetails(string settingsName);
+
+        int UpdateProfileDetails(UpdateProfile updateProfile);
     }
 }
