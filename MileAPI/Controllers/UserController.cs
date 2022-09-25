@@ -6,7 +6,7 @@ using MileDALibrary.Models;
 namespace MileAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

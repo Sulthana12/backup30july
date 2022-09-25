@@ -53,6 +53,7 @@ namespace MileAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("../swagger/v1/swagger.json", "MILE REST APIs");
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseHealthChecks("/health");
@@ -66,8 +67,8 @@ namespace MileAPI
             .AllowAnyMethod()
             .AllowAnyHeader());
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
