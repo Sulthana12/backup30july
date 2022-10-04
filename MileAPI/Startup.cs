@@ -20,6 +20,7 @@ namespace MileAPI
         {
             services.AddControllers();
             services.Configure<DBSettings>(Configuration.GetSection("DBSettings"));
+            services.Configure<BlobConfig>(Configuration.GetSection("BlobConfig")); 
 
             ConfigureSwagger(services);
             ConfigureHealthCheck(services);
@@ -53,7 +54,7 @@ namespace MileAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("../swagger/v1/swagger.json", "MILE REST APIs");
-                //c.RoutePrefix = string.Empty;
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseHealthChecks("/health");

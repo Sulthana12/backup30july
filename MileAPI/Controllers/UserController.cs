@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MileAPI.Interfaces;
 using MileDALibrary.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MileAPI.Controllers
 {
@@ -133,19 +136,63 @@ namespace MileAPI.Controllers
             }
         }
 
-        [HttpPost("PostUpdatedProfileDetails")]
+        [HttpPost("PostUpdatedProfile/SignUpDetails")]
         public IActionResult UpdateProfileDetails([FromBody] UpdateProfile updateProfile)
         {
             int result = _userService.UpdateProfileDetails(updateProfile);
             if (result == 1)
             {
-                return Ok(new { data = "Updated Successfully" });
+                return Ok(new { data = "Operation Completed Successfully" });
             }
             else
             {
-                return NotFound();
+                return NotFound(Json("Unable to complete the operation."));
             }
 
+        }
+
+        [HttpGet("GetDriverDetails")]
+        //[Route("/")]
+        public IActionResult GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName)
+        {
+            try
+            {
+                List<DriverDetails> result = _userService.GetDriverDetails(phoneNumber, vehicleLicenseNumber, driverName);
+                if (result == null)
+                {
+                    return Unauthorized("Authentication Failed");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("No Data Found");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("Not Found");
+            }
+        }
+
+        [HttpPost("SaveUserDetails")]
+        public async Task<IActionResult> SaveUserDetails([FromBody] UserDetails userDetails)
+        {
+            try
+            {
+                UserDetails result = await _userService.SaveUserDetails(userDetails);
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+
+                return NotFound("{\"status\": \"Insertion Failed\"}");
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound("{\"status\": \"Insertion Failed\"}");
+            }
         }
     }
 }

@@ -6,17 +6,21 @@ using MileDALibrary.Models;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.Common;
+using Azure.Storage.Blobs;
+using System.Drawing;
 
 namespace MileDALibrary.DataRepository
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
+        private readonly IOptions<BlobConfig> blobconfig;
         private readonly IOptions<DBSettings> options;
         string istStrDate = "select CAST(DATEADD(HOUR, 5, DATEADD(MINUTE, 30, GETUTCDATE())) as DATE)";
         private string istDate = "";
 
-        public UserRepository(IConfiguration config, IOptions<DBSettings> options) : base(config)
+        public UserRepository(IConfiguration config, IOptions<BlobConfig> blobconfig, IOptions<DBSettings> options) : base(config)
         {
+            this.blobconfig = blobconfig;
             this.options = options;
             SQL_Helper.SetConnectionString(this.options.Value.ConnectionString);
             this.istDate = GetDateFromServer();
@@ -181,9 +185,13 @@ namespace MileDALibrary.DataRepository
 
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "updateprofile", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@first_name", Value = updateProfile.First_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@last_name", Value = updateProfile.Last_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@email_id", Value = updateProfile.Email_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = updateProfile.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = updateProfile.User_Password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = updateProfile.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@en_flg", Value = updateProfile.En_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
@@ -199,5 +207,167 @@ namespace MileDALibrary.DataRepository
             else
                 return 0;
         }
+
+        public List<DriverDetails> GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName)
+        {
+            List<DriverDetails> UserResponse = new List<DriverDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetDriverDetails", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = phoneNumber, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@vehicle_license_no", Value = vehicleLicenseNumber, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@driver_name", Value = driverName, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new DriverDetails()
+                                {
+                                    Name = dr["name"].ToString(),
+                                    Gender = dr["gender"].ToString(),
+                                    Phone_num = dr["phone_num"].ToString(),
+                                    Email_id = dr["email_id"].ToString(),
+                                    Address = dr["usr_addr"].ToString(),
+                                    Date_of_birth = dr["date_of_birth"].ToString(),
+                                    Vehicle_type_id = Convert.ToInt32(dr["vehicle_type_id"]),
+                                    Vehicle_type_name = dr["vehicle_type_name"].ToString(),
+                                    License_no = dr["license_no"].ToString(),
+                                    License_plate_no = dr["license_plate_no"].ToString(),
+                                    Insurance_no = dr["insurance_no"].ToString(),
+                                    Aadhar_no = dr["aadhar_no"].ToString(),
+                                    Usr_state = dr["usr_state"].ToString(),
+                                    Usr_district = dr["usr_district"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
+        }
+
+        public async Task<UserDetails> SaveUserDetails(UserDetails userDetails)
+        {
+
+            int insertRowsCount = 0;
+            BlobServiceClient blobServiceClient = new BlobServiceClient(this.blobconfig.Value.BlobConnection);
+
+            try
+            {
+                if (userDetails.First_name != "")
+                {
+
+                    if (!string.IsNullOrEmpty(userDetails.Image_data))
+                    {
+
+
+                        string imagedata = UserRepository.ScaleImage(userDetails.Image_data, 140, 140);
+
+                        userDetails.Image_data = string.Empty;
+                        userDetails.Image_data = imagedata;
+
+                        BlobEntity blobEntity = new BlobEntity();
+                        blobEntity.DirectoryName = "Profile";
+                        blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                        blobEntity.ByteArray = userDetails.Image_data;
+
+                        BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+
+                        string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                        BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                        Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                        Stream stream = new MemoryStream(bytes1);
+
+                        var response = await blobClient.UploadAsync(stream, true);
+
+                        userDetails.Usr_img_file_location = this.blobconfig.Value.UserProfilePhoto;
+                        userDetails.Usr_img_file_name = blobEntity.FolderName;
+
+                    }
+
+                    List<DbParameter> dbparamsselectquery = new List<DbParameter>();
+
+                    Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
+
+                    List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "adddrvinfo", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@first_name", Value = String.IsNullOrEmpty(userDetails.First_name) ? DBNull.Value : (object)userDetails.First_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@last_name", Value = String.IsNullOrEmpty(userDetails.Last_name) ? DBNull.Value : (object)userDetails.Last_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@gender", Value = String.IsNullOrEmpty(userDetails.Gender) ? DBNull.Value : (object)userDetails.Gender, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = String.IsNullOrEmpty(userDetails.Phone_number) ? DBNull.Value : (object)userDetails.Phone_number, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@usr_addr", Value = String.IsNullOrEmpty(userDetails.User_address) ? DBNull.Value : (object)userDetails.User_address, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@email_id", Value = String.IsNullOrEmpty(userDetails.Email_id) ? DBNull.Value : (object)userDetails.Email_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_password", Value = String.IsNullOrEmpty(userDetails.User_password) ? DBNull.Value : (object)userDetails.User_password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@date_of_birth", Value = userDetails.Date_of_birth, SqlDbType = SqlDbType.DateTime, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = String.IsNullOrEmpty(userDetails.User_type_flg) ? DBNull.Value : (object)userDetails.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@usr_img_file_name", Value = String.IsNullOrEmpty(userDetails.Usr_img_file_name) ? DBNull.Value : (object)userDetails.Usr_img_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@usr_img_file_location", Value = String.IsNullOrEmpty(userDetails.Usr_img_file_location) ? DBNull.Value : (object)userDetails.Usr_img_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_license_no", Value = String.IsNullOrEmpty(userDetails.Drv_license_no) ? DBNull.Value : (object)userDetails.Drv_license_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@aadhar_no", Value = String.IsNullOrEmpty(userDetails.Aadhar_no) ? DBNull.Value : (object)userDetails.Aadhar_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@country", Value = String.IsNullOrEmpty(userDetails.Country) ? DBNull.Value : (object)userDetails.Country, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@state", Value = String.IsNullOrEmpty(userDetails.State) ? DBNull.Value : (object)userDetails.State, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@district", Value = String.IsNullOrEmpty(userDetails.District) ? DBNull.Value : (object)userDetails.District, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@pincode", Value = String.IsNullOrEmpty(userDetails.Pincode) ? DBNull.Value : (object)userDetails.Pincode, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = userDetails.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@date1", Value = userDetails.Date, SqlDbType = SqlDbType.DateTime, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@en_flg", Value = String.IsNullOrEmpty(userDetails.En_flag) ? DBNull.Value : (object)userDetails.En_flag, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@vehicle_type_id", Value = String.IsNullOrEmpty(userDetails.Vehicle_type_id) ? DBNull.Value : (object)userDetails.Vehicle_type_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+                    insertRowsCount = insertRowsCount + result["RowsAffected"];
+
+
+                    return userDetails;
+
+
+                }
+
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static string ScaleImage(string ImageData, int maxWidth, int maxHeight)
+        {
+            System.Drawing.Image image;
+
+            byte[] bytes = System.Convert.FromBase64String(ImageData);
+            string base64;
+
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                image = System.Drawing.Image.FromStream(ms);
+            }
+
+            var ratioX = (double)maxWidth / image.Width;
+            var ratioY = (double)maxHeight / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+
+            using (var graphics = Graphics.FromImage(newImage))
+                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+
+            using (MemoryStream m = new MemoryStream())
+            {
+                newImage.Save(m, System.Drawing.Imaging.ImageFormat.Jpeg);
+                byte[] imageBytes = m.ToArray();
+                base64 = Convert.ToBase64String(imageBytes);
+
+            }
+
+            return base64;
+
+        }
+
     }
 }

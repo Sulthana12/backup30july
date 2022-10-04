@@ -47,5 +47,15 @@ namespace MileAPI.DataServices
         {
             return _userRepository.UpdateProfileDetails(updateProfile);
         }
+
+        public List<DriverDetails> GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName)
+        {
+            return _userRepository.GetDriverDetails(phoneNumber, vehicleLicenseNumber, driverName);
+        }
+
+        public Task<UserDetails> SaveUserDetails(UserDetails userDetails)
+        {
+            return _userRepository.SaveUserDetails(userDetails);
+        }
     }
 }
