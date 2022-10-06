@@ -173,9 +173,10 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
-        public int UpdateProfileDetails(UpdateProfile updateProfile)
+        public List<ResponseStatus> UpdateProfileDetails(UpdateProfile updateProfile)
         {
             int insertRowsCount = 0;
+            List<ResponseStatus> response = new List<ResponseStatus>();
             try
             {
                 if (updateProfile != null)
@@ -193,19 +194,42 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = updateProfile.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@en_flg", Value = updateProfile.En_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
+
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
+
+                    string spOut = DBNull.Value.Equals(result["@response_status"]) ? "" : result["@response_status"];
+                    if (!string.IsNullOrEmpty(spOut))
+                    {
+                        ResponseStatus respobj = new ResponseStatus();
+
+                        string[] a = spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+                        foreach (var keyvaluepair in spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            string[] splitteddata = keyvaluepair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+
+
+                            //if (splitteddata[0].Trim().Equals("error_desc"))
+                            //{
+                                respobj.Error_desc = splitteddata[0].ToString();
+
+                            //}
+                        }
+
+                        response.Add(respobj);
+
+
+                    }
                 }
+                return response;
             }
             catch (Exception)
             {
-                return 0;
+                return response;
             }
-            if (insertRowsCount != 0)
-                return 1;
-            else
-                return 0;
         }
 
         public List<DriverDetails> GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName)

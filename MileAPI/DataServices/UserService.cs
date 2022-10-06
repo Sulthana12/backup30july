@@ -43,7 +43,7 @@ namespace MileAPI.DataServices
             return _userRepository.GetGenderDetails(settingsName);
         }
 
-        public int UpdateProfileDetails(UpdateProfile updateProfile)
+        public List<ResponseStatus> UpdateProfileDetails(UpdateProfile updateProfile)
         {
             return _userRepository.UpdateProfileDetails(updateProfile);
         }

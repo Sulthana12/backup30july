@@ -27,17 +27,17 @@ namespace MileAPI.Controllers
                 List<LoginDetails> result = _userService.GetUserInformation(PhoneNumber, Password);
                 if (result == null)
                 {
-                    return Unauthorized("Authentication Failed");
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
                 if(result.Count == 0)
                 {
-                    return NotFound("Invalid Mobile No/Password");
+                    return NotFound("{\"status\": \"Invalid Mobile No/Password\"}");
                 }
                 return Ok(result);
             }
             catch (Exception)
             {
-                return NotFound("Not Found");
+                return NotFound("{\"status\": \"Not Found\"}");
             }   
         }
 
@@ -50,13 +50,13 @@ namespace MileAPI.Controllers
                 List<CountryDetails> result = _userService.GetCountryDetails();
                 if (result == null)
                 {
-                    return Unauthorized("Authentication Failed");
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
                 return Ok(result);
             }
             catch (Exception)
             {
-                return NotFound("Not Found");
+                return NotFound("{\"status\": \"Not Found\"}");
             }
         }
 
@@ -69,13 +69,13 @@ namespace MileAPI.Controllers
                 List<StateDetails> result = _userService.GetStateDetails();
                 if (result == null)
                 {
-                    return Unauthorized("Authentication Failed");
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
                 return Ok(result);
             }
             catch (Exception)
             {
-                return NotFound("Not Found");
+                return NotFound("{\"status\": \"Not Found\"}");
             }
         }
 
@@ -88,13 +88,13 @@ namespace MileAPI.Controllers
                 List<DistrictDetails> result = _userService.GetDistrictDetails(stateId, countryId);
                 if (result == null)
                 {
-                    return Unauthorized("Authentication Failed");
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
                 return Ok(result);
             }
             catch (Exception)
             {
-                return NotFound("Not Found");
+                return NotFound("{\"status\": \"Not Found\"}");
             }
         }
 
@@ -107,13 +107,13 @@ namespace MileAPI.Controllers
                 List<VehicleDetails> result = _userService.GetVehicleDetails();
                 if (result == null)
                 {
-                    return Unauthorized("Authentication Failed");
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
                 return Ok(result);
             }
             catch (Exception)
             {
-                return NotFound("Not Found");
+                return NotFound("{\"status\": \"Not Found\"}");
             }
         }
 
@@ -126,29 +126,26 @@ namespace MileAPI.Controllers
                 List<GenderDetails> result = _userService.GetGenderDetails(settingsName);
                 if (result == null)
                 {
-                    return Unauthorized("Authentication Failed");
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
                 return Ok(result);
             }
             catch (Exception)
             {
-                return NotFound("Not Found");
+                return NotFound("{\"status\": \"Not Found\"}");
             }
         }
 
         [HttpPost("PostUpdatedProfile/SignUpDetails")]
         public IActionResult UpdateProfileDetails([FromBody] UpdateProfile updateProfile)
         {
-            int result = _userService.UpdateProfileDetails(updateProfile);
-            if (result == 1)
+            List<ResponseStatus> result = _userService.UpdateProfileDetails(updateProfile);
+            if (!result.Any())
             {
-                return Ok(new { data = "Operation Completed Successfully" });
-            }
-            else
-            {
-                return NotFound(Json("Unable to complete the operation."));
+                return NotFound("{\"status\": \"Failed\"}");
             }
 
+            return Ok(result);
         }
 
         [HttpGet("GetDriverDetails")]
@@ -160,17 +157,17 @@ namespace MileAPI.Controllers
                 List<DriverDetails> result = _userService.GetDriverDetails(phoneNumber, vehicleLicenseNumber, driverName);
                 if (result == null)
                 {
-                    return Unauthorized("Authentication Failed");
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
                 if (result.Count == 0)
                 {
-                    return NotFound("No Data Found");
+                    return NotFound("{\"status\": \"No Data Found\"}");
                 }
                 return Ok(result);
             }
             catch (Exception)
             {
-                return NotFound("Not Found");
+                return NotFound("{\"status\": \"Not Found\"}");
             }
         }
 
