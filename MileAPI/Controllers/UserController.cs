@@ -144,8 +144,7 @@ namespace MileAPI.Controllers
             {
                 return NotFound("{\"status\": \"Failed\"}");
             }
-
-            return Ok(result);
+            return NotFound(result);
         }
 
         [HttpGet("GetDriverDetails")]
