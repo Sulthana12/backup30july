@@ -334,9 +334,15 @@ namespace MileDALibrary.DataRepository
                     dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@district", Value = String.IsNullOrEmpty(userDetails.District) ? DBNull.Value : (object)userDetails.District, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@pincode", Value = String.IsNullOrEmpty(userDetails.Pincode) ? DBNull.Value : (object)userDetails.Pincode, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = userDetails.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@date1", Value = userDetails.Date, SqlDbType = SqlDbType.DateTime, Direction = ParameterDirection.Input });
                     dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@en_flg", Value = String.IsNullOrEmpty(userDetails.En_flag) ? DBNull.Value : (object)userDetails.En_flag, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@vehicle_type_id", Value = String.IsNullOrEmpty(userDetails.Vehicle_type_id) ? DBNull.Value : (object)userDetails.Vehicle_type_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@vehicle_type_id", Value = userDetails.Vehicle_type_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@license_plate_no", Value = String.IsNullOrEmpty(userDetails.License_plate_no) ? DBNull.Value : (object)userDetails.License_plate_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_insurance_no", Value = String.IsNullOrEmpty(userDetails.Drv_insurance_no) ? DBNull.Value : (object)userDetails.Drv_insurance_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_aadhar_no", Value = String.IsNullOrEmpty(userDetails.Drv_aadhar_no) ? DBNull.Value : (object)userDetails.Drv_aadhar_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_name1", Value = String.IsNullOrEmpty(userDetails.Doc_file_name1) ? DBNull.Value : (object)userDetails.Doc_file_name1, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_location1", Value = String.IsNullOrEmpty(userDetails.Doc_file_location1) ? DBNull.Value : (object)userDetails.Doc_file_location1, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@district_id", Value = userDetails.District_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+
 
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
 

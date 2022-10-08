@@ -46,11 +46,21 @@ namespace MileDALibrary.Models
 
         public int? User_id { get; set; }
 
-        public DateTime? Date { get; set; }
-
         public string? En_flag { get; set; }
 
-        public string? Vehicle_type_id { get; set; }
+        public int? Vehicle_type_id { get; set; }
+
+        public string? License_plate_no { get; set; }
+
+        public string? Drv_insurance_no { get; set; }
+
+        public string? Drv_aadhar_no { get; set; }
+
+        public int? District_id { get; set; }
+
+        public string? Doc_file_name1 { get; set; }
+
+        public string? Doc_file_location1 { get; set; }
 
     }
 }
