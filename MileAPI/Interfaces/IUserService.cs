@@ -20,6 +20,6 @@ namespace MileAPI.Interfaces
 
         List<DriverDetails> GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName);
 
-        Task<UserDetails> SaveUserDetails(UserDetails userDetails);
+        Task<List<ResponseStatus>> SaveUserDetails(UserDetails userDetails);
     }
 }

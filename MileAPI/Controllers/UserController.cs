@@ -175,17 +175,17 @@ namespace MileAPI.Controllers
         {
             try
             {
-                UserDetails result = await _userService.SaveUserDetails(userDetails);
+                List<ResponseStatus> result = await _userService.SaveUserDetails(userDetails);
 
-                if (result != null)
+                if (!result.Any())
                 {
-                    return Ok(result);
+                    return NotFound("{\"status\": \"Failed\"}");
                 }
 
-                return NotFound("{\"status\": \"Insertion Failed\"}");
+                return NotFound(result);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return NotFound("{\"status\": \"Insertion Failed\"}");
             }
