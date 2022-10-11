@@ -139,10 +139,16 @@ namespace MileAPI.Controllers
         [HttpPost("PostUpdatedProfile/SignUpDetails")]
         public IActionResult UpdateProfileDetails([FromBody] UpdateProfile updateProfile)
         {
+            string flag;
             List<ResponseStatus> result = _userService.UpdateProfileDetails(updateProfile);
             if (!result.Any())
             {
                 return NotFound("{\"status\": \"Failed\"}");
+            }
+            flag = result[0].Error_desc;
+            if (flag.Contains("Success"))
+            {
+                return Ok(result);
             }
             return NotFound(result);
         }
@@ -173,6 +179,7 @@ namespace MileAPI.Controllers
         [HttpPost("SaveUserDetails")]
         public async Task<IActionResult> SaveUserDetails([FromBody] UserDetails userDetails)
         {
+            string flag;
             try
             {
                 List<ResponseStatus> result = await _userService.SaveUserDetails(userDetails);
@@ -180,6 +187,11 @@ namespace MileAPI.Controllers
                 if (!result.Any())
                 {
                     return NotFound("{\"status\": \"Failed\"}");
+                }
+                flag = result[0].Error_desc;
+                if (flag.Contains("Success"))
+                {
+                    return Ok(result);
                 }
 
                 return NotFound(result);

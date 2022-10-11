@@ -22,7 +22,7 @@ namespace MileDALibrary.Models
         
         public string? User_password { get; set; }
         
-        public DateTime? Date_of_birth { get; set; }
+        public string? Date_of_birth { get; set; }
 
         public string? User_type_flg { get; set; }
 
@@ -63,6 +63,38 @@ namespace MileDALibrary.Models
         public string? Doc_data { get; set; }
 
         public string? Doc_file_location1 { get; set; }
+
+        public string? Aadhar_file_name { get; set; }
+
+        public string? Aadhar_data { get; set; }
+
+        public string? Aadhar_file_location { get; set; }
+
+        public string? Drv_pan_no { get; set; }
+
+        public string? Panno_file_name { get; set; }
+
+        public string? Pan_data { get; set; }
+
+        public string? Panno_file_location { get; set; }
+
+        public string? Licno_file_name { get; set; }
+
+        public string? License_data { get; set; }
+
+        public string? Licno_file_location { get; set; }
+
+        public string? insno_file_name { get; set; }
+
+        public string? Insurance_data { get; set; }
+
+        public string? Insno_file_location { get; set; }
+
+        public string? Plateno_file_name { get; set; }
+
+        public string? PlateNo_data { get; set; }
+
+        public string? Plateno_file_location { get; set; }
 
     }
 }

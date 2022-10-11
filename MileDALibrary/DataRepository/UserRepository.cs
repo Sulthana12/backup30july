@@ -318,7 +318,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Doc_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
@@ -337,6 +337,156 @@ namespace MileDALibrary.DataRepository
 
                 }
 
+                if (!string.IsNullOrEmpty(userDetails.Aadhar_data))
+                {
+
+
+                    string aadharData = UserRepository.ScaleImage(userDetails.Aadhar_data, 140, 140);
+
+                    userDetails.Aadhar_data = string.Empty;
+                    userDetails.Aadhar_data = aadharData;
+
+                    BlobEntity blobEntity = new BlobEntity();
+                    blobEntity.DirectoryName = "Profile";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.ByteArray = userDetails.Aadhar_data;
+
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+
+                    string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                    BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                    Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                    Stream stream = new MemoryStream(bytes1);
+
+                    var response = await blobClient.UploadAsync(stream, true);
+
+                    userDetails.Aadhar_file_location = this.blobconfig.Value.UserProfilePhoto;
+                    userDetails.Aadhar_file_name = blobEntity.FolderName;
+
+                }
+
+                if (!string.IsNullOrEmpty(userDetails.Pan_data))
+                {
+
+
+                    string panData = UserRepository.ScaleImage(userDetails.Pan_data, 140, 140);
+
+                    userDetails.Pan_data = string.Empty;
+                    userDetails.Pan_data = panData;
+
+                    BlobEntity blobEntity = new BlobEntity();
+                    blobEntity.DirectoryName = "Profile";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.ByteArray = userDetails.Pan_data;
+
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+
+                    string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                    BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                    Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                    Stream stream = new MemoryStream(bytes1);
+
+                    var response = await blobClient.UploadAsync(stream, true);
+
+                    userDetails.Panno_file_location = this.blobconfig.Value.UserProfilePhoto;
+                    userDetails.Panno_file_name = blobEntity.FolderName;
+
+                }
+
+                if (!string.IsNullOrEmpty(userDetails.License_data))
+                {
+
+
+                    string licenseData = UserRepository.ScaleImage(userDetails.License_data, 140, 140);
+
+                    userDetails.License_data = string.Empty;
+                    userDetails.License_data = licenseData;
+
+                    BlobEntity blobEntity = new BlobEntity();
+                    blobEntity.DirectoryName = "Profile";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.ByteArray = userDetails.License_data;
+
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+
+                    string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                    BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                    Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                    Stream stream = new MemoryStream(bytes1);
+
+                    var response = await blobClient.UploadAsync(stream, true);
+
+                    userDetails.Licno_file_location = this.blobconfig.Value.UserProfilePhoto;
+                    userDetails.Licno_file_name = blobEntity.FolderName;
+
+                }
+
+                if (!string.IsNullOrEmpty(userDetails.Insurance_data))
+                {
+
+
+                    string insuranceData = UserRepository.ScaleImage(userDetails.Insurance_data, 140, 140);
+
+                    userDetails.Insurance_data = string.Empty;
+                    userDetails.Insurance_data = insuranceData;
+
+                    BlobEntity blobEntity = new BlobEntity();
+                    blobEntity.DirectoryName = "Profile";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.ByteArray = userDetails.Insurance_data;
+
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+
+                    string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                    BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                    Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                    Stream stream = new MemoryStream(bytes1);
+
+                    var response = await blobClient.UploadAsync(stream, true);
+
+                    userDetails.Insno_file_location = this.blobconfig.Value.UserProfilePhoto;
+                    userDetails.insno_file_name = blobEntity.FolderName;
+
+                }
+
+                if (!string.IsNullOrEmpty(userDetails.PlateNo_data))
+                {
+
+
+                    string plateNoData = UserRepository.ScaleImage(userDetails.PlateNo_data, 140, 140);
+
+                    userDetails.PlateNo_data = string.Empty;
+                    userDetails.PlateNo_data = plateNoData;
+
+                    BlobEntity blobEntity = new BlobEntity();
+                    blobEntity.DirectoryName = "Profile";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.ByteArray = userDetails.PlateNo_data;
+
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+
+                    string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                    BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                    Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                    Stream stream = new MemoryStream(bytes1);
+
+                    var response = await blobClient.UploadAsync(stream, true);
+
+                    userDetails.Plateno_file_location = this.blobconfig.Value.UserProfilePhoto;
+                    userDetails.Plateno_file_name = blobEntity.FolderName;
+
+                }
+
 
                 Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
 
@@ -350,7 +500,7 @@ namespace MileDALibrary.DataRepository
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@usr_addr", Value = String.IsNullOrEmpty(userDetails.User_address) ? DBNull.Value : (object)userDetails.User_address, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@email_id", Value = String.IsNullOrEmpty(userDetails.Email_id) ? DBNull.Value : (object)userDetails.Email_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_password", Value = String.IsNullOrEmpty(userDetails.User_password) ? DBNull.Value : (object)userDetails.User_password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@date_of_birth", Value = userDetails.Date_of_birth, SqlDbType = SqlDbType.DateTime, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@date_of_birth", Value = String.IsNullOrEmpty(userDetails.Date_of_birth) ? DBNull.Value : (object)userDetails.Date_of_birth, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = String.IsNullOrEmpty(userDetails.User_type_flg) ? DBNull.Value : (object)userDetails.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@usr_img_file_name", Value = String.IsNullOrEmpty(userDetails.Usr_img_file_name) ? DBNull.Value : (object)userDetails.Usr_img_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@usr_img_file_location", Value = String.IsNullOrEmpty(userDetails.Usr_img_file_location) ? DBNull.Value : (object)userDetails.Usr_img_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
@@ -368,6 +518,17 @@ namespace MileDALibrary.DataRepository
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_aadhar_no", Value = String.IsNullOrEmpty(userDetails.Drv_aadhar_no) ? DBNull.Value : (object)userDetails.Drv_aadhar_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_name1", Value = String.IsNullOrEmpty(userDetails.Doc_file_name1) ? DBNull.Value : (object)userDetails.Doc_file_name1, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_location1", Value = String.IsNullOrEmpty(userDetails.Doc_file_location1) ? DBNull.Value : (object)userDetails.Doc_file_location1, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@aadhar_file_name", Value = String.IsNullOrEmpty(userDetails.Aadhar_file_name) ? DBNull.Value : (object)userDetails.Aadhar_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@aadhar_file_location", Value = String.IsNullOrEmpty(userDetails.Aadhar_file_location) ? DBNull.Value : (object)userDetails.Aadhar_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_pan_no", Value = String.IsNullOrEmpty(userDetails.Drv_pan_no) ? DBNull.Value : (object)userDetails.Drv_pan_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@panno_file_name", Value = String.IsNullOrEmpty(userDetails.Panno_file_name) ? DBNull.Value : (object)userDetails.Panno_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@panno_file_location", Value = String.IsNullOrEmpty(userDetails.Panno_file_location) ? DBNull.Value : (object)userDetails.Panno_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@licno_file_name", Value = String.IsNullOrEmpty(userDetails.Licno_file_name) ? DBNull.Value : (object)userDetails.Licno_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@licno_file_location", Value = String.IsNullOrEmpty(userDetails.Licno_file_location) ? DBNull.Value : (object)userDetails.Licno_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@insno_file_name", Value = String.IsNullOrEmpty(userDetails.insno_file_name) ? DBNull.Value : (object)userDetails.insno_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@insno_file_location", Value = String.IsNullOrEmpty(userDetails.Insno_file_location) ? DBNull.Value : (object)userDetails.Insno_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@plateno_file_name", Value = String.IsNullOrEmpty(userDetails.Plateno_file_name) ? DBNull.Value : (object)userDetails.Plateno_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@plateno_file_location", Value = String.IsNullOrEmpty(userDetails.Plateno_file_location) ? DBNull.Value : (object)userDetails.Plateno_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@district_id", Value = userDetails.District_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
