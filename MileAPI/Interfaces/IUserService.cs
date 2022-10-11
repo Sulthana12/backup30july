@@ -18,7 +18,7 @@ namespace MileAPI.Interfaces
 
         List<ResponseStatus> UpdateProfileDetails(UpdateProfile updateProfile);
 
-        List<DriverDetails> GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName);
+        List<DriverDetails> GetDriverDetails();
 
         Task<List<ResponseStatus>> SaveUserDetails(UserDetails userDetails);
     }

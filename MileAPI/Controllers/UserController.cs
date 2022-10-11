@@ -155,11 +155,11 @@ namespace MileAPI.Controllers
 
         [HttpGet("GetDriverDetails")]
         //[Route("/")]
-        public IActionResult GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName)
+        public IActionResult GetDriverDetails()
         {
             try
             {
-                List<DriverDetails> result = _userService.GetDriverDetails(phoneNumber, vehicleLicenseNumber, driverName);
+                List<DriverDetails> result = _userService.GetDriverDetails();
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");

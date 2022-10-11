@@ -232,15 +232,12 @@ namespace MileDALibrary.DataRepository
             }
         }
 
-        public List<DriverDetails> GetDriverDetails(string phoneNumber, string vehicleLicenseNumber, string driverName)
+        public List<DriverDetails> GetDriverDetails()
         {
             List<DriverDetails> UserResponse = new List<DriverDetails>();
             DataTable dt = new DataTable();
             List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetDriverDetails", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = phoneNumber, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@vehicle_license_no", Value = vehicleLicenseNumber, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@driver_name", Value = driverName, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
 
             if (dt != null && dt.Rows.Count > 0)
@@ -262,6 +259,24 @@ namespace MileDALibrary.DataRepository
                                     Aadhar_no = dr["aadhar_no"].ToString(),
                                     Usr_state = dr["usr_state"].ToString(),
                                     Usr_district = dr["usr_district"].ToString(),
+                                    Country = dr["usr_country"].ToString(),
+                                    Pincode = dr["pincode"].ToString(),
+                                    Usr_img_file_location = dr["usr_img_file_location"].ToString(),
+                                    Usr_img_file_name = dr["usr_img_file_name"].ToString(),
+                                    User_address = dr["usr_addr"].ToString(),
+                                    En_flag = dr["en_flg"].ToString(),
+                                    Aadhar_file_name = dr["aadhar_file_name"].ToString(),
+                                    Aadhar_file_location = dr["aadhar_file_location"].ToString(),
+                                    Drv_pan_no = dr["drv_pan_no"].ToString(),
+                                    Panno_file_name = dr["panno_file_name"].ToString(),
+                                    Panno_file_location = dr["panno_file_location"].ToString(),
+                                    Licno_file_name = dr["licno_file_name"].ToString(),
+                                    Licno_file_location = dr["licno_file_location"].ToString(),
+                                    insno_file_name = dr["insno_file_name"].ToString(),
+                                    Insno_file_location = dr["insno_file_location"].ToString(),
+                                    Plateno_file_name = dr["plateno_file_name"].ToString(),
+                                    Plateno_file_location = dr["plateno_file_location"].ToString(),
+
                                 }).ToList();
             }
 

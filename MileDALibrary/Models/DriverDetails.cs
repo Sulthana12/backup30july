@@ -35,5 +35,39 @@ namespace MileDALibrary.Models
         public string? Usr_state { get; set; }
 
         public string? Usr_district { get; set; }
+
+        public string? Country { get; set; }
+
+        public string? Pincode { get; set; }
+
+        public string? Usr_img_file_location { get; set; }
+
+        public string? Usr_img_file_name { get; set; }
+
+        public string? User_address { get; set; }
+
+        public string? En_flag { get; set; }
+
+        public string? Aadhar_file_name { get; set; }
+
+        public string? Aadhar_file_location { get; set; }
+
+        public string? Drv_pan_no { get; set; }
+
+        public string? Panno_file_name { get; set; }
+
+        public string? Panno_file_location { get; set; }
+
+        public string? Licno_file_name { get; set; }
+
+        public string? Licno_file_location { get; set; }
+
+        public string? insno_file_name { get; set; }
+
+        public string? Insno_file_location { get; set; }
+
+        public string? Plateno_file_name { get; set; }
+
+        public string? Plateno_file_location { get; set; }
     }
 }
