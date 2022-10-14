@@ -5,6 +5,7 @@ using MileDALibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace MileAPI.Controllers
 {
@@ -200,6 +201,23 @@ namespace MileAPI.Controllers
             catch (Exception)
             {
                 return NotFound("{\"status\": \"Insertion Failed\"}");
+            }
+        }
+
+        [HttpGet("ValidateUser")]
+        public async Task<IActionResult> ValidateUser(string phoneNumber)
+        {
+            try
+            {
+                const string filePath = "\r\n\r\n<div style=\"font-size:1.1em;color:black!important\">\r\n        <span>Hi,</span><br />\r\n        <br />\r\n        <span>Use the following one-time password (OTP) to sign in to your Bihan App account.</span><br />\r\n        <br />\r\n        <span style=\"font-weight:bold;font-size:1.8em!important;\">otpplaceholder</span><br />\r\n\r\n        <span>(The OTP will be valid for the next 5 minutes)</span><br />\r\n        <span>If you didn't initiate this action or if you think you received this email by mistake, please contact adidaassupport@bihan.com</span><br />\r\n        <br />\r\n       \r\n        <span>*This is an auto generated e-mail, therefore do not reply to this email.*</span><br />\r\n        <br />\r\n        \r\n        Regards,<br />\r\n        BIHAN TEAM\r\n    </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
+
+                int otp = RandomNumberGenerator.GetInt32(100000, 999999);
+
+                return Ok(otp);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Failed To Send SMS\"}");
             }
         }
     }
