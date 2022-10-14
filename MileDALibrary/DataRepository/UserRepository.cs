@@ -306,7 +306,7 @@ namespace MileDALibrary.DataRepository
                     blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Image_data;
 
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
 
                     string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
 
@@ -333,10 +333,10 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
                     blobEntity.ByteArray = userDetails.Doc_data;
 
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
 
                     string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
 
@@ -366,7 +366,7 @@ namespace MileDALibrary.DataRepository
                     blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Aadhar_data;
 
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
 
                     string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
 
@@ -396,7 +396,7 @@ namespace MileDALibrary.DataRepository
                     blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Pan_data;
 
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
 
                     string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
 
@@ -426,7 +426,7 @@ namespace MileDALibrary.DataRepository
                     blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.License_data;
 
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
 
                     string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
 
@@ -456,7 +456,7 @@ namespace MileDALibrary.DataRepository
                     blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Insurance_data;
 
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
 
                     string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
 
@@ -486,7 +486,7 @@ namespace MileDALibrary.DataRepository
                     blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.PlateNo_data;
 
-                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("mileapp");
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
 
                     string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
 
