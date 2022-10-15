@@ -630,8 +630,7 @@ namespace MileDALibrary.DataRepository
             {
                 MimeMessage message = new MimeMessage();
 
-                MailboxAddress from = new MailboxAddress("User",
-                _SMTPGateway.Value.OfficialFromEmailID);
+                MailboxAddress from = new MailboxAddress("User","afarcabs@gmail.com");
                 message.From.Add(from);
 
                 MailboxAddress to = new MailboxAddress("Admin", emailId);
@@ -644,8 +643,8 @@ namespace MileDALibrary.DataRepository
                 message.Body = bodyBuilder.ToMessageBody();
 
                 SmtpClient client = new SmtpClient();
-                client.Connect(_SMTPGateway.Value.Gateway, _SMTPGateway.Value.Port, SecureSocketOptions.StartTls);
-                client.Authenticate(_SMTPGateway.Value.OfficialFromEmailID, _SMTPGateway.Value.OfficialFromEmailIDPassword);
+                client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                client.Authenticate("afarcabs@gmail.com","oifikzxjevrqahoi");
 
                 client.Send(message);
                 client.Disconnect(true);
