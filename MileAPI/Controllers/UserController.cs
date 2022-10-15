@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using MailKit.Security;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MileAPI.Interfaces;
 using MileDALibrary.Models;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace MileAPI.Controllers
 {
@@ -14,6 +18,7 @@ namespace MileAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -205,19 +210,24 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("ValidateUser")]
-        public async Task<IActionResult> ValidateUser(string phoneNumber)
+        public async Task<IActionResult> ValidateUser(string emailId)
         {
             try
             {
-                const string filePath = "\r\n\r\n<div style=\"font-size:1.1em;color:black!important\">\r\n        <span>Hi,</span><br />\r\n        <br />\r\n        <span>Use the following one-time password (OTP) to sign in to your Bihan App account.</span><br />\r\n        <br />\r\n        <span style=\"font-weight:bold;font-size:1.8em!important;\">otpplaceholder</span><br />\r\n\r\n        <span>(The OTP will be valid for the next 5 minutes)</span><br />\r\n        <span>If you didn't initiate this action or if you think you received this email by mistake, please contact adidaassupport@bihan.com</span><br />\r\n        <br />\r\n       \r\n        <span>*This is an auto generated e-mail, therefore do not reply to this email.*</span><br />\r\n        <br />\r\n        \r\n        Regards,<br />\r\n        BIHAN TEAM\r\n    </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n";
-
                 int otp = RandomNumberGenerator.GetInt32(100000, 999999);
-
-                return Ok(otp);
+                int result = _userService.SendEmail(emailId, otp);
+                if (result == 1)
+                {
+                    return Ok(otp);
+                }
+                else
+                {
+                    return NotFound("{\"status\": \"Failed To Send OTP\"}");
+                }
             }
             catch (Exception)
             {
-                return NotFound("{\"status\": \"Failed To Send SMS\"}");
+                return NotFound("{\"status\": \"Failed To Send OTP\"}");
             }
         }
     }

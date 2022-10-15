@@ -57,5 +57,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.SaveUserDetails(userDetails);
         }
+
+        public int SendEmail(string emailId, int otp)
+        {
+            return _userRepository.SendEmail(emailId, otp);
+        }
     }
 }

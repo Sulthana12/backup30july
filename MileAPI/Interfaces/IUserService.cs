@@ -21,5 +21,7 @@ namespace MileAPI.Interfaces
         List<DriverDetails> GetDriverDetails();
 
         Task<List<ResponseStatus>> SaveUserDetails(UserDetails userDetails);
+
+        int SendEmail(string emailId, int otp);
     }
 }

@@ -8,6 +8,12 @@ using System.Data.SqlClient;
 using System.Data.Common;
 using Azure.Storage.Blobs;
 using System.Drawing;
+using Azure.Communication;
+using Azure.Communication.Sms;
+using MimeKit;
+using System.Net.Mail;
+using MailKit.Security;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace MileDALibrary.DataRepository
 {
@@ -15,6 +21,7 @@ namespace MileDALibrary.DataRepository
     {
         private readonly IOptions<BlobConfig> blobconfig;
         private readonly IOptions<DBSettings> options;
+        private readonly IOptions<SMTPGateway> _SMTPGateway;
         string istStrDate = "select CAST(DATEADD(HOUR, 5, DATEADD(MINUTE, 30, GETUTCDATE())) as DATE)";
         private string istDate = "";
 
@@ -209,14 +216,14 @@ namespace MileDALibrary.DataRepository
 
                         //foreach (var keyvaluepair in spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
                         //{
-                            //string[] splitteddata = keyvaluepair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+                        //string[] splitteddata = keyvaluepair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
 
 
-                            //if (splitteddata[0].Trim().Equals("error_desc"))
-                            //{
-                            respobj.Error_desc = spOut;
+                        //if (splitteddata[0].Trim().Equals("error_desc"))
+                        //{
+                        respobj.Error_desc = spOut;
 
-                            //}
+                        //}
                         //}
 
                         response.Add(respobj);
@@ -303,7 +310,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" +"image"+ DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Image_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -333,7 +340,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "doc" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
                     blobEntity.ByteArray = userDetails.Doc_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -363,7 +370,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "aadhar" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Aadhar_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -393,7 +400,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "pan" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Pan_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -423,7 +430,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "license" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.License_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -453,7 +460,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "insurance" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Insurance_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -483,7 +490,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "plateno" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.PlateNo_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -560,14 +567,14 @@ namespace MileDALibrary.DataRepository
 
                     //foreach (var keyvaluepair in spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
                     //{
-                        //string[] splitteddata = keyvaluepair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+                    //string[] splitteddata = keyvaluepair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
 
 
-                        //if (splitteddata[0].Trim().Equals("error_desc"))
-                        //{
-                        respobj.Error_desc = spOut;
+                    //if (splitteddata[0].Trim().Equals("error_desc"))
+                    //{
+                    respobj.Error_desc = spOut;
 
-                        //}
+                    //}
                     //}
 
                     output.Add(respobj);
@@ -615,8 +622,41 @@ namespace MileDALibrary.DataRepository
             }
 
             return base64;
-
         }
 
+        public int SendEmail(string emailId, int otp)
+        {
+            try
+            {
+                MimeMessage message = new MimeMessage();
+
+                MailboxAddress from = new MailboxAddress("User",
+                _SMTPGateway.Value.OfficialFromEmailID);
+                message.From.Add(from);
+
+                MailboxAddress to = new MailboxAddress("Admin", emailId);
+                message.To.Add(to);
+
+                message.Subject = "Afar Cabs - OTP";
+
+                BodyBuilder bodyBuilder = new BodyBuilder();
+                bodyBuilder.TextBody = "Hi User," + System.Environment.NewLine + System.Environment.NewLine + "You can use the following OTP in Afar Cabs App" + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + "Thanks," + System.Environment.NewLine + "Afar Cabs";
+                message.Body = bodyBuilder.ToMessageBody();
+
+                SmtpClient client = new SmtpClient();
+                client.Connect(_SMTPGateway.Value.Gateway, _SMTPGateway.Value.Port, SecureSocketOptions.StartTls);
+                client.Authenticate(_SMTPGateway.Value.OfficialFromEmailID, _SMTPGateway.Value.OfficialFromEmailIDPassword);
+
+                client.Send(message);
+                client.Disconnect(true);
+                client.Dispose();
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
     }
 }
