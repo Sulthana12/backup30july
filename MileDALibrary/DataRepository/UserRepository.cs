@@ -657,5 +657,30 @@ namespace MileDALibrary.DataRepository
                 return 0;
             }
         }
+
+        public List<LoginDetails> GetUpdatedProfile(int userId)
+        {
+            List<LoginDetails> UserResponse = new List<LoginDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetUpdateProfile", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = userId, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new LoginDetails()
+                                {
+                                    User_id = Convert.ToInt32(dr["user_id"]),
+                                    Phone_num = dr["phone_num"].ToString(),
+                                    Email_id = dr["email_id"].ToString(),
+                                    User_type_flg = dr["user_type_flg"].ToString(),
+                                    Name = dr["name"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
+        }
     }
 }

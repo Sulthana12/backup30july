@@ -28,5 +28,8 @@ namespace MileDALibrary.Interfaces
         Task<List<ResponseStatus>> SaveUserDetails(UserDetails userDetails);
 
         int SendEmail(string emailId, int otp);
+
+        List<LoginDetails> GetUpdatedProfile(int userId);
+
     }
 }

@@ -62,5 +62,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.SendEmail(emailId, otp);
         }
+
+        public List<LoginDetails> GetUpdatedProfile(int userId)
+        {
+            return _userRepository.GetUpdatedProfile(userId);
+        }
     }
 }

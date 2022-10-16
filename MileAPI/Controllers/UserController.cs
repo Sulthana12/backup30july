@@ -230,5 +230,27 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Failed To Send OTP\"}");
             }
         }
+
+        [HttpGet("GetUpdatedProfile")]
+        public IActionResult GetUpdatedProfile(int userId)
+        {
+            try
+            {
+                List<LoginDetails> result = _userService.GetUpdatedProfile(userId);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"Not Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
     }
 }
