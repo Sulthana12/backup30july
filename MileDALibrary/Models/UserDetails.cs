@@ -8,6 +8,8 @@ namespace MileDALibrary.Models
 {
     public class UserDetails
     {
+        public int? New_userid { get; set; }
+
         public string? First_name { get; set; }
 
         public string? Last_name { get; set; }
