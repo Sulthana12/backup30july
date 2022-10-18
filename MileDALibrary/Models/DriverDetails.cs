@@ -69,5 +69,14 @@ namespace MileDALibrary.Models
         public string? Plateno_file_name { get; set; }
 
         public string? Plateno_file_location { get; set; }
+
+        public int? User_id { get; set; }
+
+        public string? First_Name { get; set; }
+
+        public string? Last_Name { get; set; }
+
+        public int? District_id { get; set; }
+
     }
 }

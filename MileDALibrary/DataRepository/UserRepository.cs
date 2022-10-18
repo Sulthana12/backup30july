@@ -283,7 +283,10 @@ namespace MileDALibrary.DataRepository
                                     Insno_file_location = dr["insno_file_location"].ToString(),
                                     Plateno_file_name = dr["plateno_file_name"].ToString(),
                                     Plateno_file_location = dr["plateno_file_location"].ToString(),
-
+                                    User_id = Convert.ToInt32(dr["user_id"]),
+                                    First_Name = dr["first_name"].ToString(),
+                                    Last_Name = dr["last_name"].ToString(),
+                                    District_id = Convert.ToInt32(dr["district_id"]),
                                 }).ToList();
             }
 
