@@ -648,7 +648,7 @@ namespace MileDALibrary.DataRepository
 
                 SmtpClient client = new SmtpClient();
                 client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                client.Authenticate("afarcabs@gmail.com","oifikzxjevrqahoi");
+                client.Authenticate("afarcab@gmail.com","frgdvztoysskkiax");
 
                 client.Send(message);
                 client.Disconnect(true);
