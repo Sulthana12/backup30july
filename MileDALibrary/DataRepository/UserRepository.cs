@@ -643,12 +643,12 @@ namespace MileDALibrary.DataRepository
                 message.Subject = "Afar Cabs - OTP";
 
                 BodyBuilder bodyBuilder = new BodyBuilder();
-                bodyBuilder.TextBody = "Hi User," + System.Environment.NewLine + System.Environment.NewLine + "You can use the following OTP in Afar Cabs App" + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + "Thanks," + System.Environment.NewLine + "Afar Cabs";
+                bodyBuilder.TextBody = "Hi User," + System.Environment.NewLine + System.Environment.NewLine + "You can use the following OTP in Afar Cabs App" + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "Thanks," + System.Environment.NewLine + "Afar Cabs";
                 message.Body = bodyBuilder.ToMessageBody();
 
                 SmtpClient client = new SmtpClient();
                 client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                client.Authenticate("afarcab@gmail.com","frgdvztoysskkiax");
+                client.Authenticate("nithesh7477@gmail.com","erjkdeyfxuxwnyvg");
 
                 client.Send(message);
                 client.Disconnect(true);
@@ -686,5 +686,56 @@ namespace MileDALibrary.DataRepository
 
             return UserResponse;
         }
+
+        /*public List<ResponseStatus> SaveLocation(LocationDetails locationDetails)
+        {
+            int insertRowsCount = 0;
+            List<ResponseStatus> response = new List<ResponseStatus>();
+            try
+            {
+                if (updateProfile != null)
+                {
+                    Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
+                    DataTable dt = new DataTable();
+
+                    List<DbParameter> dbparams = new List<DbParameter>();
+                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "updateprofile", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@first_name", Value = updateProfile.First_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@last_name", Value = updateProfile.Last_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@email_id", Value = updateProfile.Email_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = updateProfile.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = updateProfile.User_Password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = updateProfile.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@en_flg", Value = updateProfile.En_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
+
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);
+
+                    insertRowsCount = insertRowsCount + result["RowsAffected"];
+
+                    string spOut = DBNull.Value.Equals(result["@response_status"]) ? "" : result["@response_status"];
+                    if (!string.IsNullOrEmpty(spOut))
+                    {
+                        ResponseStatus respobj = new ResponseStatus();
+
+        
+                        respobj.Error_desc = spOut;
+
+                        //}
+                        //}
+
+                        response.Add(respobj);
+
+
+                    }
+                }
+                return response;
+            }
+            catch (Exception)
+            {
+                return response;
+            }
+        }*/
     }
 }
