@@ -67,5 +67,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetUpdatedProfile(userId);
         }
+
+        public List<ResponseStatus> SaveLocation(LocationDetails locationDetails)
+        {
+            return _userRepository.SaveLocation(locationDetails);
+        }
     }
 }

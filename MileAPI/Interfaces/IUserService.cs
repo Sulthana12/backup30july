@@ -25,5 +25,7 @@ namespace MileAPI.Interfaces
         int SendEmail(string emailId, int otp);
 
         List<LoginDetails> GetUpdatedProfile(int userId);
+
+        List<ResponseStatus> SaveLocation(LocationDetails locationDetails);
     }
 }

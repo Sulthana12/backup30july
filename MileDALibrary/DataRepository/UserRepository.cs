@@ -687,30 +687,30 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
-        /*public List<ResponseStatus> SaveLocation(LocationDetails locationDetails)
+        public List<ResponseStatus> SaveLocation(LocationDetails locationDetails)
         {
             int insertRowsCount = 0;
             List<ResponseStatus> response = new List<ResponseStatus>();
             try
             {
-                if (updateProfile != null)
+                if (locationDetails != null)
                 {
                     Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
                     DataTable dt = new DataTable();
 
                     List<DbParameter> dbparams = new List<DbParameter>();
-                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "updateprofile", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@first_name", Value = updateProfile.First_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@last_name", Value = updateProfile.Last_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@email_id", Value = updateProfile.Email_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = updateProfile.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = updateProfile.User_Password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = updateProfile.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@en_flg", Value = updateProfile.En_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "savelocation", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = locationDetails.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@loc_id", Value = locationDetails.Location_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@loc_type", Value = locationDetails.Location_type, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@loc_address", Value = locationDetails.Location_address, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@loc_street", Value = locationDetails.Location_street, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@pincode", Value = locationDetails.Pincode, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@loc_landmark", Value = locationDetails.Location_landmark, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@status", Value = locationDetails.Status, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
-                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_usr_profile_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
 
@@ -718,16 +718,8 @@ namespace MileDALibrary.DataRepository
                     if (!string.IsNullOrEmpty(spOut))
                     {
                         ResponseStatus respobj = new ResponseStatus();
-
-        
                         respobj.Error_desc = spOut;
-
-                        //}
-                        //}
-
                         response.Add(respobj);
-
-
                     }
                 }
                 return response;
@@ -736,6 +728,6 @@ namespace MileDALibrary.DataRepository
             {
                 return response;
             }
-        }*/
+        }
     }
 }

@@ -252,5 +252,32 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+
+        [HttpPost("SaveLocation")]
+        public async Task<IActionResult> SaveLocation([FromBody] LocationDetails locationDetails)
+        {
+            string flag;
+            try
+            {
+                List<ResponseStatus> result =  _userService.SaveLocation(locationDetails);
+
+                if (!result.Any())
+                {
+                    return NotFound("{\"status\": \"Failed\"}");
+                }
+                flag = result[0].Error_desc;
+                if (flag.Contains("Success"))
+                {
+                    return Ok(result);
+                }
+
+                return NotFound(result);
+
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Insertion Failed\"}");
+            }
+        }
     }
 }
