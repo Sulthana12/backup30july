@@ -336,7 +336,7 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string docData = UserRepository.ScaleImage(userDetails.Doc_data, 140, 140);
+                    string docData = userDetails.Doc_data;
 
                     userDetails.Doc_data = string.Empty;
                     userDetails.Doc_data = docData;
