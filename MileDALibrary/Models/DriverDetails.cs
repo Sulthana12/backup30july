@@ -70,6 +70,10 @@ namespace MileDALibrary.Models
 
         public string? Plateno_file_location { get; set; }
 
+        public string? Doc_file_name { get; set; }
+
+        public string? Doc_file_location { get; set; }
+
         public int? User_id { get; set; }
 
         public string? First_Name { get; set; }
