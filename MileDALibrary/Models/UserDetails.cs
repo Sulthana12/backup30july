@@ -60,11 +60,11 @@ namespace MileDALibrary.Models
 
         public int? District_id { get; set; }
 
-        public string? Doc_file_name1 { get; set; }
+        public string? Doc_file_name { get; set; }
 
         public string? Doc_data { get; set; }
 
-        public string? Doc_file_location1 { get; set; }
+        public string? Doc_file_location { get; set; }
 
         public string? Aadhar_file_name { get; set; }
 

@@ -359,8 +359,8 @@ namespace MileDALibrary.DataRepository
 
                     var response = await blobClient.UploadAsync(stream, true);
 
-                    userDetails.Doc_file_location1 = this.blobconfig.Value.UserProfilePhoto;
-                    userDetails.Doc_file_name1 = blobEntity.FolderName;
+                    userDetails.Doc_file_location = this.blobconfig.Value.UserProfilePhoto;
+                    userDetails.Doc_file_name = blobEntity.FolderName;
 
                 }
 
@@ -544,8 +544,8 @@ namespace MileDALibrary.DataRepository
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@license_plate_no", Value = String.IsNullOrEmpty(userDetails.License_plate_no) ? DBNull.Value : (object)userDetails.License_plate_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_insurance_no", Value = String.IsNullOrEmpty(userDetails.Drv_insurance_no) ? DBNull.Value : (object)userDetails.Drv_insurance_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_aadhar_no", Value = String.IsNullOrEmpty(userDetails.Drv_aadhar_no) ? DBNull.Value : (object)userDetails.Drv_aadhar_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_name1", Value = String.IsNullOrEmpty(userDetails.Doc_file_name1) ? DBNull.Value : (object)userDetails.Doc_file_name1, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_location1", Value = String.IsNullOrEmpty(userDetails.Doc_file_location1) ? DBNull.Value : (object)userDetails.Doc_file_location1, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_name", Value = String.IsNullOrEmpty(userDetails.Doc_file_name) ? DBNull.Value : (object)userDetails.Doc_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@doc_file_location", Value = String.IsNullOrEmpty(userDetails.Doc_file_location) ? DBNull.Value : (object)userDetails.Doc_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@aadhar_file_name", Value = String.IsNullOrEmpty(userDetails.Aadhar_file_name) ? DBNull.Value : (object)userDetails.Aadhar_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@aadhar_file_location", Value = String.IsNullOrEmpty(userDetails.Aadhar_file_location) ? DBNull.Value : (object)userDetails.Aadhar_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@drv_pan_no", Value = String.IsNullOrEmpty(userDetails.Drv_pan_no) ? DBNull.Value : (object)userDetails.Drv_pan_no, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
