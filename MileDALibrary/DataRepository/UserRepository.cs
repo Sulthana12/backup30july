@@ -211,20 +211,7 @@ namespace MileDALibrary.DataRepository
                     if (!string.IsNullOrEmpty(spOut))
                     {
                         ResponseStatus respobj = new ResponseStatus();
-
-                        //string[] a = spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-                        //foreach (var keyvaluepair in spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
-                        //{
-                        //string[] splitteddata = keyvaluepair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
-
-
-                        //if (splitteddata[0].Trim().Equals("error_desc"))
-                        //{
                         respobj.Error_desc = spOut;
-
-                        //}
-                        //}
 
                         response.Add(respobj);
 
@@ -289,6 +276,7 @@ namespace MileDALibrary.DataRepository
                                     First_Name = dr["first_name"].ToString(),
                                     Last_Name = dr["last_name"].ToString(),
                                     District_id = Convert.ToInt32(dr["district_id"]),
+                                    Id_proof_name = dr["id_proof_name"].ToString(),
                                 }).ToList();
             }
 
@@ -558,6 +546,7 @@ namespace MileDALibrary.DataRepository
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@plateno_file_name", Value = String.IsNullOrEmpty(userDetails.Plateno_file_name) ? DBNull.Value : (object)userDetails.Plateno_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@plateno_file_location", Value = String.IsNullOrEmpty(userDetails.Plateno_file_location) ? DBNull.Value : (object)userDetails.Plateno_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@district_id", Value = userDetails.District_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@id_proof_name", Value = String.IsNullOrEmpty(userDetails.Id_Proof_Name) ? DBNull.Value : (object)userDetails.Id_Proof_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
                 result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
@@ -568,23 +557,9 @@ namespace MileDALibrary.DataRepository
                 if (!string.IsNullOrEmpty(spOut))
                 {
                     ResponseStatus respobj = new ResponseStatus();
-
-                    //string[] a = spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-
-                    //foreach (var keyvaluepair in spOut.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries))
-                    //{
-                    //string[] splitteddata = keyvaluepair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
-
-
-                    //if (splitteddata[0].Trim().Equals("error_desc"))
-                    //{
                     respobj.Error_desc = spOut;
 
-                    //}
-                    //}
-
                     output.Add(respobj);
-
                 }
 
                 return output;
@@ -642,15 +617,15 @@ namespace MileDALibrary.DataRepository
                 MailboxAddress to = new MailboxAddress("Admin", emailId);
                 message.To.Add(to);
 
-                message.Subject = "Afar Cabs - OTP";
+                message.Subject = "AFAR-Cabing Service | OTP to Verify Email";
 
                 BodyBuilder bodyBuilder = new BodyBuilder();
-                bodyBuilder.TextBody = "Hi User," + System.Environment.NewLine + System.Environment.NewLine + "You can use the following OTP in Afar Cabs App" + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "Thanks," + System.Environment.NewLine + "Afar Cabs";
+                bodyBuilder.TextBody = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine +"To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 5 minutes.Please do not share this code with anyone";
                 message.Body = bodyBuilder.ToMessageBody();
 
                 SmtpClient client = new SmtpClient();
                 client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                client.Authenticate("nithesh7477@gmail.com","erjkdeyfxuxwnyvg");
+                client.Authenticate("afar.suport.noreply@gmail.com", "pqemlbygefgjittg");
 
                 client.Send(message);
                 client.Disconnect(true);
@@ -730,6 +705,32 @@ namespace MileDALibrary.DataRepository
             {
                 return response;
             }
+        }
+
+        public List<LocationDetails> GetSavedLocation()
+        {
+            List<LocationDetails> UserResponse = new List<LocationDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "Getsavelocation", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_taxi_usr_profile_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new LocationDetails()
+                                {
+                                    User_id = Convert.ToInt32(dr["user_id"]),
+                                    Location_id = Convert.ToInt32(dr["loc_id"]),
+                                    Location_type = dr["loc_type"].ToString(),
+                                    Location_address = dr["loc_address"].ToString(),
+                                    Location_street = dr["loc_street"].ToString(),
+                                    Pincode = dr["pincode"].ToString(),
+                                    Location_landmark = dr["loc_landmark"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
         }
     }
 }

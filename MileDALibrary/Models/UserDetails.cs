@@ -98,6 +98,8 @@ namespace MileDALibrary.Models
 
         public string? Plateno_file_location { get; set; }
 
+        public string? Id_Proof_Name { get; set; }
+
     }
 }
  

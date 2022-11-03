@@ -32,5 +32,7 @@ namespace MileDALibrary.Interfaces
         List<LoginDetails> GetUpdatedProfile(int userId);
 
         List<ResponseStatus> SaveLocation(LocationDetails locationDetails);
+
+        List<LocationDetails> GetSavedLocation();
     }
 }

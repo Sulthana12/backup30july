@@ -279,5 +279,28 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Insertion Failed\"}");
             }
         }
+
+        [HttpGet("GetSavedLocation")]
+        //[Route("/")]
+        public IActionResult GetSavedLocation()
+        {
+            try
+            {
+                List<LocationDetails> result = _userService.GetSavedLocation();
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
     }
 }

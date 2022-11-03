@@ -82,5 +82,7 @@ namespace MileDALibrary.Models
 
         public int? District_id { get; set; }
 
+        public string? Id_proof_name { get; set; }
+
     }
 }
