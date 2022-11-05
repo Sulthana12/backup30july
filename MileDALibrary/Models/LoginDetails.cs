@@ -17,5 +17,7 @@ namespace MileDALibrary.Models
         public string? User_type_flg { get; set; }
 
         public string? Name { get; set; }
+
+        public string? Notification_token { get; set; }
     }
 }
