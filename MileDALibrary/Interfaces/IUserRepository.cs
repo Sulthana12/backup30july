@@ -23,7 +23,7 @@ namespace MileDALibrary.Interfaces
 
         List<ResponseStatus> UpdateProfileDetails(UpdateProfile updateProfile);
 
-        List<DriverDetails> GetDriverDetails();
+        List<DriverDetails> GetDriverDetails(string phoneNumber);
 
         Task<List<ResponseStatus>> SaveUserDetails(UserDetails userDetails);
 

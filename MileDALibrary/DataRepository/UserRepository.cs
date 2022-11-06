@@ -228,12 +228,13 @@ namespace MileDALibrary.DataRepository
             }
         }
 
-        public List<DriverDetails> GetDriverDetails()
+        public List<DriverDetails> GetDriverDetails(string phoneNumber)
         {
             List<DriverDetails> UserResponse = new List<DriverDetails>();
             DataTable dt = new DataTable();
             List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetDriverDetails", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = phoneNumber, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
 
             if (dt != null && dt.Rows.Count > 0)
@@ -247,7 +248,7 @@ namespace MileDALibrary.DataRepository
                                     Email_id = dr["email_id"].ToString(),
                                     Address = dr["usr_addr"].ToString(),
                                     Date_of_birth = dr["date_of_birth"].ToString(),
-                                    Vehicle_type_id = Convert.ToInt32(dr["vehicle_type_id"]),
+                                    Vehicle_type_id = dr["vehicle_type_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["vehicle_type_id"]),
                                     Vehicle_type_name = dr["vehicle_type_name"].ToString(),
                                     License_no = dr["license_no"].ToString(),
                                     License_plate_no = dr["license_plate_no"].ToString(),
@@ -274,10 +275,10 @@ namespace MileDALibrary.DataRepository
                                     Plateno_file_location = dr["plateno_file_location"].ToString(),
                                     Doc_file_name = dr["doc_file_name"].ToString(),
                                     Doc_file_location = dr["doc_file_location"].ToString(),
-                                    User_id = Convert.ToInt32(dr["user_id"]),
+                                    User_id = dr["user_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["user_id"]),
                                     First_Name = dr["first_name"].ToString(),
                                     Last_Name = dr["last_name"].ToString(),
-                                    District_id = Convert.ToInt32(dr["district_id"]),
+                                    District_id = dr["district_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["district_id"]),
                                     Id_proof_name = dr["id_proof_name"].ToString(),
                                 }).ToList();
             }
@@ -305,7 +306,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" +"image"+ DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "image" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
                     blobEntity.ByteArray = userDetails.Image_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -613,7 +614,7 @@ namespace MileDALibrary.DataRepository
             {
                 MimeMessage message = new MimeMessage();
 
-                MailboxAddress from = new MailboxAddress("User","afarcabs@gmail.com");
+                MailboxAddress from = new MailboxAddress("User", "afarcabs123@gmail.com");
                 message.From.Add(from);
 
                 MailboxAddress to = new MailboxAddress("Admin", emailId);
@@ -622,7 +623,7 @@ namespace MileDALibrary.DataRepository
                 message.Subject = "AFAR-Cabing Service | OTP to Verify Email";
 
                 BodyBuilder bodyBuilder = new BodyBuilder();
-                bodyBuilder.TextBody = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine +"To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 5 minutes.Please do not share this code with anyone.";
+                bodyBuilder.TextBody = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine + "To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 5 minutes.Please do not share this code with anyone.";
                 message.Body = bodyBuilder.ToMessageBody();
 
                 SmtpClient client = new SmtpClient();
