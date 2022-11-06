@@ -77,5 +77,11 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetSavedLocation();
         }
+
+       public List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails)
+        {
+            return _userRepository.SaveBookingDetails(bookingDetails);
+        }
+
     }
 }

@@ -34,5 +34,7 @@ namespace MileDALibrary.Interfaces
         List<ResponseStatus> SaveLocation(LocationDetails locationDetails);
 
         List<LocationDetails> GetSavedLocation();
+
+        List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails);
     }
 }

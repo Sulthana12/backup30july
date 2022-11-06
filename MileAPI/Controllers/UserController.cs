@@ -302,5 +302,33 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+
+        [HttpPost("SaveBookingDetails")]
+        public async Task<IActionResult> SaveBookingDetails([FromBody] BookingDetails bookingDetails)
+        {
+            string flag;
+            try
+            {
+                List<ResponseStatus> result = _userService.SaveBookingDetails(bookingDetails);
+
+                if (!result.Any())
+                {
+                    return NotFound("{\"status\": \"Failed\"}");
+                }
+                flag = result[0].Error_desc;
+                if (flag.Contains("Success"))
+                {
+                    return Ok(result);
+                }
+
+                return NotFound(result);
+
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Insertion Failed\"}");
+            }
+        }
+
     }
 }

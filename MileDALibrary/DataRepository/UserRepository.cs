@@ -622,7 +622,7 @@ namespace MileDALibrary.DataRepository
                 message.Subject = "AFAR-Cabing Service | OTP to Verify Email";
 
                 BodyBuilder bodyBuilder = new BodyBuilder();
-                bodyBuilder.TextBody = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine +"To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 5 minutes.Please do not share this code with anyone";
+                bodyBuilder.TextBody = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine +"To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 5 minutes.Please do not share this code with anyone.";
                 message.Body = bodyBuilder.ToMessageBody();
 
                 SmtpClient client = new SmtpClient();
@@ -687,7 +687,7 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@pincode", Value = locationDetails.Pincode, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@loc_landmark", Value = locationDetails.Location_landmark, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@status", Value = locationDetails.Status, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
+                    dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Output });
 
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_usr_profile_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
@@ -733,6 +733,57 @@ namespace MileDALibrary.DataRepository
             }
 
             return UserResponse;
+        }
+
+        public List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails)
+        {
+            int insertRowsCount = 0;
+            List<ResponseStatus> response = new List<ResponseStatus>();
+            try
+            {
+                if (bookingDetails != null)
+                {
+                    Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
+                    DataTable dt = new DataTable();
+
+                    List<DbParameter> dbparams = new List<DbParameter>();
+                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "usrbook", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = bookingDetails.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_track_id", Value = bookingDetails.User_track_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@from_location", Value = bookingDetails.From_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@to_location", Value = bookingDetails.To_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@from_latitude", Value = bookingDetails.From_latitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@from_longitude", Value = bookingDetails.From_longitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@to_latitude", Value = bookingDetails.To_latitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@to_longitude", Value = bookingDetails.To_longitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@fare_date", Value = bookingDetails.Fare_date, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@fare_type", Value = bookingDetails.Fare_type, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@Others_number", Value = bookingDetails.Others_number, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@vehicle_id", Value = bookingDetails.Vehicle_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@kms", Value = bookingDetails.Kms, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@cal_fare", Value = bookingDetails.Cal_fare, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@routed_driver_id", Value = bookingDetails.Routed_driver_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@fare_status", Value = bookingDetails.Fare_status, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Output });
+
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_usr_booking_post", dbparams, SQL_Helper.ExecutionType.Procedure);
+
+                    insertRowsCount = insertRowsCount + result["RowsAffected"];
+
+                    string spOut = DBNull.Value.Equals(result["@response_status"]) ? "" : result["@response_status"];
+                    if (!string.IsNullOrEmpty(spOut))
+                    {
+                        ResponseStatus respobj = new ResponseStatus();
+                        respobj.Error_desc = spOut;
+                        response.Add(respobj);
+                    }
+                }
+                return response;
+            }
+            catch (Exception)
+            {
+                return response;
+            }
         }
     }
 }
