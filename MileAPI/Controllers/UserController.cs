@@ -35,7 +35,7 @@ namespace MileAPI.Controllers
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
-                if(result.Count == 0)
+                if (result.Count == 0)
                 {
                     return NotFound("{\"status\": \"Invalid Mobile No/Password\"}");
                 }
@@ -44,7 +44,7 @@ namespace MileAPI.Controllers
             catch (Exception)
             {
                 return NotFound("{\"status\": \"Not Found\"}");
-            }   
+            }
         }
 
         [HttpGet("GetCountryDetails")]
@@ -161,10 +161,14 @@ namespace MileAPI.Controllers
 
         [HttpGet("GetDriverDetails")]
         //[Route("/")]
-        public IActionResult GetDriverDetails( string? phoneNumber)
+        public IActionResult GetDriverDetails(string? phoneNumber)
         {
             try
             {
+                if (phoneNumber != null)
+                {
+                    phoneNumber = phoneNumber.Substring(1, phoneNumber.Length - 2);
+                }
                 List<DriverDetails> result = _userService.GetDriverDetails(phoneNumber);
                 if (result == null)
                 {
@@ -259,7 +263,7 @@ namespace MileAPI.Controllers
             string flag;
             try
             {
-                List<ResponseStatus> result =  _userService.SaveLocation(locationDetails);
+                List<ResponseStatus> result = _userService.SaveLocation(locationDetails);
 
                 if (!result.Any())
                 {
