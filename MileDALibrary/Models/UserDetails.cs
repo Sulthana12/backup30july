@@ -100,6 +100,8 @@ namespace MileDALibrary.Models
 
         public string? Id_Proof_Name { get; set; }
 
+        public string? Comments { get; set; }
+
     }
 }
  

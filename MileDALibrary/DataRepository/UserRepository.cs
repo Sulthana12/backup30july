@@ -280,6 +280,7 @@ namespace MileDALibrary.DataRepository
                                     Last_Name = dr["last_name"].ToString(),
                                     District_id = dr["district_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["district_id"]),
                                     Id_proof_name = dr["id_proof_name"].ToString(),
+                                    Comments = dr["Comments"].ToString(),
                                 }).ToList();
             }
 
@@ -550,6 +551,7 @@ namespace MileDALibrary.DataRepository
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@plateno_file_location", Value = String.IsNullOrEmpty(userDetails.Plateno_file_location) ? DBNull.Value : (object)userDetails.Plateno_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@district_id", Value = userDetails.District_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@id_proof_name", Value = String.IsNullOrEmpty(userDetails.Id_Proof_Name) ? DBNull.Value : (object)userDetails.Id_Proof_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@comments", Value = String.IsNullOrEmpty(userDetails.Comments) ? DBNull.Value : (object)userDetails.Comments, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
                 result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);

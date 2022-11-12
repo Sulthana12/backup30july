@@ -84,5 +84,6 @@ namespace MileDALibrary.Models
 
         public string? Id_proof_name { get; set; }
 
+        public string? Comments { get; set; }
     }
 }
