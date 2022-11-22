@@ -165,10 +165,10 @@ namespace MileAPI.Controllers
         {
             try
             {
-                if (phoneNumber != null)
+                /*if (phoneNumber != null)
                 {
                     phoneNumber = phoneNumber.Substring(1, phoneNumber.Length - 2);
-                }
+                }*/
                 List<DriverDetails> result = _userService.GetDriverDetails(phoneNumber);
                 if (result == null)
                 {
@@ -334,5 +334,27 @@ namespace MileAPI.Controllers
             }
         }
 
+        /*[HttpGet("GetDriverNotificationDetails")]
+        //[Route("/")]
+        public IActionResult GetDriverNotificationDetails()
+        {
+            try
+            {
+                List<DriverNotification> result = _userService.GetDriverNotificationDetails();
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }*/
     }
 }
