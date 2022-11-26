@@ -3,7 +3,14 @@ using MileAPI.Interfaces;
 using MileDALibrary.DataRepository;
 using MileDALibrary.Interfaces;
 using MileDALibrary.Models;
-using System.Configuration;
+using CorePush.Apple;
+using CorePush.Google;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace MileAPI
 {
@@ -20,7 +27,13 @@ namespace MileAPI
         {
             services.AddControllers();
             services.Configure<DBSettings>(Configuration.GetSection("DBSettings"));
-            services.Configure<BlobConfig>(Configuration.GetSection("BlobConfig")); 
+            services.Configure<BlobConfig>(Configuration.GetSection("BlobConfig"));
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddHttpClient<FcmSender>();
+            services.AddHttpClient<ApnSender>();
+
+            var appSettingsSection = Configuration.GetSection("FcmNotification");
+            services.Configure<FcmNotificationSetting>(appSettingsSection);
 
             ConfigureSwagger(services);
             ConfigureHealthCheck(services);

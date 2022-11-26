@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MileDALibrary.Models
 {
-    public class DriverDetails
+    public class DriverNotification
     {
         public string? Name { get; set; }
 
@@ -17,19 +17,19 @@ namespace MileDALibrary.Models
         public string? Email_id { get; set; }
 
         public string? Address { get; set; }
-        
+
         public string? Date_of_birth { get; set; }
-        
+
         public int? Vehicle_type_id { get; set; }
-        
+
         public string? Vehicle_type_name { get; set; }
-        
+
         public string? License_no { get; set; }
-        
+
         public string? License_plate_no { get; set; }
-        
+
         public string? Insurance_no { get; set; }
-        
+
         public string? Aadhar_no { get; set; }
 
         public string? Usr_state { get; set; }
@@ -86,22 +86,8 @@ namespace MileDALibrary.Models
 
         public string? Comments { get; set; }
 
-        public string? Bank_Name { get; set; }
+        public string? Notification_token { get; set; }
 
-        public string? Branch_Name { get; set; }
-
-        public string? Ifsc_Code { get; set; }
-
-        public string? Bank_Img_File_Name { get; set; }
-
-        public string? Bank_Img_File_Location { get; set; }
-    
-        public string? Account_Number { get; set; }
-
-        public string? Bank_mobile_num { get; set; }
-
-        public string? Driving_License_Expiry_Date { get; set; }
-
-        public string? Vehicle_Insurance_Expiry_Date { get; set; }
+        public string? Token_msg { get; set; }
     }
 }

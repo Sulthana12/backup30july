@@ -160,15 +160,10 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetDriverDetails")]
-        //[Route("/")]
         public IActionResult GetDriverDetails(string? phoneNumber)
         {
             try
             {
-                /*if (phoneNumber != null)
-                {
-                    phoneNumber = phoneNumber.Substring(1, phoneNumber.Length - 2);
-                }*/
                 List<DriverDetails> result = _userService.GetDriverDetails(phoneNumber);
                 if (result == null)
                 {
@@ -334,8 +329,7 @@ namespace MileAPI.Controllers
             }
         }
 
-        /*[HttpGet("GetDriverNotificationDetails")]
-        //[Route("/")]
+        [HttpGet("GetDriverNotificationDetails")]
         public IActionResult GetDriverNotificationDetails()
         {
             try
@@ -355,6 +349,6 @@ namespace MileAPI.Controllers
             {
                 return NotFound("{\"status\": \"Not Found\"}");
             }
-        }*/
+        }
     }
 }

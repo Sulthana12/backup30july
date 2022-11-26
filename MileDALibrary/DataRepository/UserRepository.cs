@@ -281,6 +281,15 @@ namespace MileDALibrary.DataRepository
                                     District_id = dr["district_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["district_id"]),
                                     Id_proof_name = dr["id_proof_name"].ToString(),
                                     Comments = dr["Comments"].ToString(),
+                                    Bank_Name = dr["Bank_name"].ToString(),
+                                    Branch_Name = dr["branch_name"].ToString(),
+                                    Ifsc_Code = dr["ifsc_code"].ToString(),
+                                    Bank_Img_File_Name = dr["bank_img_file_name"].ToString(),
+                                    Bank_Img_File_Location = dr["bank_img_file_location"].ToString(),
+                                    Account_Number = dr["Account_number"].ToString(),
+                                    Bank_mobile_num = dr["bank_mobile_num"].ToString(),
+                                    Driving_License_Expiry_Date = dr["Driving_license_Expiry_date"].ToString(),
+                                    Vehicle_Insurance_Expiry_Date = dr["Vehicle_insurance_Expiry_date"].ToString(),
                                 }).ToList();
             }
 
@@ -506,6 +515,36 @@ namespace MileDALibrary.DataRepository
 
                 }
 
+                if (!string.IsNullOrEmpty(userDetails.Bank_Img_File_Data))
+                {
+
+
+                    string bankdata = UserRepository.ScaleImage(userDetails.Bank_Img_File_Data, 140, 140);
+
+                    userDetails.Bank_Img_File_Data = string.Empty;
+                    userDetails.Bank_Img_File_Data = bankdata;
+
+                    BlobEntity blobEntity = new BlobEntity();
+                    blobEntity.DirectoryName = "Profile";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "BankDetails" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.ByteArray = userDetails.Bank_Img_File_Data;
+
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
+
+                    string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                    BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                    Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                    Stream stream = new MemoryStream(bytes1);
+
+                    var response = await blobClient.UploadAsync(stream, true);
+
+                    userDetails.Bank_Img_File_Location = this.blobconfig.Value.UserProfilePhoto;
+                    userDetails.Bank_Img_File_Name = blobEntity.FolderName;
+
+                }
+
 
                 Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
 
@@ -552,6 +591,13 @@ namespace MileDALibrary.DataRepository
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@district_id", Value = userDetails.District_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@id_proof_name", Value = String.IsNullOrEmpty(userDetails.Id_Proof_Name) ? DBNull.Value : (object)userDetails.Id_Proof_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@comments", Value = String.IsNullOrEmpty(userDetails.Comments) ? DBNull.Value : (object)userDetails.Comments, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@bank_name", Value = String.IsNullOrEmpty(userDetails.Bank_Name) ? DBNull.Value : (object)userDetails.Bank_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@branch_name", Value = String.IsNullOrEmpty(userDetails.Branch_Name) ? DBNull.Value : (object)userDetails.Branch_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@ifsc_code", Value = String.IsNullOrEmpty(userDetails.Ifsc_Code) ? DBNull.Value : (object)userDetails.Ifsc_Code, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Account_number", Value = String.IsNullOrEmpty(userDetails.Account_Number) ? DBNull.Value : (object)userDetails.Account_Number, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@bank_mobile_num", Value = String.IsNullOrEmpty(userDetails.Bank_mobile_num) ? DBNull.Value : (object)userDetails.Bank_mobile_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Driving_license_Expiry_date", Value = String.IsNullOrEmpty(userDetails.Driving_License_Expiry_Date) ? DBNull.Value : (object)userDetails.Driving_License_Expiry_Date, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Vehicle_insurance_Expiry_date", Value = String.IsNullOrEmpty(userDetails.Vehicle_Insurance_Expiry_Date) ? DBNull.Value : (object)userDetails.Vehicle_Insurance_Expiry_Date, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                 dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
                 result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
@@ -787,6 +833,66 @@ namespace MileDALibrary.DataRepository
             {
                 return response;
             }
+        }
+
+        public List<DriverNotification> GetDriverNotificationDetails()
+        {
+            List<DriverNotification> UserResponse = new List<DriverNotification>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetDrivernotification", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new DriverNotification()
+                                {
+                                    Name = dr["name"].ToString(),
+                                    Gender = dr["gender"].ToString(),
+                                    Phone_num = dr["phone_num"].ToString(),
+                                    Email_id = dr["email_id"].ToString(),
+                                    Address = dr["usr_addr"].ToString(),
+                                    Date_of_birth = dr["date_of_birth"].ToString(),
+                                    Vehicle_type_id = dr["vehicle_type_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["vehicle_type_id"]),
+                                    Vehicle_type_name = dr["vehicle_type_name"].ToString(),
+                                    License_no = dr["license_no"].ToString(),
+                                    License_plate_no = dr["license_plate_no"].ToString(),
+                                    Insurance_no = dr["insurance_no"].ToString(),
+                                    Aadhar_no = dr["aadhar_no"].ToString(),
+                                    Usr_state = dr["usr_state"].ToString(),
+                                    Usr_district = dr["usr_district"].ToString(),
+                                    Country = dr["usr_country"].ToString(),
+                                    Pincode = dr["pincode"].ToString(),
+                                    Usr_img_file_location = dr["usr_img_file_location"].ToString(),
+                                    Usr_img_file_name = dr["usr_img_file_name"].ToString(),
+                                    User_address = dr["usr_addr"].ToString(),
+                                    En_flag = dr["en_flg"].ToString(),
+                                    Aadhar_file_name = dr["aadhar_file_name"].ToString(),
+                                    Aadhar_file_location = dr["aadhar_file_location"].ToString(),
+                                    Drv_pan_no = dr["drv_pan_no"].ToString(),
+                                    Panno_file_name = dr["panno_file_name"].ToString(),
+                                    Panno_file_location = dr["panno_file_location"].ToString(),
+                                    Licno_file_name = dr["licno_file_name"].ToString(),
+                                    Licno_file_location = dr["licno_file_location"].ToString(),
+                                    insno_file_name = dr["insno_file_name"].ToString(),
+                                    Insno_file_location = dr["insno_file_location"].ToString(),
+                                    Plateno_file_name = dr["plateno_file_name"].ToString(),
+                                    Plateno_file_location = dr["plateno_file_location"].ToString(),
+                                    Doc_file_name = dr["doc_file_name"].ToString(),
+                                    Doc_file_location = dr["doc_file_location"].ToString(),
+                                    User_id = dr["user_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["user_id"]),
+                                    First_Name = dr["first_name"].ToString(),
+                                    Last_Name = dr["last_name"].ToString(),
+                                    District_id = dr["district_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["district_id"]),
+                                    Id_proof_name = dr["id_proof_name"].ToString(),
+                                    Comments = dr["Comments"].ToString(),
+                                    Notification_token = dr["notification_token"].ToString(),
+                                    Token_msg = dr["token_msg"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
         }
     }
 }

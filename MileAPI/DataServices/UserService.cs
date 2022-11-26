@@ -83,5 +83,9 @@ namespace MileAPI.DataServices
             return _userRepository.SaveBookingDetails(bookingDetails);
         }
 
+        public List<DriverNotification> GetDriverNotificationDetails()
+        {
+            return _userRepository.GetDriverNotificationDetails();
+        }
     }
 }

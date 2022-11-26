@@ -102,6 +102,28 @@ namespace MileDALibrary.Models
 
         public string? Comments { get; set; }
 
+        public string? Bank_Name { get; set; }
+
+        public string? Branch_Name { get; set; }
+
+        public string? Ifsc_Code { get; set; }
+
+        public string? Bank_Img_File_Name { get; set; }
+
+        public string? Bank_Img_File_Location { get; set; }
+
+        public string? Bank_Img_File_Data { get; set; }
+
+        public string? Account_Number { get; set; }
+
+        public string? Bank_mobile_num { get; set; }
+
+        public string? Driving_License_Expiry_Date { get; set; }
+
+        public string? Vehicle_Insurance_Expiry_Date { get; set; }
+
+
+
     }
 }
  

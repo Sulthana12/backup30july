@@ -32,5 +32,6 @@ namespace MileAPI.Interfaces
 
         List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails);
 
+        List<DriverNotification> GetDriverNotificationDetails();
     }
 }

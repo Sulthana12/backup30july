@@ -36,5 +36,7 @@ namespace MileDALibrary.Interfaces
         List<LocationDetails> GetSavedLocation();
 
         List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails);
+
+        List<DriverNotification> GetDriverNotificationDetails();
     }
 }
