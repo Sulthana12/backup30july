@@ -350,5 +350,54 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+
+        [HttpPost("PostDriverPaymentDetails")]
+        public async Task<IActionResult> DriverPaymentDetails([FromBody] DriverPaymentDetails driverPaymentDetails)
+        {
+            string flag;
+            try
+            {
+                List<ResponseStatus> result = await _userService.DriverPaymentDetails(driverPaymentDetails);
+
+                if (!result.Any())
+                {
+                    return NotFound("{\"status\": \"Failed\"}");
+                }
+                flag = result[0].Error_desc;
+                if (flag.Contains("Success"))
+                {
+                    return Ok(result);
+                }
+
+                return NotFound(result);
+
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Insertion Failed\"}");
+            }
+        }
+
+        [HttpGet("GetDriverPaymentDetails")]
+        public IActionResult GetDriverPaymentDetails()
+        {
+            try
+            {
+                List<GetDriverPaymentDetails> result = _userService.GetDriverPaymentDetails();
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
     }
 }

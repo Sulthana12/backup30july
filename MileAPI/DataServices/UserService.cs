@@ -87,5 +87,15 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetDriverNotificationDetails();
         }
+
+        public Task<List<ResponseStatus>> DriverPaymentDetails(DriverPaymentDetails driverPaymentDetails)
+        {
+            return _userRepository.DriverPaymentDetails(driverPaymentDetails);
+        }
+
+        public List<GetDriverPaymentDetails> GetDriverPaymentDetails()
+        {
+            return _userRepository.GetDriverPaymentDetails();
+        }
     }
 }

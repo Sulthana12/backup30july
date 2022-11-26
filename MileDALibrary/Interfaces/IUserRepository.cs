@@ -38,5 +38,9 @@ namespace MileDALibrary.Interfaces
         List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails);
 
         List<DriverNotification> GetDriverNotificationDetails();
+
+        Task<List<ResponseStatus>> DriverPaymentDetails(DriverPaymentDetails driverPaymentDetails);
+
+        List<GetDriverPaymentDetails> GetDriverPaymentDetails();
     }
 }
