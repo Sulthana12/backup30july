@@ -28,7 +28,6 @@ namespace MileAPI
             services.AddControllers();
             services.Configure<DBSettings>(Configuration.GetSection("DBSettings"));
             services.Configure<BlobConfig>(Configuration.GetSection("BlobConfig"));
-            services.AddTransient<INotificationService, NotificationService>();
             services.AddHttpClient<FcmSender>();
             services.AddHttpClient<ApnSender>();
 
@@ -95,6 +94,9 @@ namespace MileAPI
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddSingleton<IBankDetailsService, BankDetailsService>();
+            services.AddSingleton<IBankDetailsRepository, BankDetailsRepository>();
+            services.AddTransient<INotificationService, NotificationService>();
         }
     }
 }
