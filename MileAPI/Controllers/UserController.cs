@@ -24,6 +24,8 @@ namespace MileAPI.Controllers
             _userService = userService;
         }
 
+
+
         [HttpGet("GetUserDetails")]
         //[Route("/")]
         public IActionResult GetUserInformation(string PhoneNumber, string Password)
