@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'AFAR-API'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1D58E83378394C458BE36186A60E5827 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E5C5BA625C7A41BAB56CE4D0D0084BE3 }}
           package: .
