@@ -42,5 +42,7 @@ namespace MileDALibrary.Interfaces
         Task<List<ResponseStatus>> DriverPaymentDetails(DriverPaymentDetails driverPaymentDetails);
 
         List<GetDriverPaymentDetails> GetDriverPaymentDetails();
+
+        List<ExpiredVehicleInsurance> GetExpiredDrvLicense(ExpiredVehicleDetails expiredVehicleDetails);
     }
 }

@@ -401,5 +401,54 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+
+        [HttpPost("GetExpiredDrvLicense")]
+        public IActionResult GetExpiredDrvLicense([FromBody] ExpiredVehicleDetails expiredVehicleDetails)
+        {
+            List<ExpiredVehicleInsurance> expiredDrvLicenseDetails = new();
+            try
+            {
+                expiredDrvLicenseDetails = _userService.GetExpiredDrvLicense(expiredVehicleDetails);
+                if (expiredDrvLicenseDetails == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (expiredDrvLicenseDetails.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(expiredDrvLicenseDetails);
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"GetExpiredDrvLicense. Reason: {ex.Message}");
+            }
+        }
+
+        [HttpPost("GetExpiredVehicleInsurance")]
+        public IActionResult GetExpiredVehicleInsurance([FromBody] ExpiredVehicleDetails expiredVehicleDetails)
+        {
+            List<ExpiredVehicleInsurance> expiredVehicleInsuranceDetails = new();
+            try
+            {
+                expiredVehicleInsuranceDetails = _userService.GetExpiredDrvLicense(expiredVehicleDetails);
+                if (expiredVehicleInsuranceDetails == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (expiredVehicleInsuranceDetails.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(expiredVehicleInsuranceDetails);
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"GetExpiredVehicleInsurance. Reason: {ex.Message}");
+            }
+
+        }
     }
 }

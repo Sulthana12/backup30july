@@ -966,5 +966,42 @@ namespace MileDALibrary.DataRepository
 
             return UserResponse;
         }
+
+        public List<ExpiredVehicleInsurance> GetExpiredDrvLicense(ExpiredVehicleDetails expiredVehicleDetails)
+        {
+            List<ExpiredVehicleInsurance> expiredVehicleInsuranceDetails = new List<ExpiredVehicleInsurance>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparams = new List<DbParameter>();
+            dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = expiredVehicleDetails.Userid, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = expiredVehicleDetails.Phonenum, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@email_id", Value = expiredVehicleDetails.Emailid, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = expiredVehicleDetails.Userpassword, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@vehicle_license_no", Value = expiredVehicleDetails.VehicleLicenseNo, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@driver_name", Value = expiredVehicleDetails.DriverName, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = expiredVehicleDetails.QueryName, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.VarChar, Size = 500, Direction = ParameterDirection.Output });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparams, SQL_Helper.ExecutionType.Procedure);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                expiredVehicleInsuranceDetails = (from DataRow dr in dt.Rows
+                                                  select new ExpiredVehicleInsurance()
+                                                  {
+                                                      User_id = Convert.ToInt32(dr["user_id"]),
+                                                      First_name = dr["first_name"].ToString(),
+                                                      Last_name = dr["last_name"].ToString(),
+                                                      Email_id = dr["email_id"].ToString(),
+                                                      Phone_num = dr["phone_num"].ToString(),
+                                                      Notification_token = dr["notification_token"].ToString(),
+                                                      License_plate_no = dr["license_plate_no"].ToString(),
+                                                      Vehicle_insurance_Expiry_date = dr["Vehicle_insurance_Expiry_date"].ToString(),
+                                                      Msg = dr["msg"].ToString(),
+                                                  }).ToList();
+            }
+
+            return expiredVehicleInsuranceDetails;
+        }
+
+
+
     }
 }

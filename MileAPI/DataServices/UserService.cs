@@ -97,5 +97,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetDriverPaymentDetails();
         }
+
+        public List<ExpiredVehicleInsurance> GetExpiredDrvLicense(ExpiredVehicleDetails expiredVehicleDetails)
+        {
+            return _userRepository.GetExpiredDrvLicense(expiredVehicleDetails);
+        }
     }
 }
