@@ -15,7 +15,7 @@ namespace MileDALibrary.Models
         public string? Phone_num { get; set; }
         public string? Notification_token { get; set; }
         public string? License_plate_no { get; set; }
-        public string? Vehicle_insurance_Expiry_date { get; set; }
+        public string? Expiry_date { get; set; }
         public string? Msg { get; set; }
     }
 

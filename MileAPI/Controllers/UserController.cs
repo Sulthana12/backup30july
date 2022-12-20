@@ -402,12 +402,15 @@ namespace MileAPI.Controllers
             }
         }
 
-        [HttpPost("GetExpiredDrvLicense")]
-        public IActionResult GetExpiredDrvLicense([FromBody] ExpiredVehicleDetails expiredVehicleDetails)
+        [HttpGet("GetExpiredDrvLicense")]
+        public IActionResult GetExpiredDrvLicense(int UserId)
         {
             List<ExpiredVehicleInsurance> expiredDrvLicenseDetails = new();
+            ExpiredVehicleDetails expiredVehicleDetails = new ExpiredVehicleDetails();
             try
             {
+                expiredVehicleDetails.QueryName = "GetExpiredDrvLicense";
+                expiredVehicleDetails.Userid = UserId;
                 expiredDrvLicenseDetails = _userService.GetExpiredDrvLicense(expiredVehicleDetails);
                 if (expiredDrvLicenseDetails == null)
                 {
@@ -426,12 +429,15 @@ namespace MileAPI.Controllers
             }
         }
 
-        [HttpPost("GetExpiredVehicleInsurance")]
-        public IActionResult GetExpiredVehicleInsurance([FromBody] ExpiredVehicleDetails expiredVehicleDetails)
+        [HttpGet("GetExpiredVehicleInsurance")]
+        public IActionResult GetExpiredVehicleInsurance(int UserId)
         {
             List<ExpiredVehicleInsurance> expiredVehicleInsuranceDetails = new();
+            ExpiredVehicleDetails expiredVehicleDetails = new ExpiredVehicleDetails();
             try
             {
+                expiredVehicleDetails.QueryName = "GetExpiredVehicleInsurance";
+                expiredVehicleDetails.Userid = UserId;
                 expiredVehicleInsuranceDetails = _userService.GetExpiredDrvLicense(expiredVehicleDetails);
                 if (expiredVehicleInsuranceDetails == null)
                 {

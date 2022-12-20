@@ -993,7 +993,8 @@ namespace MileDALibrary.DataRepository
                                                       Phone_num = dr["phone_num"].ToString(),
                                                       Notification_token = dr["notification_token"].ToString(),
                                                       License_plate_no = dr["license_plate_no"].ToString(),
-                                                      Vehicle_insurance_Expiry_date = dr["Vehicle_insurance_Expiry_date"].ToString(),
+                                                      Expiry_date = dr["Expiry_date"].ToString(),
+                                                      
                                                       Msg = dr["msg"].ToString(),
                                                   }).ToList();
             }
