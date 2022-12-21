@@ -17,6 +17,7 @@ namespace MileDALibrary.Models
         public string? License_plate_no { get; set; }
         public string? Expiry_date { get; set; }
         public string? Msg { get; set; }
+        public string? flag { get; set; }
     }
 
     public class ExpiredVehicleDetails
