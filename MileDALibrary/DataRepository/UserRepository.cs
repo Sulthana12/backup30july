@@ -996,6 +996,7 @@ namespace MileDALibrary.DataRepository
                                                       Expiry_date = dr["Expiry_date"].ToString(),
                                                       
                                                       Msg = dr["msg"].ToString(),
+                                                      flag = dr["flag"].ToString(),
                                                   }).ToList();
             }
 
