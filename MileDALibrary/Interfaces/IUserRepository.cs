@@ -44,5 +44,7 @@ namespace MileDALibrary.Interfaces
         List<GetDriverPaymentDetails> GetDriverPaymentDetails();
 
         List<ExpiredVehicleInsurance> GetExpiredDrvLicense(ExpiredVehicleDetails expiredVehicleDetails);
+
+        List<ResponseStatus> AddReferralDetails(ReferralDetails ReferralDetails);
     }
 }
