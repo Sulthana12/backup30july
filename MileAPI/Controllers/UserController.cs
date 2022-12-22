@@ -165,7 +165,7 @@ namespace MileAPI.Controllers
         public IActionResult AddReferralDetails([FromBody] ReferralDetails ReferralDetails)
         {
             string flag;
-            List<ResponseStatus> result = _userService.ReferralDetails(ReferralDetails);
+            List<ResponseStatus> result = _userService.AddReferralDetails(ReferralDetails);
             if (!result.Any())
             {
                 return NotFound("{\"status\": \"Failed\"}");
