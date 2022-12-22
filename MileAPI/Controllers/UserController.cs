@@ -161,6 +161,23 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
+         [HttpPost("PostAddReferral/LoginReferralDetails")]
+        public IActionResult AddReferralDetails([FromBody] ReferralDetails ReferralDetails)
+        {
+            string flag;
+            List<ResponseStatus> result = _userService.ReferralDetails(ReferralDetails);
+            if (!result.Any())
+            {
+                return NotFound("{\"status\": \"Failed\"}");
+            }
+            flag = result[0].Error_desc;
+            if (flag.Contains("Success"))
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
         [HttpGet("GetDriverDetails")]
         public IActionResult GetDriverDetails(string? phoneNumber)
         {

@@ -40,6 +40,7 @@ namespace MileAPI.Interfaces
 
         List<ExpiredVehicleInsurance> GetExpiredDrvLicense(ExpiredVehicleDetails expiredVehicleDetails);
 
+        List<ResponseStatus> AddReferralDetails(ReferralDetails ReferralDetails);
 
     }
 }

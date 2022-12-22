@@ -102,5 +102,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetExpiredDrvLicense(expiredVehicleDetails);
         }
+
+        public List<ResponseStatus> AddReferralDetails(ReferralDetails ReferralDetails)
+        {
+            return _userRepository.AddReferralDetails(ReferralDetails);
+        }
     }
 }

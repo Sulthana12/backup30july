@@ -1003,7 +1003,46 @@ namespace MileDALibrary.DataRepository
             return expiredVehicleInsuranceDetails;
         }
 
+        public List<ResponseStatus> AddReferralDetails(ReferralDetails ReferralDetails)
+        {
+            int insertRowsCount = 0;
+            List<ResponseStatus> response = new List<ResponseStatus>();
+            try
+            {
+                if (ReferralDetails != null)
+                {
+                    Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
+                    DataTable dt = new DataTable();
 
+                    List<DbParameter> dbparams = new List<DbParameter>();
+                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "AddReferral", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = ReferralDetails.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = ReferralDetails.user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
+                    dbparams.Add(new SqlParameter { ParameterName = "@referral_code", Value = ReferralDetails.referral_code, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_afar_driver_app_post", dbparams, SQL_Helper.ExecutionType.Procedure);
+
+                    insertRowsCount = insertRowsCount + result["RowsAffected"];
+
+                    string spOut = DBNull.Value.Equals(result["@response_status"]) ? "" : result["@response_status"];
+                    if (!string.IsNullOrEmpty(spOut))
+                    {
+                        ResponseStatus respobj = new ResponseStatus();
+                        respobj.Error_desc = spOut;
+
+                        response.Add(respobj);
+
+
+                    }
+                }
+                return response;
+            }
+            catch (Exception)
+            {
+                return response;
+            }
+        }
 
     }
 }
