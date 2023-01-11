@@ -397,6 +397,33 @@ namespace MileAPI.Controllers
             }
         }
 
+        [HttpPost("PostDriverRegPaymentDetails")]
+        public async Task<IActionResult> DriverRegPaymentStatusDetails([FromBody] DriverRegPaymentStatus DriverRegPaymentStatus)
+        {
+            string flag;
+            try
+            {
+                List<ResponseStatus> result = _userService.DriverRegPaymentStatusDetails(DriverRegPaymentStatus);
+
+                if (!result.Any())
+                {
+                    return NotFound("{\"status\": \"Failed\"}");
+                }
+                flag = result[0].Error_desc;
+                if (flag.Contains("Success"))
+                {
+                    return Ok(result);
+                }
+
+                return NotFound(result);
+
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Insertion Failed\"}");
+            }
+        }
+
         [HttpGet("GetDriverPaymentDetails")]
         public IActionResult GetDriverPaymentDetails()
         {
@@ -473,5 +500,6 @@ namespace MileAPI.Controllers
             }
 
         }
+
     }
 }

@@ -48,6 +48,12 @@ namespace MileAPI.DataServices
             return _userRepository.UpdateProfileDetails(updateProfile);
         }
 
+        public List<ResponseStatus> DriverRegPaymentStatusDetails(DriverRegPaymentStatus DriverRegPaymentStatus)
+        {
+            return _userRepository.DriverRegPaymentStatusDetails(DriverRegPaymentStatus);
+        }
+
+
         public List<DriverDetails> GetDriverDetails(string phoneNumber)
         {
             return _userRepository.GetDriverDetails(phoneNumber);
@@ -62,6 +68,11 @@ namespace MileAPI.DataServices
         {
             return _userRepository.SendEmail(emailId, otp);
         }
+
+        //public int SendMsg(string phonenum, int otp)
+        //{
+        //   return _userRepository.SendMsg(phonenum, otp);
+        //}
 
         public List<LoginDetails> GetUpdatedProfile(int userId)
         {
