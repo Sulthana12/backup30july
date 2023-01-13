@@ -993,12 +993,13 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
-        public List<GetDriverPaymentDetails> GetDriverPaymentDetails()
+        public List<GetDriverPaymentDetails> GetDriverPaymentDetails(int User_Id)
         {
             List<GetDriverPaymentDetails> UserResponse = new List<GetDriverPaymentDetails>();
             DataTable dt = new DataTable();
             List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetDriverInitPayment", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = User_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
 
             if (dt != null && dt.Rows.Count > 0)
@@ -1073,12 +1074,12 @@ namespace MileDALibrary.DataRepository
 
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "AddReferral", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = ReferralDetails.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@Bank_mobile_num", Value = ReferralDetails.Bank_mobile_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = ReferralDetails.user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
                     dbparams.Add(new SqlParameter { ParameterName = "@referral_code", Value = ReferralDetails.referral_code, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     
-                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_afar_driver_app_post", dbparams, SQL_Helper.ExecutionType.Procedure);
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_driver_payment_Post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
 

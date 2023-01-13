@@ -425,11 +425,11 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetDriverPaymentDetails")]
-        public IActionResult GetDriverPaymentDetails()
+        public IActionResult GetDriverPaymentDetails(int User_Id)
         {
             try
             {
-                List<GetDriverPaymentDetails> result = _userService.GetDriverPaymentDetails();
+                List<GetDriverPaymentDetails> result = _userService.GetDriverPaymentDetails(User_Id);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");

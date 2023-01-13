@@ -36,7 +36,7 @@ namespace MileAPI.Interfaces
 
         Task<List<ResponseStatus>> DriverPaymentDetails(DriverPaymentDetails driverPaymentDetails);
 
-        List<GetDriverPaymentDetails> GetDriverPaymentDetails();
+        List<GetDriverPaymentDetails> GetDriverPaymentDetails(int User_Id);
 
         List<ExpiredVehicleInsurance> GetExpiredDrvLicense(ExpiredVehicleDetails expiredVehicleDetails);
 

@@ -104,9 +104,9 @@ namespace MileAPI.DataServices
             return _userRepository.DriverPaymentDetails(driverPaymentDetails);
         }
 
-        public List<GetDriverPaymentDetails> GetDriverPaymentDetails()
+        public List<GetDriverPaymentDetails> GetDriverPaymentDetails(int User_Id)
         {
-            return _userRepository.GetDriverPaymentDetails();
+            return _userRepository.GetDriverPaymentDetails(User_Id);
         }
 
         public List<ExpiredVehicleInsurance> GetExpiredDrvLicense(ExpiredVehicleDetails expiredVehicleDetails)

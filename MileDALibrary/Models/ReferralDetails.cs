@@ -12,6 +12,6 @@ namespace MileDALibrary.Models
 
 		public string? referral_code { get; set; }
 
-        public string? Phone_num { get; set; }
+        public string? Bank_mobile_num { get; set; }
     }
 }
