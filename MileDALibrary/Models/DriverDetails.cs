@@ -8,7 +8,7 @@ namespace MileDALibrary.Models
 {
     public class DriverDetails
     {
-        public string? Regstr_pymt_flg;
+        public string? Regstr_pymt_flg { get; set; }
 
         public string? Name { get; set; }
 
