@@ -249,6 +249,20 @@ namespace MileAPI.Controllers
             }
         }
 
+        [HttpGet("OtpGenerator")]
+        public async Task<IActionResult> OtpGenerator()
+        {
+            try
+            {
+                int otp = RandomNumberGenerator.GetInt32(100000, 999999);
+                    return Ok(otp);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Failed To Send OTP\"}");
+            }
+        }
+
         [HttpGet("GetUpdatedProfile")]
         public IActionResult GetUpdatedProfile(int userId)
         {

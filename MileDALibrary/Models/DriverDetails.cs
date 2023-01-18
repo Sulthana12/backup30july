@@ -8,8 +8,7 @@ namespace MileDALibrary.Models
 {
     public class DriverDetails
     {
-        public string? Regstr_pymt_flg { get; set; }
-
+       
         public string? Name { get; set; }
 
         public string? Gender { get; set; }
@@ -105,5 +104,7 @@ namespace MileDALibrary.Models
         public string? Driving_License_Expiry_Date { get; set; }
 
         public string? Vehicle_Insurance_Expiry_Date { get; set; }
+        public string? Regstr_pymt_flg { get; set; }
+
     }
 }
