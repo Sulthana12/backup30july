@@ -118,5 +118,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.AddReferralDetails(ReferralDetails);
         }
+
+        public List<ResponseStatus> SMSGatewayStatus(AddSMSGatewayStatus AddSMSGatewayStatus)
+        {
+            return _userRepository.SMSGatewayStatus(AddSMSGatewayStatus);
+        }
     }
 }

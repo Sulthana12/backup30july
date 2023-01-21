@@ -48,5 +48,8 @@ namespace MileDALibrary.Interfaces
         List<ResponseStatus> AddReferralDetails(ReferralDetails ReferralDetails);
 
         List<ResponseStatus> DriverRegPaymentStatusDetails(DriverRegPaymentStatus DriverRegPaymentStatus);
+
+        List<ResponseStatus> SMSGatewayStatus(AddSMSGatewayStatus AddSMSGatewayStatus);
+
     }
 }

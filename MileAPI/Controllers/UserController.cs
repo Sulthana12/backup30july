@@ -514,6 +514,22 @@ namespace MileAPI.Controllers
             }
 
         }
+        [HttpPost("PostSMSGatewayStatus")]
+        public IActionResult SMSGatewayStatus([FromBody] AddSMSGatewayStatus AddSMSGatewayStatus)
+        {
+            string flag;
+            List<ResponseStatus> result = _userService.SMSGatewayStatus(AddSMSGatewayStatus);
+            if (!result.Any())
+            {
+                return NotFound("{\"status\": \"Failed\"}");
+            }
+            flag = result[0].Error_desc;
+            if (flag.Contains("Success"))
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
 
     }
 }
