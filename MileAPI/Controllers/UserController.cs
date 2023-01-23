@@ -145,10 +145,12 @@ namespace MileAPI.Controllers
         }
 
         [HttpPost("PostUpdatedProfile/SignUpDetails")]
-        public IActionResult UpdateProfileDetails([FromBody] UpdateProfile updateProfile)
+
+        public async Task<IActionResult> UpdateProfileDetails([FromBody] UpdateProfile updateProfile)
         {
             string flag;
-            List<ResponseStatus> result = _userService.UpdateProfileDetails(updateProfile);
+            List<ResponseStatus> result = await _userService.UpdateProfileDetails(updateProfile);
+
             if (!result.Any())
             {
                 return NotFound("{\"status\": \"Failed\"}");

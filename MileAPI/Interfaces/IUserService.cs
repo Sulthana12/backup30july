@@ -16,7 +16,7 @@ namespace MileAPI.Interfaces
 
         List<GenderDetails> GetGenderDetails(string settingsName);
 
-        List<ResponseStatus> UpdateProfileDetails(UpdateProfile updateProfile);
+        Task<List<ResponseStatus>> UpdateProfileDetails(UpdateProfile updateProfile);
 
         List<DriverDetails> GetDriverDetails(string phoneNumber);
 

@@ -181,12 +181,42 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
-        public List<ResponseStatus> UpdateProfileDetails(UpdateProfile updateProfile)
+        public async Task<List<ResponseStatus>> UpdateProfileDetails(UpdateProfile updateProfile)
         {
             int insertRowsCount = 0;
             List<ResponseStatus> response = new List<ResponseStatus>();
+
+            BlobServiceClient blobServiceClient = new BlobServiceClient(this.blobconfig.Value.BlobConnection);
+
             try
             {
+                if (!string.IsNullOrEmpty(updateProfile.Image_data))
+                {       
+                    string imagedata = UserRepository.ScaleImage(updateProfile.Image_data, 140, 140);
+                    updateProfile.Image_data = string.Empty;
+                    updateProfile.Image_data = imagedata;
+
+                    BlobEntity blobEntity = new BlobEntity();
+                    blobEntity.DirectoryName = "Profile";
+                    blobEntity.FolderName = updateProfile.First_name + "-" + updateProfile.User_id + "-" + "image" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.ByteArray = updateProfile.Image_data;
+
+                    BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
+
+                    string blobPath = blobEntity.DirectoryName + "/" + blobEntity.FolderName;
+
+                    BlobClient blobClient = containerClient.GetBlobClient(blobPath);
+
+                    Byte[] bytes1 = Convert.FromBase64String(blobEntity.ByteArray);
+                    Stream stream = new MemoryStream(bytes1);
+
+                    var response1 = await blobClient.UploadAsync(stream, true);
+
+                    updateProfile.Usr_img_file_location = this.blobconfig.Value.UserProfilePhoto;
+                    updateProfile.Usr_img_file_name = blobEntity.FolderName;
+
+                    }
+
                 if (updateProfile != null)
                 {
                     Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
@@ -201,10 +231,12 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = updateProfile.User_Password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = updateProfile.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@en_flg", Value = updateProfile.En_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@usr_img_file_name", Value = String.IsNullOrEmpty(updateProfile.Usr_img_file_name) ? DBNull.Value : (object)updateProfile.Usr_img_file_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@usr_img_file_location", Value = String.IsNullOrEmpty(updateProfile.Usr_img_file_location) ? DBNull.Value : (object)updateProfile.Usr_img_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@notification_token", Value = updateProfile.Notification_token, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
-
+                    
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];

@@ -43,9 +43,9 @@ namespace MileAPI.DataServices
             return _userRepository.GetGenderDetails(settingsName);
         }
 
-        public List<ResponseStatus> UpdateProfileDetails(UpdateProfile updateProfile)
+        public IUserRepository Get_userRepository()
         {
-            return _userRepository.UpdateProfileDetails(updateProfile);
+            return _userRepository;
         }
 
         public List<ResponseStatus> DriverRegPaymentStatusDetails(DriverRegPaymentStatus DriverRegPaymentStatus)
@@ -122,6 +122,11 @@ namespace MileAPI.DataServices
         public List<ResponseStatus> SMSGatewayStatus(AddSMSGatewayStatus AddSMSGatewayStatus)
         {
             return _userRepository.SMSGatewayStatus(AddSMSGatewayStatus);
+        }
+
+        public Task<List<ResponseStatus>> UpdateProfileDetails(UpdateProfile updateProfile)
+        {
+            return _userRepository.UpdateProfileDetails(updateProfile);
         }
     }
 }

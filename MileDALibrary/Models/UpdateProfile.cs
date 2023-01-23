@@ -25,5 +25,11 @@ namespace MileDALibrary.Models
         public string? Notification_token { get; set; }
 
         public int? User_id { get; set; }
+        public string? Image_data { get; set; }
+
+        public string? Usr_img_file_name { get; set; }
+        
+        public string? Usr_img_file_location { get; set; }
+        
     }
 }
