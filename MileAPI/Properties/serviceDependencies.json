@@ -2,7 +2,7 @@
   "dependencies": {
     "mssql1": {
       "type": "mssql",
-      "connectionId": "mile-sqldb.database.windows.net"
+      "connectionId": "afar-db.database.windows.net"
     }
   }
 }

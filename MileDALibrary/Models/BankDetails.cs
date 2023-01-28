@@ -8,6 +8,7 @@ namespace MileDALibrary.Models
 {
     public class BankDetails
     {
+
         public string? MICR { get; set; }
 
         public string? BRANCH { get; set; }
