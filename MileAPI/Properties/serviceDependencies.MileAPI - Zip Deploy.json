@@ -2,9 +2,9 @@
   "dependencies": {
     "mssql1": {
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/AFAR_DB/databases/afar-db",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/mile-sqldb/databases/mile_db",
       "type": "mssql.azure",
-      "connectionId": "afar-db.database.windows.net"
+      "connectionId": "mile-sqldb.database.windows.net"
     }
   }
 }
