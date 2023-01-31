@@ -367,6 +367,7 @@ namespace MileDALibrary.DataRepository
                                     Driving_License_Expiry_Date = dr["Driving_license_Expiry_date"].ToString(),
                                     Vehicle_Insurance_Expiry_Date = dr["Vehicle_insurance_Expiry_date"].ToString(),
                                     Regstr_pymt_flg = dr["Regstr_pymt_flg"].ToString(),
+                                    referral_code = dr["referral_code"].ToString(),
                                 }).ToList();
             }
 
