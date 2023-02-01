@@ -19,5 +19,6 @@ namespace MileDALibrary.Models
         public string? Name { get; set; }
 
         public string? Notification_token { get; set; }
+        public string? Referral_code { get; set; }
     }
 }
