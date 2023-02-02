@@ -9,5 +9,6 @@ namespace MileDALibrary.Models
     public class ResponseStatus
     {
         public string? Error_desc { get; set; }
+        public string? OutUserId { get; set; }
     }
 }

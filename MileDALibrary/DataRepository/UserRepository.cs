@@ -14,6 +14,7 @@ using MimeKit;
 using System.Net.Mail;
 using MailKit.Security;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace MileDALibrary.DataRepository
 {
@@ -198,7 +199,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = updateProfile.First_name + "-" + updateProfile.User_id + "-" + "image" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = updateProfile.First_name + "-" + updateProfile.User_id + "-" + "image.jpg";
                     blobEntity.ByteArray = updateProfile.Image_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -236,16 +237,20 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@notification_token", Value = updateProfile.Notification_token, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
-                    
+                    dbparams.Add(new SqlParameter { ParameterName = "@error_user_id", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
+
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
 
                     string spOut = DBNull.Value.Equals(result["@response_status"]) ? "" : result["@response_status"];
+                    string spOut1 = DBNull.Value.Equals(result["@error_user_id"]) ? "" : result["@error_user_id"];
+
                     if (!string.IsNullOrEmpty(spOut))
                     {
                         ResponseStatus respobj = new ResponseStatus();
                         respobj.Error_desc = spOut;
+                        respobj.OutUserId = spOut1;
 
                         response.Add(respobj);
 
@@ -394,7 +399,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "image" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "image.jpg";
                     blobEntity.ByteArray = userDetails.Image_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -424,7 +429,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "doc" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "doc.pdf";
                     blobEntity.ByteArray = userDetails.Doc_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -454,7 +459,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "aadhar" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "aadhar.jpg";
                     blobEntity.ByteArray = userDetails.Aadhar_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -484,7 +489,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "pan" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "pan.jpg";
                     blobEntity.ByteArray = userDetails.Pan_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -514,7 +519,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "license" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "license.jpg";
                     blobEntity.ByteArray = userDetails.License_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -544,7 +549,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "insurance" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "insurance.jpg";
                     blobEntity.ByteArray = userDetails.Insurance_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -574,7 +579,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "plateno" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = userDetails.First_name + "-" + userDetails.User_id + "-" + "plateno.jpg";
                     blobEntity.ByteArray = userDetails.PlateNo_data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
@@ -686,7 +691,7 @@ namespace MileDALibrary.DataRepository
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
-                    blobEntity.FolderName = driverPaymentDetails.User_Id + "-" + "BankDetails" + DateTime.Now.ToString("dd-MM-yyyy") + ".jpg";
+                    blobEntity.FolderName = driverPaymentDetails.User_Id + "-" + "BankDetails.jpg";
                     blobEntity.ByteArray = driverPaymentDetails.Bank_Img_File_Data;
 
                     BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("afar-blob");
