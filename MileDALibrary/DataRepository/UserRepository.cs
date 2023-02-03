@@ -193,9 +193,9 @@ namespace MileDALibrary.DataRepository
             {
                 if (!string.IsNullOrEmpty(updateProfile.Image_data))
                 {       
-                    string imagedata = UserRepository.ScaleImage(updateProfile.Image_data, 140, 140);
-                    updateProfile.Image_data = string.Empty;
-                    updateProfile.Image_data = imagedata;
+                    //string imagedata = UserRepository.ScaleImage(updateProfile.Image_data, 140, 140);
+                    //updateProfile.Image_data = string.Empty;
+                    //updateProfile.Image_data = imagedata;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
