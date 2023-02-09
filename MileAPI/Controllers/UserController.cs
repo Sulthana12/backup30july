@@ -533,6 +533,7 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpGet("GetUserByPhoneOrEmail")]
         public IActionResult GetUserByPhoneOrEmail(string phone_num)
         {
             try
