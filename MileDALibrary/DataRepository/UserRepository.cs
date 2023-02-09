@@ -392,10 +392,10 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string imagedata = UserRepository.ScaleImage(userDetails.Image_data, 140, 140);
+                    //string imagedata = UserRepository.ScaleImage(userDetails.Image_data, 140, 140);
 
-                    userDetails.Image_data = string.Empty;
-                    userDetails.Image_data = imagedata;
+                    //userDetails.Image_data = string.Empty;
+                    //userDetails.Image_data = imagedata;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
@@ -452,10 +452,10 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string aadharData = UserRepository.ScaleImage(userDetails.Aadhar_data, 140, 140);
+                    //string aadharData = UserRepository.ScaleImage(userDetails.Aadhar_data, 140, 140);
 
-                    userDetails.Aadhar_data = string.Empty;
-                    userDetails.Aadhar_data = aadharData;
+                    //userDetails.Aadhar_data = string.Empty;
+                    //userDetails.Aadhar_data = aadharData;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
@@ -482,10 +482,10 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string panData = UserRepository.ScaleImage(userDetails.Pan_data, 140, 140);
+                    //string panData = UserRepository.ScaleImage(userDetails.Pan_data, 140, 140);
 
-                    userDetails.Pan_data = string.Empty;
-                    userDetails.Pan_data = panData;
+                    //userDetails.Pan_data = string.Empty;
+                    //userDetails.Pan_data = panData;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
@@ -512,10 +512,10 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string licenseData = UserRepository.ScaleImage(userDetails.License_data, 140, 140);
+                    //string licenseData = UserRepository.ScaleImage(userDetails.License_data, 140, 140);
 
-                    userDetails.License_data = string.Empty;
-                    userDetails.License_data = licenseData;
+                    //userDetails.License_data = string.Empty;
+                    //userDetails.License_data = licenseData;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
@@ -542,10 +542,10 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string insuranceData = UserRepository.ScaleImage(userDetails.Insurance_data, 140, 140);
+                    //string insuranceData = UserRepository.ScaleImage(userDetails.Insurance_data, 140, 140);
 
-                    userDetails.Insurance_data = string.Empty;
-                    userDetails.Insurance_data = insuranceData;
+                    //userDetails.Insurance_data = string.Empty;
+                    //userDetails.Insurance_data = insuranceData;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
@@ -572,10 +572,10 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string plateNoData = UserRepository.ScaleImage(userDetails.PlateNo_data, 140, 140);
+                    //string plateNoData = UserRepository.ScaleImage(userDetails.PlateNo_data, 140, 140);
 
-                    userDetails.PlateNo_data = string.Empty;
-                    userDetails.PlateNo_data = plateNoData;
+                    //userDetails.PlateNo_data = string.Empty;
+                    //userDetails.PlateNo_data = plateNoData;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
@@ -684,10 +684,10 @@ namespace MileDALibrary.DataRepository
                 {
 
 
-                    string bankdata = UserRepository.ScaleImage(driverPaymentDetails.Bank_Img_File_Data, 140, 140);
+                    //string bankdata = UserRepository.ScaleImage(driverPaymentDetails.Bank_Img_File_Data, 140, 140);
 
-                    driverPaymentDetails.Bank_Img_File_Data = string.Empty;
-                    driverPaymentDetails.Bank_Img_File_Data = bankdata;
+                    //driverPaymentDetails.Bank_Img_File_Data = string.Empty;
+                    //driverPaymentDetails.Bank_Img_File_Data = bankdata;
 
                     BlobEntity blobEntity = new BlobEntity();
                     blobEntity.DirectoryName = "Profile";
@@ -1183,6 +1183,31 @@ namespace MileDALibrary.DataRepository
             {
                 return response;
             }
+        }
+
+        public List<UserByPhoneOrEmail> GetUserByPhoneOrEmail(string phone_num)
+        {
+            List<UserByPhoneOrEmail> UserResponse = new List<UserByPhoneOrEmail>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetUserByPhoneOrEmail", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = phone_num, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new UserByPhoneOrEmail()
+                                {
+                                    user_id = Convert.ToInt32(dr["user_id"]),
+                                    name = dr["name"].ToString(),
+                                    user_type_flg = dr["user_type_flg"].ToString(),
+                                    phone_num = dr["phone_num"].ToString(),
+                                    email_id = dr["email_id"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
         }
     }
 }

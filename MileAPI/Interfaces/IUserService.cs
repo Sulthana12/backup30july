@@ -44,5 +44,7 @@ namespace MileAPI.Interfaces
         List<ResponseStatus> DriverRegPaymentStatusDetails(DriverRegPaymentStatus DriverRegPaymentStatus);
 
         List<ResponseStatus> SMSGatewayStatus(AddSMSGatewayStatus AddSMSGatewayStatus);
+
+        List<UserByPhoneOrEmail> GetUserByPhoneOrEmail(string phone_num);
     }
 }

@@ -533,5 +533,22 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
+        public IActionResult GetUserByPhoneOrEmail(string phone_num)
+        {
+            try
+            {
+                List<UserByPhoneOrEmail> result = _userService.GetUserByPhoneOrEmail(phone_num);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
+
     }
 }
