@@ -550,6 +550,22 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+        [HttpPost("PostSMSGatewayStatus")]
+        public IActionResult UserPwdUpdate([FromBody] UserDetails UserPwdUpdate)
+        {
+            string flag;
+            List<ResponseStatus> result = _userService.UserPwdUpdate(UserPwdUpdate);
+            if (!result.Any())
+            {
+                return NotFound("{\"status\": \"Failed\"}");
+            }
+            flag = result[0].Error_desc;
+            if (flag.Contains("Success"))
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
 
     }
 }

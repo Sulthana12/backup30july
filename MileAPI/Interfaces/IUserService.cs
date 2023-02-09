@@ -46,5 +46,6 @@ namespace MileAPI.Interfaces
         List<ResponseStatus> SMSGatewayStatus(AddSMSGatewayStatus AddSMSGatewayStatus);
 
         List<UserByPhoneOrEmail> GetUserByPhoneOrEmail(string phone_num);
+        List<ResponseStatus> UserPwdUpdate(UserDetails UserPwdUpdate);
     }
 }
