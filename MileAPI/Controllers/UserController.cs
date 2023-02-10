@@ -552,7 +552,8 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetUserByPhoneOrEmail")]
-        public IActionResult GetUserByPhoneOrEmail(String PhoneNumber)
+        //[Route("/")]
+        public IActionResult GetUserByPhoneOrEmail(string PhoneNumber)
         {
             try
             {
