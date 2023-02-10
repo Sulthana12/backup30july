@@ -134,7 +134,7 @@ namespace MileAPI.DataServices
             return _userRepository.GetUserByPhoneOrEmail(phone_num);
         }
 
-        public List<ResponseStatus> UserPwdUpdate(UserDetails UserPwdUpdate)
+        public List<ResponseStatus> UserPwdUpdate(PwdUpdate UserPwdUpdate)
         {
             return _userRepository.UserPwdUpdate(UserPwdUpdate);
         }

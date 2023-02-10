@@ -543,15 +543,20 @@ namespace MileAPI.Controllers
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
                 return Ok(result);
             }
             catch (Exception)
             {
                 return NotFound("{\"status\": \"Not Found\"}");
             }
+            
         }
         [HttpPost("PostUserPwdUpdate")]
-        public IActionResult UserPwdUpdate([FromBody] UserDetails UserPwdUpdate)
+        public IActionResult UserPwdUpdate([FromBody] PwdUpdate UserPwdUpdate)
         {
             string flag;
             List<ResponseStatus> result = _userService.UserPwdUpdate(UserPwdUpdate);

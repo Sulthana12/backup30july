@@ -1210,7 +1210,7 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
-        public List<ResponseStatus> UserPwdUpdate(UserDetails UserPwdUpdate)
+        public List<ResponseStatus> UserPwdUpdate(PwdUpdate UserPwdUpdate)
         {
             int insertRowsCount = 0;
             List<ResponseStatus> response = new List<ResponseStatus>();
@@ -1223,7 +1223,7 @@ namespace MileDALibrary.DataRepository
 
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "userupdatePwd", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = UserPwdUpdate.Phone_number, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = UserPwdUpdate.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = UserPwdUpdate.User_password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = UserPwdUpdate.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
