@@ -138,9 +138,9 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetUserByPhoneOrEmail(PhoneNumber);
         }
-        public List<ConfigSettings> GetMasterSettings(string Settings_name)
+        public List<ConfigSettings> GetMasterSettings(string settingsName)
         {
-            return _userRepository.GetMasterSettings(Settings_name);
+            return _userRepository.GetMasterSettings(settingsName);
         }
     }
 }

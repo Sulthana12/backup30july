@@ -1251,13 +1251,13 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
-        public List<ConfigSettings> GetMasterSettings(string Settings_name)
+        public List<ConfigSettings> GetMasterSettings(string settingsName)
         {
             List<ConfigSettings> UserResponse = new List<ConfigSettings>();
             DataTable dt = new DataTable();
             List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrsettings", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@settings_name", Value = Settings_name, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@settings_name", Value = settingsName, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
 
             if (dt != null && dt.Rows.Count > 0)
@@ -1265,15 +1265,15 @@ namespace MileDALibrary.DataRepository
                 UserResponse = (from DataRow dr in dt.Rows
                                 select new ConfigSettings()
                                 {
-                                    Settings_name = dr["settings_name"].ToString(),
                                     Settings_id = Convert.ToInt32(dr["settings_id"]),
+                                    Settings_name = dr["settings_name"].ToString(),
                                     Settings_value = dr["settings_value"].ToString(),
                                     Setting_desc = dr["setting_desc"].ToString(),
-                                    Type = dr["type"].ToString(),
-                                    Days = dr["days"].ToString(),
-                                    file_name = dr["file_name"].ToString(),
-                                    file_location = dr["file_location"].ToString(),
                                     En_flg = dr["en_flg"].ToString(),
+                                    Type = dr["Type"].ToString(),
+                                    Days = dr["Days"].ToString(),
+                                    file_location = dr["file_location"].ToString(),
+                                    file_name = dr["file_name"].ToString(),
                                 }).ToList();
             }
 

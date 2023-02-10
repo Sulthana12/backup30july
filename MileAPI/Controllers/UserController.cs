@@ -574,11 +574,12 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetMasterSettings")]
-        public IActionResult GetMasterSettings(String Settings_name)
+        //[Route("/")]
+        public IActionResult GetMasterSettings(string settingsName)
         {
             try
             {
-                List<ConfigSettings> result = _userService.GetMasterSettings(Settings_name);
+                List<ConfigSettings> result = _userService.GetMasterSettings(settingsName);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");

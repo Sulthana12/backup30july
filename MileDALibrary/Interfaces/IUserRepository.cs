@@ -53,7 +53,7 @@ namespace MileDALibrary.Interfaces
         List<ResponseStatus> UserPwdUpdate(PwdUpdate PwdUpdate);
 
         List<LoginDetails> GetUserByPhoneOrEmail(string PhoneNumber);
-        List<ConfigSettings> GetMasterSettings(string Settings_name);
+        List<ConfigSettings> GetMasterSettings(string settingsName);
 
     }
 }
