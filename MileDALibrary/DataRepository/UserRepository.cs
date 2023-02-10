@@ -1225,5 +1225,61 @@ namespace MileDALibrary.DataRepository
                 return response;
             }
         }
+
+        public List<LoginDetails> GetUserByPhoneOrEmail(string PhoneNumber)
+        {
+            List<LoginDetails> UserResponse = new List<LoginDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetUserByPhoneOrEmail", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = PhoneNumber, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new LoginDetails()
+                                {
+                                    User_id = Convert.ToInt32(dr["user_id"]),
+                                    Phone_num = dr["phone_num"].ToString(),
+                                    Email_id = dr["email_id"].ToString(),
+                                    User_type_flg = dr["user_type_flg"].ToString(),
+                                    Name = dr["name"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
+        }
+
+        public List<ConfigSettings> GetMasterSettings(string Settings_name)
+        {
+            List<ConfigSettings> UserResponse = new List<ConfigSettings>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrsettings", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@settings_name", Value = Settings_name, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new ConfigSettings()
+                                {
+                                    Settings_name = dr["settings_name"].ToString(),
+                                    Settings_id = Convert.ToInt32(dr["settings_id"]),
+                                    Settings_value = dr["settings_value"].ToString(),
+                                    Setting_desc = dr["setting_desc"].ToString(),
+                                    Type = dr["type"].ToString(),
+                                    Days = dr["days"].ToString(),
+                                    file_name = dr["file_name"].ToString(),
+                                    file_location = dr["file_location"].ToString(),
+                                    En_flg = dr["en_flg"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
+        }
+
+
     }
 }

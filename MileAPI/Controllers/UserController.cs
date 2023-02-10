@@ -551,5 +551,54 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
+        public IUserService Get_userService()
+        {
+            return _userService;
+        }
+
+        [HttpGet("GetUserByPhoneOrEmail")]
+        public IActionResult GetUserByPhoneOrEmail(String PhoneNumber)
+        {
+            try
+            {
+                List<LoginDetails> result = _userService.GetUserByPhoneOrEmail(PhoneNumber);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"Not Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
+
+        [HttpGet("GetMasterSettings")]
+        public IActionResult GetMasterSettings(String Settings_name)
+        {
+            try
+            {
+                List<ConfigSettings> result = _userService.GetMasterSettings(Settings_name);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"Not Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
+
     }
 }

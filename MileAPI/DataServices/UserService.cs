@@ -133,5 +133,14 @@ namespace MileAPI.DataServices
         {
             return _userRepository.UserPwdUpdate(PwdUpdate);
         }
+
+        public List<LoginDetails> GetUserByPhoneOrEmail(string PhoneNumber)
+        {
+            return _userRepository.GetUserByPhoneOrEmail(PhoneNumber);
+        }
+        public List<ConfigSettings> GetMasterSettings(string Settings_name)
+        {
+            return _userRepository.GetMasterSettings(Settings_name);
+        }
     }
 }
