@@ -50,7 +50,6 @@ namespace MileDALibrary.Interfaces
         List<ResponseStatus> DriverRegPaymentStatusDetails(DriverRegPaymentStatus DriverRegPaymentStatus);
 
         List<ResponseStatus> SMSGatewayStatus(AddSMSGatewayStatus AddSMSGatewayStatus);
-        List<UserByPhoneOrEmail> GetUserByPhoneOrEmail(string phone_num);
-        List<ResponseStatus> UserPwdUpdate(PwdUpdate UserPwdUpdate);
+        List<ResponseStatus> UserPwdUpdate(PwdUpdate PwdUpdate);
     }
 }

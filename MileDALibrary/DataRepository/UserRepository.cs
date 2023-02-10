@@ -1185,47 +1185,22 @@ namespace MileDALibrary.DataRepository
             }
         }
 
-        public List<UserByPhoneOrEmail> GetUserByPhoneOrEmail(string phone_num)
-        {
-            List<UserByPhoneOrEmail> UserResponse = new List<UserByPhoneOrEmail>();
-            DataTable dt = new DataTable();
-            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetUserByPhoneOrEmail", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = phone_num, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
-
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                UserResponse = (from DataRow dr in dt.Rows
-                                select new UserByPhoneOrEmail()
-                                {
-                                    user_id = Convert.ToInt32(dr["user_id"]),
-                                    name = dr["name"].ToString(),
-                                    user_type_flg = dr["user_type_flg"].ToString(),
-                                    phone_num = dr["phone_num"].ToString(),
-                                    email_id = dr["email_id"].ToString(),
-                                }).ToList();
-            }
-
-            return UserResponse;
-        }
-
-        public List<ResponseStatus> UserPwdUpdate(PwdUpdate UserPwdUpdate)
+        public List<ResponseStatus> UserPwdUpdate(PwdUpdate PwdUpdate)
         {
             int insertRowsCount = 0;
             List<ResponseStatus> response = new List<ResponseStatus>();
             try
             {
-                if (UserPwdUpdate != null)
+                if (PwdUpdate != null)
                 {
                     Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
                     DataTable dt = new DataTable();
 
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "userupdatePwd", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = UserPwdUpdate.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = UserPwdUpdate.User_password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = UserPwdUpdate.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@phone_num", Value = PwdUpdate.Phone_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_password", Value = PwdUpdate.User_password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = PwdUpdate.User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_mileapp_usr_reg_post", dbparams, SQL_Helper.ExecutionType.Procedure);

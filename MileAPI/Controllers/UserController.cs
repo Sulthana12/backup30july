@@ -533,33 +533,12 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpGet("GetUserByPhoneOrEmail")]
-        public IActionResult GetUserByPhoneOrEmail(string phone_num)
-        {
-            try
-            {
-                List<UserByPhoneOrEmail> result = _userService.GetUserByPhoneOrEmail(phone_num);
-                if (result == null)
-                {
-                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
-                }
-                if (result.Count == 0)
-                {
-                    return NotFound("{\"status\": \"No Data Found\"}");
-                }
-                return Ok(result);
-            }
-            catch (Exception)
-            {
-                return NotFound("{\"status\": \"Not Found\"}");
-            }
-            
-        }
+        
         [HttpPost("PostUserPwdUpdate")]
-        public IActionResult UserPwdUpdate([FromBody] PwdUpdate UserPwdUpdate)
+        public IActionResult UserPwdUpdate([FromBody] PwdUpdate PwdUpdate)
         {
             string flag;
-            List<ResponseStatus> result = _userService.UserPwdUpdate(UserPwdUpdate);
+            List<ResponseStatus> result = _userService.UserPwdUpdate(PwdUpdate);
             if (!result.Any())
             {
                 return NotFound("{\"status\": \"Failed\"}");

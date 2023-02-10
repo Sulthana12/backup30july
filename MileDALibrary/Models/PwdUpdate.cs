@@ -8,7 +8,6 @@ namespace MileDALibrary.Models
 {
     public class PwdUpdate
     {
-        public int? User_id { get; set; }
 
         public string? Phone_num { get; set; }
 
