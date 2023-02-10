@@ -551,11 +551,6 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
-        public IUserService Get_userService()
-        {
-            return _userService;
-        }
-
         [HttpGet("GetUserByPhoneOrEmail")]
         public IActionResult GetUserByPhoneOrEmail(String PhoneNumber)
         {
