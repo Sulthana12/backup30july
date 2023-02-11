@@ -236,8 +236,8 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@usr_img_file_location", Value = String.IsNullOrEmpty(updateProfile.Usr_img_file_location) ? DBNull.Value : (object)updateProfile.Usr_img_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@notification_token", Value = updateProfile.Notification_token, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@screen_type", Value = updateProfile.Screen_type, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@template_id", Value = updateProfile.Referral_Code, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@screen_type", Value = String.IsNullOrEmpty(updateProfile.Screen_type) ? DBNull.Value : (object)updateProfile.Screen_type, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@template_id", Value = String.IsNullOrEmpty(updateProfile.Referral_Code) ? DBNull.Value : (object)updateProfile.Referral_Code, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
                     dbparams.Add(new SqlParameter { ParameterName = "@error_user_id", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
