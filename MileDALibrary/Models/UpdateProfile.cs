@@ -30,6 +30,9 @@ namespace MileDALibrary.Models
         public string? Usr_img_file_name { get; set; }
         
         public string? Usr_img_file_location { get; set; }
-        
+
+        public string? Screen_type { get; set; }
+        public string? Referral_Code { get; set; }
+
     }
 }

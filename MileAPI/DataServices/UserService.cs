@@ -142,5 +142,9 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetMasterSettings(settingsName);
         }
+        public List<ReferralDetails> GetChkReferralCode(string ReferralCode, string UserTypeFlg)
+        {
+            return _userRepository.GetChkReferralCode(ReferralCode, UserTypeFlg);
+        }
     }
 }

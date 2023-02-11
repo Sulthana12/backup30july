@@ -236,6 +236,8 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@usr_img_file_location", Value = String.IsNullOrEmpty(updateProfile.Usr_img_file_location) ? DBNull.Value : (object)updateProfile.Usr_img_file_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@notification_token", Value = updateProfile.Notification_token, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = updateProfile.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@screen_type", Value = updateProfile.Screen_type, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@template_id", Value = updateProfile.Referral_Code, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
                     dbparams.Add(new SqlParameter { ParameterName = "@error_user_id", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
 
@@ -1274,6 +1276,28 @@ namespace MileDALibrary.DataRepository
                                     Days = dr["Days"].ToString(),
                                     file_location = dr["file_location"].ToString(),
                                     file_name = dr["file_name"].ToString(),
+                                }).ToList();
+            }
+
+            return UserResponse;
+        }
+
+        public List<ReferralDetails> GetChkReferralCode(string ReferralCode, string UserTypeFlg)
+        {
+            List<ReferralDetails> UserResponse = new List<ReferralDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkReferralCode", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@referral_code", Value = ReferralCode, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_type_flg", Value = UserTypeFlg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                UserResponse = (from DataRow dr in dt.Rows
+                                select new ReferralDetails()
+                                {
+                                    user_id = Convert.ToInt32(dr["user_id"]),
                                 }).ToList();
             }
 

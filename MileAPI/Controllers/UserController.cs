@@ -597,5 +597,29 @@ namespace MileAPI.Controllers
             }
         }
 
+        [HttpGet("GetChkReferralCode")]
+        //[Route("/")]
+        public IActionResult GetChkReferralCode(string ReferralCode, string UserTypeFlg)
+        {
+            try
+            {
+                List<ReferralDetails> result = _userService.GetChkReferralCode(ReferralCode, UserTypeFlg);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"Not Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
+
     }
 }
+

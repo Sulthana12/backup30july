@@ -49,5 +49,6 @@ namespace MileAPI.Interfaces
 
         List<LoginDetails> GetUserByPhoneOrEmail(string PhoneNumber);
         List<ConfigSettings> GetMasterSettings(string settingsName);
+        List<ReferralDetails> GetChkReferralCode(string ReferralCode, string UserTypeFlg);
     }
 }
