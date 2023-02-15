@@ -316,11 +316,11 @@ namespace MileAPI.Controllers
 
         [HttpGet("GetSavedLocation")]
         //[Route("/")]
-        public IActionResult GetSavedLocation()
+        public IActionResult GetSavedLocation(int User_id, string Location_type)
         {
             try
             {
-                List<LocationDetails> result = _userService.GetSavedLocation();
+                List<LocationDetails> result = _userService.GetSavedLocation(User_id, Location_type);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");

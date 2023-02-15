@@ -84,9 +84,9 @@ namespace MileAPI.DataServices
             return _userRepository.SaveLocation(locationDetails);
         }
 
-        public List<LocationDetails> GetSavedLocation()
+        public List<LocationDetails> GetSavedLocation(int User_id, string Location_type)
         {
-            return _userRepository.GetSavedLocation();
+            return _userRepository.GetSavedLocation(User_id, Location_type);
         }
 
        public List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails)

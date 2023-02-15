@@ -28,7 +28,7 @@ namespace MileAPI.Interfaces
 
         List<ResponseStatus> SaveLocation(LocationDetails locationDetails);
 
-        List<LocationDetails> GetSavedLocation();
+        List<LocationDetails> GetSavedLocation(int User_id, string Location_type);
 
         List<ResponseStatus> SaveBookingDetails(BookingDetails bookingDetails);
 

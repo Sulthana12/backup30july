@@ -898,12 +898,14 @@ namespace MileDALibrary.DataRepository
             }
         }
 
-        public List<LocationDetails> GetSavedLocation()
+        public List<LocationDetails> GetSavedLocation(int User_id, string Location_type)
         {
             List<LocationDetails> UserResponse = new List<LocationDetails>();
             DataTable dt = new DataTable();
             List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "Getsavelocation", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@loc_type", Value = Location_type, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_taxi_usr_profile_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
 
             if (dt != null && dt.Rows.Count > 0)
