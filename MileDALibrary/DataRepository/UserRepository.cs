@@ -13,8 +13,10 @@ using Azure.Communication.Sms;
 using MimeKit;
 using System.Net.Mail;
 using MailKit.Security;
-using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+//using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Net;
+using System.Reflection;
 
 namespace MileDALibrary.DataRepository
 {
@@ -786,27 +788,44 @@ namespace MileDALibrary.DataRepository
         {
             try
             {
-                MimeMessage message = new MimeMessage();
+                using (MailMessage mm = new MailMessage("afartechnologiesmdu@gmail.com", emailId))
+                {
+                    mm.Subject = "AFAR-Cabing Service | OTP to Verify Email";
+                    mm.Body = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine + "To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 1 minute.Please do not share this code with anyone.";
+                    mm.IsBodyHtml = false;
+                    using (SmtpClient smtp = new SmtpClient())
+                    {
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.UseDefaultCredentials = false;
+                        NetworkCredential NetworkCred = new NetworkCredential("afartechnologiesmdu@gmail.com", "rgdplfzosznfipgc");
+                        smtp.EnableSsl = true;
+                        smtp.Credentials = NetworkCred;
+                        smtp.Port = 587;
+                        smtp.Send(mm);
+                    }
+                }
 
-                MailboxAddress from = new MailboxAddress("User", "afarcabs123@gmail.com");
-                message.From.Add(from);
+                //MimeMessage message = new MimeMessage();
 
-                MailboxAddress to = new MailboxAddress("Admin", emailId);
-                message.To.Add(to);
+                //MailboxAddress from = new MailboxAddress("User", "afarcabs123@gmail.com");
+                //message.From.Add(from);
 
-                message.Subject = "AFAR-Cabing Service | OTP to Verify Email";
+                //MailboxAddress to = new MailboxAddress("Admin", emailId);
+                //message.To.Add(to);
 
-                BodyBuilder bodyBuilder = new BodyBuilder();
-                bodyBuilder.TextBody = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine + "To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 1 minute.Please do not share this code with anyone.";
-                message.Body = bodyBuilder.ToMessageBody();
+                //message.Subject = "AFAR-Cabing Service | OTP to Verify Email";
 
-                SmtpClient client = new SmtpClient();
-                client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                client.Authenticate("afarcabs123@gmail.com", "pjsnthiwzelcgaua");
+                //BodyBuilder bodyBuilder = new BodyBuilder();
+                //bodyBuilder.TextBody = "Hello Partner," + System.Environment.NewLine + System.Environment.NewLine + "AFAR CABS requires further verification" + System.Environment.NewLine + System.Environment.NewLine + "To complete the sign in, enter the verification code:" + System.Environment.NewLine + System.Environment.NewLine + otp.ToString() + System.Environment.NewLine + System.Environment.NewLine + "The verification code will be valid for 1 minute.Please do not share this code with anyone.";
+                //message.Body = bodyBuilder.ToMessageBody();
 
-                client.Send(message);
-                client.Disconnect(true);
-                client.Dispose();
+                //SmtpClient client = new SmtpClient();
+                //client.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+                //client.Authenticate("afarcabs123@gmail.com", "pjsnthiwzelcgaua");
+
+                //client.Send(message);
+                //client.Disconnect(true);
+                //client.Dispose();
 
                 return 1;
             }
@@ -815,6 +834,7 @@ namespace MileDALibrary.DataRepository
                 return 0;
             }
         }
+
 
         public int SendMsg(string phonenum, int otp)
         {
