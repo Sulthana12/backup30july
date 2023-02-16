@@ -1326,6 +1326,41 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
+        public List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc, 
+            string frmlat, string frmlong, string tolat, string tolong, decimal kms, string traveltime)
+        {
+            List<FareCalculations> FareResponse = new List<FareCalculations>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsFareInfo = new List<DbParameter>();
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetAllVehiclesFare", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = userid, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@from_location", Value = frmloc, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@to_location", Value = toloc, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@from_latitude", Value = frmlat, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@from_longitude", Value = frmlong, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@to_latitude", Value = tolat, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@to_longitude", Value = tolong, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@kms", Value = kms, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@fare_date", Value = traveltime, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_taxi_usr_allvhcl_fare_cal", dbparamsFareInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                FareResponse = (from DataRow dr in dt.Rows
+                                select new FareCalculations()
+                                {
+                                    User_id = Convert.ToInt32(dr["user_id"]),//dr["user_id"] == System.DBNull.Value ? null : Convert.ToInt32(dr["user_id"]),
+                                    Kms = (decimal?)dr["kms"],
+                                    Cal_fare = (decimal?)dr["cal_fare"],
+                                    Vehicle_id = (int?)dr["vehicle_id"],
+                                    Vehicle_name = dr["vehicle_name"].ToString(),
+                                }).ToList();
+            }
+
+            return FareResponse;
+        }
+
 
     }
 }

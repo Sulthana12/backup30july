@@ -619,6 +619,29 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+        [HttpGet("GetBaseVehicleFareDetails")]
+        public IActionResult GetFareCalculations(int userid, string frmloc, string toloc,
+            string frmlat, string frmlong, string tolat, string tolong, decimal kms, string traveltime)
+        {
+            try
+            {
+                List<FareCalculations> result = _userService.GetFareCalculations(userid, frmloc,  toloc,
+             frmlat, frmlong,  tolat,  tolong,  kms,  traveltime);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
 
     }
 }

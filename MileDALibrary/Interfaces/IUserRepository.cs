@@ -55,6 +55,7 @@ namespace MileDALibrary.Interfaces
         List<LoginDetails> GetUserByPhoneOrEmail(string PhoneNumber);
         List<ConfigSettings> GetMasterSettings(string settingsName);
         List<ReferralDetails> GetChkReferralCode(string ReferralCode, string UserTypeFlg);
-
+        List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc,
+            string frmlat, string frmlong, string tolat, string tolong, decimal kms, string traveltime);
     }
 }
