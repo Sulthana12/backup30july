@@ -147,7 +147,7 @@ namespace MileAPI.DataServices
             return _userRepository.GetChkReferralCode(ReferralCode, UserTypeFlg);
         }
         public List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc,
-            string frmlat, string frmlong, string tolat, string tolong, decimal kms, string traveltime)
+            string frmlat, string frmlong, string tolat, string tolong, string kms, string traveltime)
         {
             return _userRepository.GetFareCalculations(userid, frmloc, toloc,
              frmlat, frmlong, tolat, tolong, kms, traveltime);

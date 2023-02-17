@@ -51,6 +51,6 @@ namespace MileAPI.Interfaces
         List<ConfigSettings> GetMasterSettings(string settingsName);
         List<ReferralDetails> GetChkReferralCode(string ReferralCode, string UserTypeFlg);
         List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc,
-            string frmlat, string frmlong, string tolat, string tolong, decimal kms, string traveltime);
+            string frmlat, string frmlong, string tolat, string tolong, string kms, string traveltime);
      }
 }

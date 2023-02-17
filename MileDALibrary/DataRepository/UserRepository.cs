@@ -1327,7 +1327,7 @@ namespace MileDALibrary.DataRepository
         }
 
         public List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc, 
-            string frmlat, string frmlong, string tolat, string tolong, decimal kms, string traveltime)
+            string frmlat, string frmlong, string tolat, string tolong, string kms, string traveltime)
         {
             List<FareCalculations> FareResponse = new List<FareCalculations>();
             DataTable dt = new DataTable();
