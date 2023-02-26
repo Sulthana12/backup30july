@@ -620,6 +620,7 @@ namespace MileAPI.Controllers
             }
         }
         [HttpGet("GetBaseVehicleFareDetails")]
+        //[Route("/")]
         public IActionResult GetFareCalculations(int userid, string frmloc, string toloc,
             string frmlat, string frmlong, string tolat, string tolong, string kms, string traveltime)
         {

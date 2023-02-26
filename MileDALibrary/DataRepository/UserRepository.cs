@@ -937,7 +937,10 @@ namespace MileDALibrary.DataRepository
                                     Location_id = Convert.ToInt32(dr["loc_id"]),
                                     Location_type = dr["loc_type"].ToString(),
                                     Location_address = dr["loc_address"].ToString(),
-                                    Location_street = dr["loc_street"].ToString(),
+                                    Location_street = dr["l" +
+                                    "" +
+                                    "" +
+                                    "oc_street"].ToString(),
                                     Pincode = dr["pincode"].ToString(),
                                     Location_landmark = dr["loc_landmark"].ToString(),
                                 }).ToList();
