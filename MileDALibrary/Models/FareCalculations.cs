@@ -34,7 +34,8 @@ namespace MileDALibrary.Models
         public int? Vehicle_id { get; set; }
 
         public string? Vehicle_name { get; set; }
-
-
+        public string? file_location { get; set; }
+        public string? Peak_flg { get; set; }
+        public string? fare_date_time { get; set; }
     }
 }
