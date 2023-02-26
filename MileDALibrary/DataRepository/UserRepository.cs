@@ -1341,7 +1341,7 @@ namespace MileDALibrary.DataRepository
             dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@to_latitude", Value = tolat, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@to_longitude", Value = tolong, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@kms", Value = kms, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-            dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@fare_date", Value = traveltime, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            //dbparamsFareInfo.Add(new SqlParameter { ParameterName = "@fare_date", Value = traveltime, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
 
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_taxi_usr_allvhcl_fare_cal", dbparamsFareInfo, SQL_Helper.ExecutionType.Procedure);
 
