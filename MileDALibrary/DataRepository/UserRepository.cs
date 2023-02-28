@@ -1356,7 +1356,7 @@ namespace MileDALibrary.DataRepository
                                     Vehicle_id = (int?)dr["vehicle_id"],
                                     Vehicle_name = dr["vehicle_name"].ToString(),
                                     file_location   = dr["file_location"].ToString(),
-                                    Peak_flg = dr["peak_flg"].ToString(),
+                                    //Peak_flg = dr["peak_flg"].ToString(),
                                     fare_date_time  = dr["fare_date_time"].ToString(),
                                 }).ToList();
             }
