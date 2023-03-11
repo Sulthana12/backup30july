@@ -52,5 +52,6 @@ namespace MileAPI.Interfaces
         List<ReferralDetails> GetChkReferralCode(string ReferralCode, string UserTypeFlg);
         List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc,
             string frmlat, string frmlong, string tolat, string tolong, string kms, string traveltime);
+        List<ResponseStatus> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation);
      }
 }

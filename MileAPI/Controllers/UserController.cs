@@ -644,6 +644,23 @@ namespace MileAPI.Controllers
             }
         }
 
+        [HttpPost("PostDriversLocation")]
+        public IActionResult PostDriversCurrLocation([FromBody] DriversCurrLocation DriversCurrLocation)
+        {
+            string flag;
+            List<ResponseStatus> result = _userService.PostDriversCurrLocation(DriversCurrLocation);
+            if (!result.Any())
+            {
+                return NotFound("{\"status\": \"Failed\"}");
+            }
+            flag = result[0].Error_desc;
+            if (flag.Contains("Success"))
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
     }
 }
 
