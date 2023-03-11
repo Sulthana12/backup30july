@@ -1407,6 +1407,47 @@ namespace MileDALibrary.DataRepository
             }
         }
 
+        public List<ReferralDetails> GetDriversNearBy2Kms(decimal Latitude, decimal Longitude,decimal Fare, decimal Fare_Requested_In_Kms,string Location_Name, int user_id)
+        {
+            List<ReferralDetails> DriversNearBy2Kms = new List<ReferralDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkNearDrivers", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Latitude", Value = Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@fare", Value = Fare, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_req_distance", Value = Fare_Requested_In_Kms, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+
+
+
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                DriversNearBy2Kms = (from DataRow dr in dt.Rows
+                                select new ReferralDetails()
+                                {
+                                    user_id = Convert.ToInt32(dr["user_id"]),
+                                    driver_id = Convert.ToInt32(dr["driver_id"]),
+                                    Driver_Latitude = Convert.ToDecimal(dr["Driver_Latitude"]),
+                                    Driver_Longitude = Convert.ToDecimal(dr["Driver_Longitude"]),
+                                    Driver_Location_Name = dr["Driver_loc_name"].ToString(),
+                                    User_Name = dr["User_Name"].ToString(),
+                                    User_Phone_Num = dr["User_Phone_Num"].ToString(),
+                                    User_Location_Name = dr["User_Location"].ToString(),
+                                    User_Latitude   = Convert.ToDecimal(dr["User_Latitude"]),
+                                    User_Longitude = Convert.ToDecimal(dr["User_Longitude"]),
+                                    Fare = Convert.ToDecimal(dr["Req_Tot_Fare"]),
+                                    Fare_Requested_In_Kms = Convert.ToDecimal(dr["Approx_Req_Distance"]),
+
+                                }).ToList();
+            }
+
+            return DriversNearBy2Kms;
+        }
+
 
     }
 }

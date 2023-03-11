@@ -156,5 +156,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.PostDriversCurrLocation(DriversCurrLocation);
         }
+
+        public List<ReferralDetails> GetDriversNearBy2Kms(decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id)
+        {
+            return _userRepository.GetDriversNearBy2Kms(Latitude, Longitude,Fare,Fare_Requested_In_Kms,Location_Name,user_id);
+        }
     }
 }

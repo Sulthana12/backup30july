@@ -661,6 +661,27 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpGet("GetDriversNearBy2Kms")]
+        public IActionResult GetDriversNearBy2Kms(decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id)
+        {
+            try
+            {
+                List<ReferralDetails> result = _userService.GetDriversNearBy2Kms(Latitude, Longitude, Fare, Fare_Requested_In_Kms, Location_Name, user_id);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
     }
 }
 
