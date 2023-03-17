@@ -194,7 +194,7 @@ namespace MileDALibrary.DataRepository
             try
             {
                 if (!string.IsNullOrEmpty(updateProfile.Image_data))
-                {       
+                {
                     //string imagedata = UserRepository.ScaleImage(updateProfile.Image_data, 140, 140);
                     //updateProfile.Image_data = string.Empty;
                     //updateProfile.Image_data = imagedata;
@@ -218,7 +218,7 @@ namespace MileDALibrary.DataRepository
                     updateProfile.Usr_img_file_location = this.blobconfig.Value.UserProfilePhoto;
                     updateProfile.Usr_img_file_name = blobEntity.FolderName;
 
-                    }
+                }
 
                 if (updateProfile != null)
                 {
@@ -682,7 +682,7 @@ namespace MileDALibrary.DataRepository
 
             try
             {
-               
+
 
                 if (!string.IsNullOrEmpty(driverPaymentDetails.Bank_Img_File_Data))
                 {
@@ -842,7 +842,7 @@ namespace MileDALibrary.DataRepository
             {
                 return 1;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return 0;
             }
@@ -1083,7 +1083,7 @@ namespace MileDALibrary.DataRepository
                                     Bank_Img_File_Location = dr["bank_img_file_location"].ToString(),
                                     Account_Number = dr["Account_number"].ToString(),
                                     Bank_mobile_num = dr["bank_mobile_num"].ToString(),
-                                    }).ToList();
+                                }).ToList();
             }
 
             return UserResponse;
@@ -1116,7 +1116,7 @@ namespace MileDALibrary.DataRepository
                                                       Notification_token = dr["notification_token"].ToString(),
                                                       License_plate_no = dr["license_plate_no"].ToString(),
                                                       Expiry_date = dr["Expiry_date"].ToString(),
-                                                      
+
                                                       Msg = dr["msg"].ToString(),
                                                       flag = dr["flag"].ToString(),
                                                   }).ToList();
@@ -1142,7 +1142,7 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = ReferralDetails.user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
                     dbparams.Add(new SqlParameter { ParameterName = "@referral_code", Value = ReferralDetails.referral_code, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    
+
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_driver_payment_Post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
@@ -1326,7 +1326,7 @@ namespace MileDALibrary.DataRepository
             return UserResponse;
         }
 
-        public List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc, 
+        public List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc,
             string frmlat, string frmlong, string tolat, string tolong, string kms, string traveltime)
         {
             List<FareCalculations> FareResponse = new List<FareCalculations>();
@@ -1355,25 +1355,26 @@ namespace MileDALibrary.DataRepository
                                     Cal_fare = (decimal?)dr["cal_fare"],
                                     Vehicle_id = (int?)dr["vehicle_id"],
                                     Vehicle_name = dr["vehicle_name"].ToString(),
-                                    file_location   = dr["file_location"].ToString(),
+                                    file_location = dr["file_location"].ToString(),
                                     //Peak_flg = dr["peak_flg"].ToString(),
-                                    fare_date_time  = dr["fare_date_time"].ToString(),
+                                    fare_date_time = dr["fare_date_time"].ToString(),
                                 }).ToList();
             }
 
             return FareResponse;
         }
 
-        public List<ResponseStatus> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation)
+        public List<UserBookSearchModel> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation)
         {
             int insertRowsCount = 0;
             List<ResponseStatus> response = new List<ResponseStatus>();
+            List<UserBookSearchModel> userBookSearch = new List<UserBookSearchModel>();
+            DataTable dt = new DataTable();
             try
             {
                 if (DriversCurrLocation != null)
                 {
                     Dictionary<string, dynamic> result = new Dictionary<string, dynamic>();
-                    DataTable dt = new DataTable();
 
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
@@ -1383,7 +1384,7 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@loc_name", Value = DriversCurrLocation.Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@rec_created_userid", Value = DriversCurrLocation.Created_UserId, SqlDbType = SqlDbType.Int, Size = 1000, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
-                    
+
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_driver_location_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
@@ -1395,19 +1396,57 @@ namespace MileDALibrary.DataRepository
                         respobj.Error_desc = spOut;
 
                         response.Add(respobj);
+                    }
+                    if (insertRowsCount > 0)
+                    {
 
+                        List<DbParameter> dbparamsbookInfo = new List<DbParameter>();
+                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@driver_id", Value = DriversCurrLocation.Driver_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = DriversCurrLocation.Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                        dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_taxi_driver_location_get", dbparamsbookInfo, SQL_Helper.ExecutionType.Procedure);
 
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            userBookSearch = (from DataRow dr in dt.Rows
+                                              select new UserBookSearchModel()
+                                              {
+                                                  User_Id = Convert.ToInt32(dr["user_id"]),
+                                                  Search_Id = Convert.ToInt32(dr["search_id"]),
+                                                  Name = dr["name"].ToString(),
+                                                  Phone_Num = dr["phone_num"].ToString(),
+                                                  Gender = dr["gender"].ToString(),
+                                                  From_Location = dr["from_location"].ToString(),
+                                                  To_Location = dr["to_location"].ToString(),
+                                                  From_Latitude = dr["from_latitude"].ToString(),
+                                                  From_Longitude = dr["from_longitude"].ToString(),
+                                                  To_Latitude = dr["to_latitude"].ToString(),
+                                                  To_Longitude = dr["to_longitude"].ToString(),
+                                                  Fare_Date = dr["fare_date"].ToString(),
+                                                  Fare_Type = dr["fare_type"].ToString(),
+                                                  Fare_Status = dr["fare_status"].ToString(),
+                                                  Others_Number = dr["Others_number"].ToString(),
+                                                  Vehicle_Id = Convert.ToInt32(dr["Vehicle_id"]),
+                                                  Kms = Convert.ToDecimal(dr["kms"]),
+                                                  Cal_Fare = Convert.ToDecimal(dr["cal_fare"]),
+                                                  Comments = dr["comments"].ToString(),
+                                                  Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
+                                                  Distance_In_Kms = Convert.ToDecimal(dr["distance_in_kms"])
+                                              }).ToList();
+                        }
                     }
                 }
-                return response;
+                return userBookSearch;
             }
             catch (Exception)
             {
-                return response;
+                return userBookSearch;
             }
         }
 
-        public List<ReferralDetails> GetDriversNearBy2Kms(decimal Latitude, decimal Longitude,decimal Fare, decimal Fare_Requested_In_Kms,string Location_Name, int user_id)
+        public List<ReferralDetails> GetDriversNearBy2Kms(decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id)
         {
             List<ReferralDetails> DriversNearBy2Kms = new List<ReferralDetails>();
             DataTable dt = new DataTable();
@@ -1427,22 +1466,22 @@ namespace MileDALibrary.DataRepository
             if (dt != null && dt.Rows.Count > 0)
             {
                 DriversNearBy2Kms = (from DataRow dr in dt.Rows
-                                select new ReferralDetails()
-                                {
-                                    user_id = Convert.ToInt32(dr["user_id"]),
-                                    driver_id = Convert.ToInt32(dr["driver_id"]),
-                                    Driver_Latitude = Convert.ToDecimal(dr["Driver_Latitude"]),
-                                    Driver_Longitude = Convert.ToDecimal(dr["Driver_Longitude"]),
-                                    Driver_Location_Name = dr["Driver_loc_name"].ToString(),
-                                    User_Name = dr["User_Name"].ToString(),
-                                    User_Phone_Num = dr["User_Phone_Num"].ToString(),
-                                    User_Location_Name = dr["User_Location"].ToString(),
-                                    User_Latitude   = Convert.ToDecimal(dr["User_Latitude"]),
-                                    User_Longitude = Convert.ToDecimal(dr["User_Longitude"]),
-                                    Fare = Convert.ToDecimal(dr["Req_Tot_Fare"]),
-                                    Fare_Requested_In_Kms = Convert.ToDecimal(dr["Approx_Req_Distance"]),
+                                     select new ReferralDetails()
+                                     {
+                                         user_id = Convert.ToInt32(dr["user_id"]),
+                                         driver_id = Convert.ToInt32(dr["driver_id"]),
+                                         Driver_Latitude = Convert.ToDecimal(dr["Driver_Latitude"]),
+                                         Driver_Longitude = Convert.ToDecimal(dr["Driver_Longitude"]),
+                                         Driver_Location_Name = dr["Driver_loc_name"].ToString(),
+                                         User_Name = dr["User_Name"].ToString(),
+                                         User_Phone_Num = dr["User_Phone_Num"].ToString(),
+                                         User_Location_Name = dr["User_Location"].ToString(),
+                                         User_Latitude = Convert.ToDecimal(dr["User_Latitude"]),
+                                         User_Longitude = Convert.ToDecimal(dr["User_Longitude"]),
+                                         Fare = Convert.ToDecimal(dr["Req_Tot_Fare"]),
+                                         Fare_Requested_In_Kms = Convert.ToDecimal(dr["Approx_Req_Distance"]),
 
-                                }).ToList();
+                                     }).ToList();
             }
 
             return DriversNearBy2Kms;

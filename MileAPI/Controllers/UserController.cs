@@ -163,7 +163,7 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
-         [HttpPost("PostAddReferral/LoginReferralDetails")]
+        [HttpPost("PostAddReferral/LoginReferralDetails")]
         public IActionResult AddReferralDetails([FromBody] ReferralDetails ReferralDetails)
         {
             string flag;
@@ -257,7 +257,7 @@ namespace MileAPI.Controllers
             try
             {
                 int otp = RandomNumberGenerator.GetInt32(100000, 999999);
-                    return Ok(otp);
+                return Ok(otp);
             }
             catch (Exception)
             {
@@ -533,7 +533,7 @@ namespace MileAPI.Controllers
             return NotFound(result);
         }
 
-        
+
         [HttpPost("PostUserPwdUpdate")]
         public IActionResult UserPwdUpdate([FromBody] PwdUpdate PwdUpdate)
         {
@@ -626,8 +626,8 @@ namespace MileAPI.Controllers
         {
             try
             {
-                List<FareCalculations> result = _userService.GetFareCalculations(userid, frmloc,  toloc,
-             frmlat, frmlong,  tolat,  tolong,  kms,  traveltime);
+                List<FareCalculations> result = _userService.GetFareCalculations(userid, frmloc, toloc,
+             frmlat, frmlong, tolat, tolong, kms, traveltime);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");
@@ -647,18 +647,13 @@ namespace MileAPI.Controllers
         [HttpPost("PostDriversLocation")]
         public IActionResult PostDriversCurrLocation([FromBody] DriversCurrLocation DriversCurrLocation)
         {
-            string flag;
-            List<ResponseStatus> result = _userService.PostDriversCurrLocation(DriversCurrLocation);
+            List<UserBookSearchModel> result = _userService.PostDriversCurrLocation(DriversCurrLocation);
             if (!result.Any())
             {
                 return NotFound("{\"status\": \"Failed\"}");
             }
-            flag = result[0].Error_desc;
-            if (flag.Contains("Success"))
-            {
-                return Ok(result);
-            }
-            return NotFound(result);
+
+            return Ok(result);
         }
 
         [HttpGet("GetDriversNearBy2Kms")]

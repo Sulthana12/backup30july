@@ -57,7 +57,7 @@ namespace MileDALibrary.Interfaces
         List<ReferralDetails> GetChkReferralCode(string ReferralCode, string UserTypeFlg);
         List<FareCalculations> GetFareCalculations(int userid, string frmloc, string toloc,
             string frmlat, string frmlong, string tolat, string tolong, string kms, string traveltime);
-        List<ResponseStatus> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation);
+        List<UserBookSearchModel> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation);
         List<ReferralDetails> GetDriversNearBy2Kms(decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id);
     }
 }

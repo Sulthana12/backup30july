@@ -152,7 +152,7 @@ namespace MileAPI.DataServices
             return _userRepository.GetFareCalculations(userid, frmloc, toloc,
              frmlat, frmlong, tolat, tolong, kms, traveltime);
         }
-        public List<ResponseStatus> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation)
+        public List<UserBookSearchModel> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation)
         {
             return _userRepository.PostDriversCurrLocation(DriversCurrLocation);
         }

@@ -66,7 +66,7 @@ namespace MileAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("../swagger/v1/swagger.json", "MILE REST APIs");
-                c.RoutePrefix = string.Empty;
+               // c.RoutePrefix = string.Empty;
             });
             //app.UseSwaggerUI();
 

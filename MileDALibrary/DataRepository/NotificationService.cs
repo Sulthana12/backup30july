@@ -51,7 +51,7 @@ namespace MileDALibrary.DataRepository
                             HttpClient httpClient = new HttpClient();
 
                             string authorizationKey = string.Format("keyy={0}", settings.ServerKey);
-                            string deviceToken = driverDetails.Notification_token;
+                            string deviceToken = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjE6MzAwOTY0MjkyMDQxOmFuZHJvaWQ6YjIwNTcwMDRmMmU5ODJhNjAwZjQxOCIsImV4cCI6MTY3OTY0NTQ0NiwiZmlkIjoiZHNncldfTmRUdG1EX3p2eHFEM1pqZCIsInByb2plY3ROdW1iZXIiOjMwMDk2NDI5MjA0MX0.AB2LPV8wRQIgUBrDi3fcIV5Vx0buOhJTHIykQLUgMlBR0YgWUrmykLUCIQC2tVdWqAsV0v7bUVG4-hn718z5amRrV1_N1hNpdTrj-w";//driverDetails.Notification_token;
 
                             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authorizationKey);
                             httpClient.DefaultRequestHeaders.Accept
@@ -60,8 +60,8 @@ namespace MileDALibrary.DataRepository
                             GoogleNotification.DataPayload dataPayload = new GoogleNotification.DataPayload();
                             string TitleKey = string.Format("PushNotificationSettings:Messages:{0}:Title","Hai");
                             string BodyKey = string.Format("PushNotificationSettings:Messages:{0}:Body", "Hai");
-                            dataPayload.Title = _configuration.GetSection(TitleKey).Value;
-                            dataPayload.Body = _configuration.GetSection(BodyKey).Value;
+                            dataPayload.Title = "AFAR";// _configuration.GetSection(TitleKey).Value;
+                            dataPayload.Body = "Message from Afar";// _configuration.GetSection(BodyKey).Value;
 
                             GoogleNotification notification = new GoogleNotification();
                             notification.Data = dataPayload;
