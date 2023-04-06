@@ -161,5 +161,9 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetDriversNearBy2Kms(Latitude, Longitude,Fare,Fare_Requested_In_Kms,Location_Name,user_id);
         }
+        public List<CityRangeDetails> GetCityRangeDetails(string city_name)
+        {
+            return _userRepository.GetCityRangeDetails(city_name);
+        }
     }
 }

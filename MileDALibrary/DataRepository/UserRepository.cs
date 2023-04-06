@@ -1487,6 +1487,29 @@ namespace MileDALibrary.DataRepository
             return DriversNearBy2Kms;
         }
 
+        public List<CityRangeDetails> GetCityRangeDetails(string city_name)
+        {
+            List<CityRangeDetails> cityRangeDetails = new List<CityRangeDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparams = new List<DbParameter>();
+            dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "mstrcityrange", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@settings_name", Value = city_name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_mstr", dbparams, SQL_Helper.ExecutionType.Procedure);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                cityRangeDetails = (from DataRow dr in dt.Rows
+                                    select new CityRangeDetails()
+                                    {
+                                        city_name = dr["CITY_NAME"].ToString(),
+                                        city_id = Convert.ToInt32(dr["CITY_ID"]),
+                                        city_latitude = dr["CENTRE_LATITUDE"].ToString(),
+                                        city_longitude = dr["CENTRE_LONGITUDE"].ToString(),
+                                        city_range = dr["CITY_TOTAL_RADIUS"].ToString(),
+                                    }).ToList();
+            }
+
+            return cityRangeDetails;
+        }
 
     }
 }

@@ -55,5 +55,6 @@ namespace MileAPI.Interfaces
         List<UserBookSearchModel> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation);
 
         List<ReferralDetails> GetDriversNearBy2Kms(decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id);
+        List<CityRangeDetails> GetCityRangeDetails(string city_name);
     }
 }

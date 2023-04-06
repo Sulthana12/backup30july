@@ -677,6 +677,24 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+        [HttpGet("GetCityRangeDetails")]
+        //[Route("/")]
+        public IActionResult GetCityRangeDetails(string city_name)
+        {
+            try
+            {
+                List<CityRangeDetails> result = _userService.GetCityRangeDetails(city_name);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
     }
 }
 
