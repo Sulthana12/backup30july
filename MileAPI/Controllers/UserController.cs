@@ -678,7 +678,6 @@ namespace MileAPI.Controllers
             }
         }
         [HttpGet("GetCityRangeDetails")]
-        //[Route("/")]
         public IActionResult GetCityRangeDetails(string city_name)
         {
             try
