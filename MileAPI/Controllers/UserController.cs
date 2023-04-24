@@ -687,6 +687,10 @@ namespace MileAPI.Controllers
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");
                 }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
                 return Ok(result);
             }
             catch (Exception)
