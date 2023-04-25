@@ -1472,6 +1472,7 @@ namespace MileDALibrary.DataRepository
                                          user_id = Convert.ToInt32(dr["user_id"]),
                                          driver_id = Convert.ToInt32(dr["driver_id"]),
                                          Driver_Latitude = Convert.ToDecimal(dr["Driver_Latitude"]),
+                                         Driver_Phone_No = dr["Driver_Phone_Num"].ToString(),
                                          Driver_Longitude = Convert.ToDecimal(dr["Driver_Longitude"]),
                                          Driver_Location_Name = dr["Driver_loc_name"].ToString(),
                                          User_Name = dr["User_Name"].ToString(),
@@ -1485,7 +1486,9 @@ namespace MileDALibrary.DataRepository
                                          Driver_Name = dr["Driver_Name"].ToString(),
                                          Driver_Photo = dr["Driver_photo"].ToString(),
                                          Driver_Rating = Convert.ToDecimal(dr["Rating"]),
-                                         Vehicle_No = dr["Vehicle_No"].ToString()
+                                         Vehicle_No = dr["Vehicle_No"].ToString(),
+                                         Vehicle_img = dr["Vehicle_Image"].ToString(),
+                                         Vehicle_Name = dr["Vehicle_Name"].ToString(),
                                      }).ToList();
             }
 

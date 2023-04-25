@@ -33,5 +33,9 @@ namespace MileDALibrary.Models
         public decimal? Driver_Rating { get; set; }
         public string? Vehicle_No { get; set; }
         public int? OTP { get; set; }
+        public string? Driver_Phone_No { get; set; }
+        public string? Vehicle_img { get; set; }
+        public string? Vehicle_Name { get; set; }
+
     }
 }
