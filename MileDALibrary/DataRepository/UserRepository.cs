@@ -1446,7 +1446,7 @@ namespace MileDALibrary.DataRepository
             }
         }
 
-        public List<ReferralDetails> GetDriversNearBy2Kms(decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id)
+        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
         {
             List<ReferralDetails> DriversNearBy2Kms = new List<ReferralDetails>();
             DataTable dt = new DataTable();
@@ -1458,7 +1458,8 @@ namespace MileDALibrary.DataRepository
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_req_distance", Value = Fare_Requested_In_Kms, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@otp", Value = otp, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@status_flg", Value = status_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
 
 
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
@@ -1480,7 +1481,11 @@ namespace MileDALibrary.DataRepository
                                          User_Longitude = Convert.ToDecimal(dr["User_Longitude"]),
                                          Fare = Convert.ToDecimal(dr["Req_Tot_Fare"]),
                                          Fare_Requested_In_Kms = Convert.ToDecimal(dr["Approx_Req_Distance"]),
-
+                                         OTP = Convert.ToInt32(dr["OTP"]),
+                                         Driver_Name = dr["Driver_Name"].ToString(),
+                                         Driver_Photo = dr["Driver_photo"].ToString(),
+                                         Driver_Rating = Convert.ToDecimal(dr["Rating"]),
+                                         Vehicle_No = dr["Vehicle_No"].ToString()
                                      }).ToList();
             }
 

@@ -27,5 +27,11 @@ namespace MileDALibrary.Models
         public decimal? User_Longitude { get; set; }
         public string? User_Location_Name { get; set; }
         public string? User_Name { get; set; }
+
+        public string? Driver_Name { get; set; }
+        public string? Driver_Photo { get; set; }
+        public decimal? Driver_Rating { get; set; }
+        public string? Vehicle_No { get; set; }
+        public int? OTP { get; set; }
     }
 }

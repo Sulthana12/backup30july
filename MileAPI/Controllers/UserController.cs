@@ -657,11 +657,11 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetDriversNearBy2Kms")]
-        public IActionResult GetDriversNearBy2Kms(decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id)
+        public IActionResult GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
         {
             try
             {
-                List<ReferralDetails> result = _userService.GetDriversNearBy2Kms(Latitude, Longitude, Fare, Fare_Requested_In_Kms, Location_Name, user_id);
+                List<ReferralDetails> result = _userService.GetDriversNearBy2Kms(otp, Latitude, Longitude, Fare, Fare_Requested_In_Kms, Location_Name, user_id, status_flg);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");
