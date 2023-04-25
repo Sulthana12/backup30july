@@ -8,7 +8,7 @@ namespace MileDALibrary.Models
 {
     public class CountryDetails
     {
-        public int? Country_id { get; set; }
+        public int? Countryid { get; set; }
 
         public string? Country_name { get; set; }
     }

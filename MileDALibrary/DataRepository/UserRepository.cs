@@ -83,7 +83,7 @@ namespace MileDALibrary.DataRepository
                                   select new CountryDetails()
                                   {
                                       Country_name = dr["country_name"].ToString(),
-                                      Country_id = Convert.ToInt32(dr["country_id"])
+                                      Countryid = Convert.ToInt32(dr["country_id"])
                                   }).ToList();
             }
 
