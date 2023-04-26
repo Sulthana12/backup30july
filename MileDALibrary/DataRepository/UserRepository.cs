@@ -1560,6 +1560,7 @@ namespace MileDALibrary.DataRepository
                                          User_type_flg = dr["user_type_flg"].ToString(),
                                          Referral_code = dr["referral_code"].ToString(),
                                          Image_data = dr["image_path"].ToString(),
+                                         message = dr["message"].ToString(),
                                      }).ToList();
             }
 

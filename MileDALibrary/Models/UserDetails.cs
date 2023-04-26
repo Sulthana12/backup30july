@@ -106,6 +106,7 @@ namespace MileDALibrary.Models
 
         public string? Vehicle_Insurance_Expiry_Date { get; set; }
         public string? Referral_code { get; set; }
+        public string? message { get; set; }
     }
 }
  
