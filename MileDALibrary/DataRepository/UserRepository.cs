@@ -1446,7 +1446,7 @@ namespace MileDALibrary.DataRepository
             }
         }
 
-        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
+        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
         {
             List<ReferralDetails> DriversNearBy2Kms = new List<ReferralDetails>();
             DataTable dt = new DataTable();
@@ -1454,6 +1454,8 @@ namespace MileDALibrary.DataRepository
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkNearDrivers", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Latitude", Value = Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@To_Latitude", Value = To_Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@To_longitude", Value = To_Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@fare", Value = Fare, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_req_distance", Value = Fare_Requested_In_Kms, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });

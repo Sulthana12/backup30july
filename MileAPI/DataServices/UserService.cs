@@ -157,9 +157,9 @@ namespace MileAPI.DataServices
             return _userRepository.PostDriversCurrLocation(DriversCurrLocation);
         }
 
-        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
+        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
         {
-            return _userRepository.GetDriversNearBy2Kms(otp, Latitude, Longitude,Fare,Fare_Requested_In_Kms,Location_Name,user_id, status_flg);
+            return _userRepository.GetDriversNearBy2Kms(otp, Latitude, Longitude, To_Latitude, To_Longitude, Fare,Fare_Requested_In_Kms,Location_Name,user_id, status_flg);
         }
         public List<CityRangeDetails> GetCityRangeDetails(string city_name)
         {
