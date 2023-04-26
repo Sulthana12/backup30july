@@ -55,6 +55,9 @@ namespace MileAPI.Interfaces
         List<UserBookSearchModel> PostDriversCurrLocation(DriversCurrLocation DriversCurrLocation);
 
         List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg);
+
+        List<ReferralDetails> GetUsersNearBy2Kms(decimal Latitude, decimal Longitude,  string Location_Name, int user_id, string status_flg);
         List<CityRangeDetails> GetCityRangeDetails(string city_name);
+        List<UserDetails> GetUsersForPushNotifications(string En_flag, string User_type_flg);
     }
 }

@@ -677,6 +677,52 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+
+        [HttpGet("GetUsersNearBy2Kms")]
+        public IActionResult GetUsersNearBy2Kms(decimal Latitude, decimal Longitude, string Location_Name, int user_id, string status_flg)
+        {
+            try
+            {
+                List<ReferralDetails> result = _userService.GetUsersNearBy2Kms( Latitude, Longitude,Location_Name, user_id, status_flg);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
+
+        [HttpGet("GetUsersForPushNotifications")]
+        public IActionResult GetUsersForPushNotifications(string En_flag, string User_type_flg)
+        {
+            try
+            {
+                List<UserDetails> result = _userService.GetUsersForPushNotifications(En_flag, User_type_flg);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
+
+
         [HttpGet("GetCityRangeDetails")]
         public IActionResult GetCityRangeDetails(string city_name)
         {

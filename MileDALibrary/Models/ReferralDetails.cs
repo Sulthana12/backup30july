@@ -25,9 +25,12 @@ namespace MileDALibrary.Models
 		public	string? Driver_Location_Name { get; set; }
         public decimal? User_Latitude { get; set; }
         public decimal? User_Longitude { get; set; }
+        public decimal? User_End_Latitude { get; set; }
+        public decimal? User_End_Longitude { get; set; }
         public string? User_Location_Name { get; set; }
         public string? User_Name { get; set; }
-
+        public string? status_flg { get; set; }
+        public string? Diff_Distance_From_Driver_Location { get; set; }
         public string? Driver_Name { get; set; }
         public string? Driver_Photo { get; set; }
         public decimal? Driver_Rating { get; set; }
@@ -36,6 +39,6 @@ namespace MileDALibrary.Models
         public string? Driver_Phone_No { get; set; }
         public string? Vehicle_img { get; set; }
         public string? Vehicle_Name { get; set; }
-
+        public string? Fare_Date { get; set; }
     }
 }
