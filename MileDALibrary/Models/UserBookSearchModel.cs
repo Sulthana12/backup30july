@@ -45,6 +45,8 @@ namespace MileDALibrary.Models
 
         public int? Routed_Driver_Id { get; set; }
 
-        public decimal Distance_In_Kms { get; set; }
+        public decimal? diff_distance_fromur_loc { get; set; }
+        public int? OTP { get; set; }
+        public string? status_flg { get; set; }
     }
 }

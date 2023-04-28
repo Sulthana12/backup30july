@@ -1401,12 +1401,12 @@ namespace MileDALibrary.DataRepository
                     {
 
                         List<DbParameter> dbparamsbookInfo = new List<DbParameter>();
-                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@driver_id", Value = DriversCurrLocation.Driver_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkNearUsers", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = DriversCurrLocation.Driver_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                         dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
                         dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
                         dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = DriversCurrLocation.Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                        dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_taxi_driver_location_get", dbparamsbookInfo, SQL_Helper.ExecutionType.Procedure);
+                        dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsbookInfo, SQL_Helper.ExecutionType.Procedure);
 
                         if (dt != null && dt.Rows.Count > 0)
                         {
@@ -1414,26 +1414,28 @@ namespace MileDALibrary.DataRepository
                                               select new UserBookSearchModel()
                                               {
                                                   User_Id = Convert.ToInt32(dr["user_id"]),
-                                                  Search_Id = Convert.ToInt32(dr["search_id"]),
-                                                  Name = dr["name"].ToString(),
-                                                  Phone_Num = dr["phone_num"].ToString(),
-                                                  Gender = dr["gender"].ToString(),
+                                                  //Search_Id = Convert.ToInt32(dr["search_id"]),
+                                                  Name = dr["User_Name"].ToString(),
+                                                  Phone_Num = dr["User_Phone_Num"].ToString(),
+                                                  //Gender = dr["gender"].ToString(),
                                                   From_Location = dr["from_location"].ToString(),
                                                   To_Location = dr["to_location"].ToString(),
-                                                  From_Latitude = dr["from_latitude"].ToString(),
-                                                  From_Longitude = dr["from_longitude"].ToString(),
-                                                  To_Latitude = dr["to_latitude"].ToString(),
-                                                  To_Longitude = dr["to_longitude"].ToString(),
+                                                  From_Latitude = dr["User_Start_Lat"].ToString(),
+                                                  From_Longitude = dr["User_Start_Long"].ToString(),
+                                                  To_Latitude = dr["User_End_Lat"].ToString(),
+                                                  To_Longitude = dr["User_End_Long"].ToString(),
                                                   Fare_Date = dr["fare_date"].ToString(),
                                                   Fare_Type = dr["fare_type"].ToString(),
                                                   Fare_Status = dr["fare_status"].ToString(),
-                                                  Others_Number = dr["Others_number"].ToString(),
+                                                  Others_Number = dr["others_num"].ToString(),
                                                   Vehicle_Id = Convert.ToInt32(dr["Vehicle_id"]),
-                                                  Kms = Convert.ToDecimal(dr["kms"]),
-                                                  Cal_Fare = Convert.ToDecimal(dr["cal_fare"]),
-                                                  Comments = dr["comments"].ToString(),
-                                                  Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
-                                                  Distance_In_Kms = Convert.ToDecimal(dr["distance_in_kms"])
+                                                  Kms = Convert.ToDecimal(dr["Usr_Req_Kms"]),
+                                                  Cal_Fare = Convert.ToDecimal(dr["Usr_Req_Fare"]),
+                                                  OTP = Convert.ToInt32(dr["OTP"]),
+                                                  status_flg = dr["status_flg"].ToString(),
+                                                  //Comments = dr["comments"].ToString(),
+                                                  //Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
+                                                  diff_distance_fromur_loc = Convert.ToDecimal(dr["diff_distance_fromur_loc"])
                                               }).ToList();
                         }
                     }
