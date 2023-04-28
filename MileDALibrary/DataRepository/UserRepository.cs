@@ -960,7 +960,7 @@ namespace MileDALibrary.DataRepository
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "usrbook", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = bookingDetails.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@user_track_id", Value = bookingDetails.User_track_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@fetch_id", Value = bookingDetails.User_track_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@from_location", Value = bookingDetails.From_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@to_location", Value = bookingDetails.To_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@from_latitude", Value = bookingDetails.From_latitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
@@ -977,7 +977,7 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@fare_status", Value = bookingDetails.Fare_status, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Output });
 
-                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_usr_booking_post", dbparams, SQL_Helper.ExecutionType.Procedure);
+                    result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_usr_booking_search_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
 
@@ -1448,7 +1448,7 @@ namespace MileDALibrary.DataRepository
             }
         }
 
-        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
+        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg, int Vehicle_id, string fare_type, string others_num, string from_location, string to_location)
         {
             List<ReferralDetails> DriversNearBy2Kms = new List<ReferralDetails>();
             DataTable dt = new DataTable();
@@ -1464,6 +1464,11 @@ namespace MileDALibrary.DataRepository
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@otp", Value = otp, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@status_flg", Value = status_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@vehicle_id", Value = Vehicle_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@fare_type", Value = fare_type, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@others_num", Value = others_num, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@From_Location", Value = from_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@To_Location", Value = to_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
 
 
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
@@ -1499,45 +1504,7 @@ namespace MileDALibrary.DataRepository
             return DriversNearBy2Kms;
         }
 
-        public List<ReferralDetails> GetUsersNearBy2Kms(decimal Latitude, decimal Longitude, string Location_Name, int user_id, string status_flg)
-        {
-            List<ReferralDetails> UsersNearBy2Kms = new List<ReferralDetails>();
-            DataTable dt = new DataTable();
-            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkNearUsers", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Latitude", Value = Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@status_flg", Value = status_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-
-
-            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
-
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                UsersNearBy2Kms = (from DataRow dr in dt.Rows
-                                     select new ReferralDetails()
-                                     {
-                                         user_id = Convert.ToInt32(dr["user_id"]),
-                                         User_Name = dr["User_Name"].ToString(),
-                                         User_Phone_Num = dr["User_Phone_Num"].ToString(),
-                                         //User_Location_Name = dr["User_Location"].ToString(),
-                                         User_Latitude = Convert.ToDecimal(dr["User_Start_Lat"]),
-                                         User_Longitude = Convert.ToDecimal(dr["User_Start_Long"]),
-                                         User_End_Latitude = Convert.ToDecimal(dr["User_End_Lat"]),
-                                         User_End_Longitude = Convert.ToDecimal(dr["User_End_Long"]),
-                                         Fare = Convert.ToDecimal(dr["Usr_Req_Fare"]),
-                                         Fare_Requested_In_Kms = Convert.ToDecimal(dr["Usr_Req_Kms"]),
-                                         OTP = Convert.ToInt32(dr["OTP"]),
-                                         Fare_Date = dr["Fare_Date"].ToString(),
-                                         status_flg = dr["status_flg"].ToString(),
-                                         Diff_Distance_From_Driver_Location = dr["diff_distance_fromur_loc"].ToString(),
-                                     }).ToList();
-            }
-
-            return UsersNearBy2Kms;
-        }
+        
 
         public List<UserDetails> GetUsersForPushNotifications(string En_flag, string User_type_flg)
         {

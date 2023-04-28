@@ -657,11 +657,11 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetDriversNearBy2Kms")]
-        public IActionResult GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
+        public IActionResult GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg, int Vehicle_id, string fare_type, string others_num, string from_location, string to_location)
         {
             try
             {
-                List<ReferralDetails> result = _userService.GetDriversNearBy2Kms(otp, Latitude, Longitude,  To_Latitude,  To_Longitude, Fare, Fare_Requested_In_Kms, Location_Name, user_id, status_flg);
+                List<ReferralDetails> result = _userService.GetDriversNearBy2Kms(otp, Latitude, Longitude,  To_Latitude,  To_Longitude, Fare, Fare_Requested_In_Kms, Location_Name, user_id, status_flg,  Vehicle_id, fare_type,  others_num,  from_location, to_location);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");
@@ -678,27 +678,6 @@ namespace MileAPI.Controllers
             }
         }
 
-        [HttpGet("GetUsersNearBy2Kms")]
-        public IActionResult GetUsersNearBy2Kms(decimal Latitude, decimal Longitude, string Location_Name, int user_id, string status_flg)
-        {
-            try
-            {
-                List<ReferralDetails> result = _userService.GetUsersNearBy2Kms( Latitude, Longitude,Location_Name, user_id, status_flg);
-                if (result == null)
-                {
-                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
-                }
-                if (result.Count == 0)
-                {
-                    return NotFound("{\"status\": \"No Data Found\"}");
-                }
-                return Ok(result);
-            }
-            catch (Exception)
-            {
-                return NotFound("{\"status\": \"Not Found\"}");
-            }
-        }
 
         [HttpGet("GetUsersForPushNotifications")]
         public IActionResult GetUsersForPushNotifications(string En_flag, string User_type_flg)

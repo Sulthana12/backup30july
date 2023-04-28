@@ -157,14 +157,11 @@ namespace MileAPI.DataServices
             return _userRepository.PostDriversCurrLocation(DriversCurrLocation);
         }
 
-        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg)
+        public List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg, int Vehicle_id, string fare_type, string others_num, string from_location, string to_location)
         {
-            return _userRepository.GetDriversNearBy2Kms(otp, Latitude, Longitude, To_Latitude, To_Longitude, Fare,Fare_Requested_In_Kms,Location_Name,user_id, status_flg);
+            return _userRepository.GetDriversNearBy2Kms(otp, Latitude, Longitude, To_Latitude, To_Longitude, Fare,Fare_Requested_In_Kms,Location_Name,user_id, status_flg, Vehicle_id, fare_type, others_num, from_location, to_location);
         }
-        public List<ReferralDetails> GetUsersNearBy2Kms(decimal Latitude, decimal Longitude, string Location_Name, int user_id, string status_flg)
-        {
-            return _userRepository.GetUsersNearBy2Kms(Latitude, Longitude, Location_Name, user_id, status_flg);
-        }
+        
         public List<UserDetails> GetUsersForPushNotifications(string En_flag, string User_type_flg)
         {
             return _userRepository.GetUsersForPushNotifications(En_flag, User_type_flg);
