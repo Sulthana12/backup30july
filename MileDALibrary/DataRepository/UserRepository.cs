@@ -1414,7 +1414,7 @@ namespace MileDALibrary.DataRepository
                                               select new UserBookSearchModel()
                                               {
                                                   User_Id = Convert.ToInt32(dr["user_id"]),
-                                                  //Search_Id = Convert.ToInt32(dr["search_id"]),
+                                                  Search_Id = Convert.ToInt32(dr["Search_Id"]),
                                                   Name = dr["User_Name"].ToString(),
                                                   Phone_Num = dr["User_Phone_Num"].ToString(),
                                                   //Gender = dr["gender"].ToString(),
