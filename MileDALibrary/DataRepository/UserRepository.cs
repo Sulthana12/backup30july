@@ -975,6 +975,7 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@cal_fare", Value = bookingDetails.Cal_fare, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@routed_driver_id", Value = bookingDetails.Routed_driver_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@fare_status", Value = bookingDetails.Fare_status, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@cancellation_reason", Value = bookingDetails.cancellation_reason, SqlDbType = SqlDbType.VarChar, Size = 1000, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Output });
 
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_usr_booking_search_post", dbparams, SQL_Helper.ExecutionType.Procedure);
@@ -1454,10 +1455,10 @@ namespace MileDALibrary.DataRepository
             DataTable dt = new DataTable();
             List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkNearDrivers", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Latitude", Value = Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@To_Latitude", Value = To_Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@To_longitude", Value = To_Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@Latitude", Value = Latitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = Longitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@To_Latitude", Value = To_Latitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@To_longitude", Value = To_Longitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@fare", Value = Fare, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_req_distance", Value = Fare_Requested_In_Kms, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = user_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });

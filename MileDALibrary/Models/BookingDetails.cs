@@ -40,5 +40,6 @@ namespace MileDALibrary.Models
 
         public string? Fare_status { get; set; }
 
+        public string? cancellation_reason { get; set; }
     }
 }
