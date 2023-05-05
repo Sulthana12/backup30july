@@ -1398,47 +1398,44 @@ namespace MileDALibrary.DataRepository
 
                         response.Add(respobj);
                     }
-                    if (insertRowsCount > 0)
+                    
+                    List<DbParameter> dbparamsbookInfo = new List<DbParameter>();
+                    dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkNearUsers", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = DriversCurrLocation.Driver_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+                    dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                    dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                    dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = DriversCurrLocation.Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsbookInfo, SQL_Helper.ExecutionType.Procedure);
+
+                    if (dt != null && dt.Rows.Count > 0)
                     {
-
-                        List<DbParameter> dbparamsbookInfo = new List<DbParameter>();
-                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetChkNearUsers", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = DriversCurrLocation.Driver_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-                        dbparamsbookInfo.Add(new SqlParameter { ParameterName = "@loc_name", Value = DriversCurrLocation.Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                        dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparamsbookInfo, SQL_Helper.ExecutionType.Procedure);
-
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-                            userBookSearch = (from DataRow dr in dt.Rows
-                                              select new UserBookSearchModel()
-                                              {
-                                                  User_Id = Convert.ToInt32(dr["user_id"]),
-                                                  Search_Id = Convert.ToInt32(dr["Search_Id"]),
-                                                  Name = dr["User_Name"].ToString(),
-                                                  Phone_Num = dr["User_Phone_Num"].ToString(),
-                                                  //Gender = dr["gender"].ToString(),
-                                                  From_Location = dr["from_location"].ToString(),
-                                                  To_Location = dr["to_location"].ToString(),
-                                                  From_Latitude = dr["User_Start_Lat"].ToString(),
-                                                  From_Longitude = dr["User_Start_Long"].ToString(),
-                                                  To_Latitude = dr["User_End_Lat"].ToString(),
-                                                  To_Longitude = dr["User_End_Long"].ToString(),
-                                                  Fare_Date = dr["fare_date"].ToString(),
-                                                  Fare_Type = dr["fare_type"].ToString(),
-                                                  Fare_Status = dr["fare_status"].ToString(),
-                                                  Others_Number = dr["others_num"].ToString(),
-                                                  Vehicle_Id = Convert.ToInt32(dr["Vehicle_id"]),
-                                                  Kms = Convert.ToDecimal(dr["Usr_Req_Kms"]),
-                                                  Cal_Fare = Convert.ToDecimal(dr["Usr_Req_Fare"]),
-                                                  OTP = Convert.ToInt32(dr["OTP"]),
-                                                  status_flg = dr["status_flg"].ToString(),
-                                                  //Comments = dr["comments"].ToString(),
-                                                  //Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
-                                                  diff_distance_fromur_loc = Convert.ToDecimal(dr["diff_distance_fromur_loc"])
-                                              }).ToList();
-                        }
+                        userBookSearch = (from DataRow dr in dt.Rows
+                                            select new UserBookSearchModel()
+                                            {
+                                                User_Id = Convert.ToInt32(dr["user_id"]),
+                                                Search_Id = Convert.ToInt32(dr["Search_Id"]),
+                                                Name = dr["User_Name"].ToString(),
+                                                Phone_Num = dr["User_Phone_Num"].ToString(),
+                                                ////Gender = dr["gender"].ToString(),
+                                                From_Location = dr["From_location"].ToString(),
+                                                To_Location = dr["To_Location"].ToString(),
+                                                From_Latitude = dr["User_Start_Lat"].ToString(),
+                                                From_Longitude = dr["User_Start_Long"].ToString(),
+                                                To_Latitude = dr["User_End_Lat"].ToString(),
+                                                To_Longitude = dr["User_End_Long"].ToString(),
+                                                Fare_Date = dr["fare_date"].ToString(),
+                                                Fare_Type = dr["fare_type"].ToString(),
+                                                Fare_Status = dr["fare_status"].ToString(),
+                                                Others_Number = dr["others_num"].ToString(),
+                                                Vehicle_Id = Convert.ToInt32(dr["Vehicle_Id"]),
+                                                Kms = Convert.ToDecimal(dr["Usr_Req_Kms"]),
+                                                Cal_Fare = Convert.ToDecimal(dr["Usr_Req_Fare"]),
+                                                OTP = Convert.ToInt32(dr["otp"]),
+                                                status_flg = dr["status_flg"].ToString(),
+                                                ////Comments = dr["comments"].ToString(),
+                                                ////Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
+                                                diff_distance_fromur_loc = Convert.ToDecimal(dr["diff_distance_fromur_loc"])
+                                            }).ToList();
                     }
                 }
                   return userBookSearch;
@@ -1481,15 +1478,15 @@ namespace MileDALibrary.DataRepository
                                      {
                                          user_id = Convert.ToInt32(dr["user_id"]),
                                          driver_id = Convert.ToInt32(dr["driver_id"]),
-                                         Driver_Latitude = Convert.ToDecimal(dr["Driver_Latitude"]),
+                                         Driver_Latitude = dr["Driver_Latitude"].ToString(),
                                          Driver_Phone_No = dr["Driver_Phone_Num"].ToString(),
-                                         Driver_Longitude = Convert.ToDecimal(dr["Driver_Longitude"]),
+                                         Driver_Longitude = dr["Driver_Longitude"].ToString(),
                                          Driver_Location_Name = dr["Driver_loc_name"].ToString(),
                                          User_Name = dr["User_Name"].ToString(),
                                          User_Phone_Num = dr["User_Phone_Num"].ToString(),
                                          User_Location_Name = dr["User_Location"].ToString(),
-                                         User_Latitude = Convert.ToDecimal(dr["User_Latitude"]),
-                                         User_Longitude = Convert.ToDecimal(dr["User_Longitude"]),
+                                         User_Latitude = dr["User_Latitude"].ToString(),
+                                         User_Longitude = dr["User_Longitude"].ToString(),
                                          Fare = Convert.ToDecimal(dr["Req_Tot_Fare"]),
                                          Fare_Requested_In_Kms = Convert.ToDecimal(dr["Approx_Req_Distance"]),
                                          OTP = Convert.ToInt32(dr["OTP"]),
