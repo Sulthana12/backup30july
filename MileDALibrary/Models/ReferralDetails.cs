@@ -40,5 +40,6 @@ namespace MileDALibrary.Models
         public string? Vehicle_img { get; set; }
         public string? Vehicle_Name { get; set; }
         public string? Fare_Date { get; set; }
+        public string? User_Track_Id { get; set; }
     }
 }
