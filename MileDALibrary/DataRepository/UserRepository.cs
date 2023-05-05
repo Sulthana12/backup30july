@@ -1499,7 +1499,8 @@ namespace MileDALibrary.DataRepository
                                          Vehicle_No = dr["Vehicle_No"].ToString(),
                                          Vehicle_img = dr["Vehicle_Image"].ToString(),
                                          Vehicle_Name = dr["Vehicle_Name"].ToString(),
-                                         User_Track_Id = dr["User_Track_Id"].ToString(),
+                                         User_Track_Id = Convert.ToInt32(dr["User_Track_Id"]),
+                                         Vehicle_Id = Convert.ToInt32(dr["Vehicle_Id"]),
                                      }).ToList();
             }
 
