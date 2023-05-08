@@ -958,7 +958,7 @@ namespace MileDALibrary.DataRepository
                     DataTable dt = new DataTable();
 
                     List<DbParameter> dbparams = new List<DbParameter>();
-                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "usrbook", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "usrbooksearch", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = bookingDetails.User_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@fetch_id", Value = bookingDetails.User_track_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@from_location", Value = bookingDetails.From_location, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
