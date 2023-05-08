@@ -17,6 +17,8 @@ using MailKit.Security;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Net;
 using System.Reflection;
+using MailKit.Search;
+using Azure.Core;
 
 namespace MileDALibrary.DataRepository
 {
@@ -1558,6 +1560,44 @@ namespace MileDALibrary.DataRepository
             }
 
             return cityRangeDetails;
+        }
+
+        public List<BookingDetails> GetOverallUserRides(int user_id, string status_flg)
+        {
+            List<BookingDetails> overallUserRides = new List<BookingDetails>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparams = new List<DbParameter>();
+            dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetUserRides", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = user_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@status_flg", Value = status_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparams, SQL_Helper.ExecutionType.Procedure);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                overallUserRides = (from DataRow dr in dt.Rows
+                                    select new BookingDetails()
+                                    {
+                                        User_id = Convert.ToInt32(dr["user_id"]),
+                                        Routed_driver_id = Convert.ToInt32(dr["routed_driver_id"]),
+                                        From_location = dr["from_location"].ToString(),
+                                        To_location = dr["to_location"].ToString(),
+                                        From_latitude = dr["latitude"].ToString(),
+                                        From_longitude = dr["longitude"].ToString(),
+                                        To_latitude = dr["To_latitude"].ToString(),
+                                        To_longitude = dr["To_longitude"].ToString(),
+                                        Fare_date = dr["fare_date"].ToString(),
+                                        cancellation_reason = dr["cancellation_reason"].ToString(),
+                                        Kms = (decimal?)dr["travelled_kms"],
+                                        Cal_fare = (decimal?)dr["travelled_cal_fare"],
+                                        Vehicle_id = Convert.ToInt32(dr["Vehicle_Id"]),
+                                        Vehicle_type_name = dr["Vehicle_Type"].ToString(),
+                                        OrderId = dr["OrderId"].ToString(),
+                                        driver_start_time = dr["driver_start_time"].ToString(),
+                                        driver_end_time = dr["driver_end_time"].ToString(),
+                                        delivery = dr["delivery"].ToString(),
+                                    }).ToList();
+            }
+
+            return overallUserRides;
         }
 
     }

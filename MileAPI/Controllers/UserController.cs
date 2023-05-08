@@ -723,6 +723,28 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Not Found\"}");
             }
         }
+
+        [HttpGet("GetOverallUserRides")]
+        public IActionResult GetOverallUserRides(int user_id, string status_flg)
+        {
+            try
+            {
+                List<BookingDetails> result = _userService.GetOverallUserRides(user_id, status_flg);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
     }
 }
 

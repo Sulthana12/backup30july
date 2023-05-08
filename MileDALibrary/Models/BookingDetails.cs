@@ -25,6 +25,8 @@ namespace MileDALibrary.Models
         public string? To_longitude { get; set; }
 
         public string? Fare_date { get; set; }
+        public string? driver_start_time { get; set; }      
+        public string? driver_end_time { get; set; }
 
         public string? Fare_type { get; set; }
 
@@ -41,5 +43,10 @@ namespace MileDALibrary.Models
         public string? Fare_status { get; set; }
 
         public string? cancellation_reason { get; set; }
+
+        public string? Vehicle_type_name { get; set; }
+
+        public string? OrderId { get; set; }
+        public string? delivery { get; set; }
     }
 }

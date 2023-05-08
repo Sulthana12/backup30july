@@ -170,5 +170,9 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetCityRangeDetails(city_name);
         }
+        public List<BookingDetails> GetOverallUserRides(int user_id, string status_flg)
+        {
+            return _userRepository.GetOverallUserRides(user_id, status_flg);
+        }
     }
 }
