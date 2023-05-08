@@ -1382,8 +1382,8 @@ namespace MileDALibrary.DataRepository
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@driver_id", Value = DriversCurrLocation.Driver_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@loc_name", Value = DriversCurrLocation.Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@rec_created_userid", Value = DriversCurrLocation.Created_UserId, SqlDbType = SqlDbType.Int, Size = 1000, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });
@@ -1418,24 +1418,24 @@ namespace MileDALibrary.DataRepository
                                                 Search_Id = Convert.ToInt32(dr["Search_Id"]),
                                                 Name = dr["User_Name"].ToString(),
                                                 Phone_Num = dr["User_Phone_Num"].ToString(),
-                                                ////Gender = dr["gender"].ToString(),
-                                                From_Location = dr["From_location"].ToString(),
-                                                To_Location = dr["To_Location"].ToString(),
+                                                OTP = Convert.ToInt32(dr["otp"]),
+                                                Fare_Date = dr["fare_date"].ToString(),
                                                 From_Latitude = dr["User_Start_Lat"].ToString(),
                                                 From_Longitude = dr["User_Start_Long"].ToString(),
                                                 To_Latitude = dr["User_End_Lat"].ToString(),
                                                 To_Longitude = dr["User_End_Long"].ToString(),
-                                                Fare_Date = dr["fare_date"].ToString(),
+                                                Kms = Convert.ToDecimal(dr["Usr_Req_Kms"]),
+                                                Cal_Fare = Convert.ToDecimal(dr["Usr_Req_Fare"]),
+                                                //////Gender = dr["gender"].ToString(),
+                                                From_Location = dr["from_location"].ToString(),
+                                                To_Location = dr["To_Location"].ToString(),
+                                                status_flg = dr["status_flg"].ToString(),
                                                 Fare_Type = dr["fare_type"].ToString(),
                                                 Fare_Status = dr["fare_status"].ToString(),
                                                 Others_Number = dr["others_num"].ToString(),
                                                 Vehicle_Id = Convert.ToInt32(dr["Vehicle_Id"]),
-                                                Kms = Convert.ToDecimal(dr["Usr_Req_Kms"]),
-                                                Cal_Fare = Convert.ToDecimal(dr["Usr_Req_Fare"]),
-                                                OTP = Convert.ToInt32(dr["otp"]),
-                                                status_flg = dr["status_flg"].ToString(),
-                                                ////Comments = dr["comments"].ToString(),
-                                                ////Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
+                                                //////Comments = dr["comments"].ToString(),
+                                                //////Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
                                                 diff_distance_fromur_loc = Convert.ToDecimal(dr["diff_distance_fromur_loc"])
                                             }).ToList();
                     }
