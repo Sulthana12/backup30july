@@ -1434,6 +1434,7 @@ namespace MileDALibrary.DataRepository
                                                 Fare_Status = dr["fare_status"].ToString(),
                                                 Others_Number = dr["others_num"].ToString(),
                                                 Vehicle_Id = Convert.ToInt32(dr["Vehicle_Id"]),
+                                                Delivery = dr["Delivery"].ToString(),
                                                 //////Comments = dr["comments"].ToString(),
                                                 //////Routed_Driver_Id = Convert.ToInt32(dr["routed_driver_id"]),
                                                 diff_distance_fromur_loc = Convert.ToDecimal(dr["diff_distance_fromur_loc"])

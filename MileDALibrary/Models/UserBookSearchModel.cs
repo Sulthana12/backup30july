@@ -33,6 +33,8 @@ namespace MileDALibrary.Models
 
         public string? Fare_Status { get; set; }
 
+        public string? Delivery { get; set; }
+
         public string? Others_Number { get; set; }
 
         public int? Vehicle_Id { get; set; }
