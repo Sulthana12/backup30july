@@ -1382,8 +1382,8 @@ namespace MileDALibrary.DataRepository
                     List<DbParameter> dbparams = new List<DbParameter>();
                     dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@driver_id", Value = DriversCurrLocation.Driver_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
-                    dbparams.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@latitude", Value = DriversCurrLocation.Latitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@longitude", Value = DriversCurrLocation.Longitude, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@loc_name", Value = DriversCurrLocation.Location_Name, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@rec_created_userid", Value = DriversCurrLocation.Created_UserId, SqlDbType = SqlDbType.Int, Size = 1000, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.NVarChar, Size = 1000, Direction = ParameterDirection.Output });

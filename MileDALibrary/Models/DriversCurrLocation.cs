@@ -10,8 +10,8 @@ namespace MileDALibrary.Models
     {
         public int? Driver_Id { get; set; }
         public string? Location_Name { get; set; }
-        public string? Latitude { get; set; }
-        public string? Longitude { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
         public int Created_UserId { get; set; }
         //public decimal Query_Name { get; set; }
         //public decimal Response_Status { get; set; }
