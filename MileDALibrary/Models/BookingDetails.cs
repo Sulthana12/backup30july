@@ -48,5 +48,8 @@ namespace MileDALibrary.Models
 
         public string? OrderId { get; set; }
         public string? delivery { get; set; }
+
+        public string? feedback { get; set; }
+        public decimal? rating { get; set; }
     }
 }

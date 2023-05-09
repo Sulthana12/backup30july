@@ -1595,6 +1595,8 @@ namespace MileDALibrary.DataRepository
                                         driver_start_time = dr["driver_start_time"].ToString(),
                                         driver_end_time = dr["driver_end_time"].ToString(),
                                         delivery = dr["delivery"].ToString(),
+                                        feedback = dr["feedback"].ToString(),
+                                        rating = (decimal?)dr["rating"],
                                     }).ToList();
             }
 
