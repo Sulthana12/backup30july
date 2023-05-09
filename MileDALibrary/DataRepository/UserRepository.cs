@@ -978,6 +978,8 @@ namespace MileDALibrary.DataRepository
                     dbparams.Add(new SqlParameter { ParameterName = "@routed_driver_id", Value = bookingDetails.Routed_driver_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@fare_status", Value = bookingDetails.Fare_status, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@cancellation_reason", Value = bookingDetails.cancellation_reason, SqlDbType = SqlDbType.VarChar, Size = 1000, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@rating", Value = bookingDetails.rating, SqlDbType = SqlDbType.Decimal, Direction = ParameterDirection.Input });
+                    dbparams.Add(new SqlParameter { ParameterName = "@feedback", Value = bookingDetails.feedback, SqlDbType = SqlDbType.VarChar, Size = 1000, Direction = ParameterDirection.Input });
                     dbparams.Add(new SqlParameter { ParameterName = "@response_status", SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Output });
 
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_usr_booking_search_post", dbparams, SQL_Helper.ExecutionType.Procedure);
