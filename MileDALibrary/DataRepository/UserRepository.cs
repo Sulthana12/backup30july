@@ -1504,6 +1504,8 @@ namespace MileDALibrary.DataRepository
                                          Vehicle_Name = dr["Vehicle_Name"].ToString(),
                                          User_Track_Id = Convert.ToInt32(dr["User_Track_Id"]),
                                          Vehicle_Id = Convert.ToInt32(dr["Vehicle_Id"]),
+                                         Fare_Type = dr["fare_type"].ToString(),
+                                         Status_Flg = dr["Final_Status_Flg"].ToString(),
                                      }).ToList();
             }
 
