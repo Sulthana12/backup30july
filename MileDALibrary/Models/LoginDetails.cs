@@ -20,5 +20,6 @@ namespace MileDALibrary.Models
 
         public string? Notification_token { get; set; }
         public string? Referral_code { get; set; }
+        public decimal? Wallet_Money { get; set; }
     }
 }

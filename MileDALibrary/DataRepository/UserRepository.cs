@@ -871,6 +871,7 @@ namespace MileDALibrary.DataRepository
                                     User_type_flg = dr["user_type_flg"].ToString(),
                                     Name = dr["name"].ToString(),
                                     Referral_code = dr["referral_code"].ToString(),
+                                    Wallet_Money = (decimal?)dr["wallet_balance"],
                                 }).ToList();
             }
 
