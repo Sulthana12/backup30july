@@ -42,8 +42,9 @@ namespace MileDALibrary.Models
         public string? Fare_Date { get; set; }
         public int? User_Track_Id { get; set; }
         public int? Vehicle_Id { get;set; }
-        public  string? Status_Flg { get; set; }
-        public string? Fare_Type { get; set; }
-       
+        public string? Final_Status_Flg { get; set; }
+        public string? Payment_Type { get; set; }
+
+
     }
 }
