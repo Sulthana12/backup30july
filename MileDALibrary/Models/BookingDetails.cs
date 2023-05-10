@@ -51,5 +51,7 @@ namespace MileDALibrary.Models
 
         public string? feedback { get; set; }
         public decimal? rating { get; set; }
+
+        public string? driver_rating { get; set; }
     }
 }
