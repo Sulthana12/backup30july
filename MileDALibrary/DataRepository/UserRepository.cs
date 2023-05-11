@@ -19,6 +19,7 @@ using System.Net;
 using System.Reflection;
 using MailKit.Search;
 using Azure.Core;
+using static Azure.Core.HttpHeader;
 
 namespace MileDALibrary.DataRepository
 {
@@ -1602,6 +1603,9 @@ namespace MileDALibrary.DataRepository
                                         delivery = dr["delivery"].ToString(),
                                         feedback = dr["feedback"].ToString(),
                                         driver_rating = dr["rating"].ToString(),
+                                        Coupon = Convert.ToDecimal(dr["Coupon"]),
+                                        Round_Off = Convert.ToDecimal(dr["round_off"]),
+                                        Your_Trips_Fare = Convert.ToDecimal(dr["Your_Trips_Fare"]),
                                     }).ToList();
             }
 

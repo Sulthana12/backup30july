@@ -53,5 +53,8 @@ namespace MileDALibrary.Models
         public decimal? rating { get; set; }
 
         public string? driver_rating { get; set; }
+        public decimal? Coupon { get; set; }
+        public decimal? Round_Off { get; set; }
+        public decimal? Your_Trips_Fare { get; set; }
     }
 }
