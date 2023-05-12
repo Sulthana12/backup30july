@@ -61,6 +61,6 @@ namespace MileDALibrary.Interfaces
         List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id,string status_flg, int Vehicle_id, string fare_type, string others_num, string from_location, string to_location);
         List<UserDetails> GetUsersForPushNotifications(string En_flag, string User_type_flg);
         List<CityRangeDetails> GetCityRangeDetails(string city_name);
-        List<BookingDetails> GetOverallUserRides(int user_id, string status_flg); 
+        List<BookingDetails> GetOverallUserRides(int user_id, string status_flg, int user_track_id); 
     }
 }

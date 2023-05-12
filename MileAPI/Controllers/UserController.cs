@@ -725,11 +725,11 @@ namespace MileAPI.Controllers
         }
 
         [HttpGet("GetOverallUserRides")]
-        public IActionResult GetOverallUserRides(int user_id, string status_flg)
+        public IActionResult GetOverallUserRides(int user_id, string status_flg, int user_track_id)
         {
             try
             {
-                List<BookingDetails> result = _userService.GetOverallUserRides(user_id, status_flg);
+                List<BookingDetails> result = _userService.GetOverallUserRides(user_id, status_flg,user_track_id);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");

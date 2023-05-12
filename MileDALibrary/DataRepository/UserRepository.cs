@@ -1569,7 +1569,7 @@ namespace MileDALibrary.DataRepository
             return cityRangeDetails;
         }
 
-        public List<BookingDetails> GetOverallUserRides(int user_id, string status_flg)
+        public List<BookingDetails> GetOverallUserRides(int user_id, string status_flg, int user_track_id)
         {
             List<BookingDetails> overallUserRides = new List<BookingDetails>();
             DataTable dt = new DataTable();
@@ -1577,6 +1577,7 @@ namespace MileDALibrary.DataRepository
             dbparams.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetUserRides", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparams.Add(new SqlParameter { ParameterName = "@user_id", Value = user_id, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparams.Add(new SqlParameter { ParameterName = "@status_flg", Value = status_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparams.Add(new SqlParameter { ParameterName = "@user_track_id", Value = user_track_id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_book_get", dbparams, SQL_Helper.ExecutionType.Procedure);
             if (dt != null && dt.Rows.Count > 0)
             {
