@@ -1585,6 +1585,7 @@ namespace MileDALibrary.DataRepository
                                     select new BookingDetails()
                                     {
                                         User_id = Convert.ToInt32(dr["user_id"]),
+                                        User_track_id = Convert.ToInt32(dr["fetch_id"]),
                                         Routed_driver_id = Convert.ToInt32(dr["routed_driver_id"]),
                                         From_location = dr["from_location"].ToString(),
                                         To_location = dr["to_location"].ToString(),
