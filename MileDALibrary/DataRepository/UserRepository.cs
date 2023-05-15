@@ -1586,6 +1586,9 @@ namespace MileDALibrary.DataRepository
                                     {
                                         User_id = Convert.ToInt32(dr["user_id"]),
                                         User_track_id = Convert.ToInt32(dr["fetch_id"]),
+                                        Fare_type = dr["fare_type"].ToString(),
+                                        Others_number = dr["others_num"].ToString(),
+                                        Fare_status = dr["fare_status"].ToString(),
                                         Routed_driver_id = Convert.ToInt32(dr["routed_driver_id"]),
                                         From_location = dr["from_location"].ToString(),
                                         To_location = dr["to_location"].ToString(),
