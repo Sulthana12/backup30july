@@ -13,9 +13,9 @@ namespace MileAPI.DataServices
             _userRepository = userRepository;
         }
 
-        public List<LoginDetails> GetUserInformation(string PhoneNumber, string Password)
+        public List<LoginDetails> GetUserInformation(string PhoneNumber, string Password, string Notification_token)
         {
-            return _userRepository.GetUserInformation(PhoneNumber, Password);
+            return _userRepository.GetUserInformation(PhoneNumber, Password,Notification_token);
         }
 
         public List<CountryDetails> GetCountryDetails()

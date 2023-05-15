@@ -4,7 +4,7 @@ namespace MileAPI.Interfaces
 {
     public interface IUserService
     {
-        List<LoginDetails> GetUserInformation(string PhoneNumber, string Password);
+        List<LoginDetails> GetUserInformation(string PhoneNumber, string Password, string Notification_token);
 
         List<CountryDetails> GetCountryDetails();
 

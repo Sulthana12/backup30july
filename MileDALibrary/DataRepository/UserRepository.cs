@@ -46,7 +46,7 @@ namespace MileDALibrary.DataRepository
             return dt.Rows[0][0].ToString();
         }
 
-        public List<LoginDetails> GetUserInformation(string PhoneNumber, string Password)
+        public List<LoginDetails> GetUserInformation(string PhoneNumber, string Password, string Notification_token)
         {
             List<LoginDetails> UserResponse = new List<LoginDetails>();
             DataTable dt = new DataTable();
@@ -54,6 +54,8 @@ namespace MileDALibrary.DataRepository
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "Login", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@phone_num", Value = PhoneNumber, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
             dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_password", Value = Password, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@notification_token", Value = Notification_token, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+
             dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_mileapp_usr_reg_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
 
             if (dt != null && dt.Rows.Count > 0)

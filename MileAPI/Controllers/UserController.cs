@@ -28,11 +28,11 @@ namespace MileAPI.Controllers
 
         [HttpGet("GetUserDetails")]
         //[Route("/")]
-        public IActionResult GetUserInformation(string PhoneNumber, string Password)
+        public IActionResult GetUserInformation(string PhoneNumber, string Password,  string Notification_token)
         {
             try
             {
-                List<LoginDetails> result = _userService.GetUserInformation(PhoneNumber, Password);
+                List<LoginDetails> result = _userService.GetUserInformation(PhoneNumber, Password, Notification_token);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");
