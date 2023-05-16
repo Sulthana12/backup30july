@@ -680,11 +680,11 @@ namespace MileAPI.Controllers
 
 
         [HttpGet("GetUsersForPushNotifications")]
-        public IActionResult GetUsersForPushNotifications(string En_flag, string User_type_flg)
+        public IActionResult GetUsersForPushNotifications(int User_Id, string Fare_Status, string User_type_flg)
         {
             try
             {
-                List<UserDetails> result = _userService.GetUsersForPushNotifications(En_flag, User_type_flg);
+                List<PushNotifications> result = _userService.GetUsersForPushNotifications(User_Id, Fare_Status, User_type_flg);
                 if (result == null)
                 {
                     return Unauthorized("{\"status\": \"Authentication Failed\"}");

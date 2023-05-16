@@ -162,9 +162,9 @@ namespace MileAPI.DataServices
             return _userRepository.GetDriversNearBy2Kms(otp, Latitude, Longitude, To_Latitude, To_Longitude, Fare,Fare_Requested_In_Kms,Location_Name,user_id, status_flg, Vehicle_id, fare_type, others_num, from_location, to_location);
         }
         
-        public List<UserDetails> GetUsersForPushNotifications(string En_flag, string User_type_flg)
+        public List<PushNotifications> GetUsersForPushNotifications(int User_Id, string Fare_Status, string User_type_flg)
         {
-            return _userRepository.GetUsersForPushNotifications(En_flag, User_type_flg);
+            return _userRepository.GetUsersForPushNotifications(User_Id, Fare_Status, User_type_flg);
         }
         public List<CityRangeDetails> GetCityRangeDetails(string city_name)
         {
