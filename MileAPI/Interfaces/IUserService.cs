@@ -56,6 +56,8 @@ namespace MileAPI.Interfaces
         List<ReferralDetails> GetDriversNearBy2Kms(int otp, decimal Latitude, decimal Longitude, decimal To_Latitude, decimal To_Longitude, decimal Fare, decimal Fare_Requested_In_Kms, string Location_Name, int user_id, string status_flg, int Vehicle_id, string fare_type, string others_num, string from_location, string to_location);
         List<CityRangeDetails> GetCityRangeDetails(string city_name);
         List<PushNotifications> GetUsersForPushNotifications(int User_Id, string Fare_Status, string User_type_flg);
+
         List<BookingDetails> GetOverallUserRides(int user_id, string status_flg, int user_track_id);
+        List<ResponseStatus> SaveDriverRequest(BookingDetails bookingDetails);
     }
 }

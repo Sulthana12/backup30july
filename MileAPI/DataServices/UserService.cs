@@ -174,5 +174,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.GetOverallUserRides(user_id, status_flg, user_track_id);
         }
+
+        public List<ResponseStatus> SaveDriverRequest(BookingDetails bookingDetails)
+        {
+            return _userRepository.SaveDriverRequest(bookingDetails);
+        }
     }
 }
