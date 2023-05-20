@@ -107,5 +107,12 @@ namespace MileDALibrary.Models
         public string? Regstr_pymt_flg { get; set; }
         public string? referral_code { get; set; }
 
+        public decimal? Fare_Cash_Today { get; set; }
+        public int? Total_Rides_Today { get; set; }
+        public decimal? Fare_Online_Today { get; set; }
+
+        public decimal? AFAR_Balance { get; set; }
+        public decimal? Wallet_Balance { get; set; }
+
     }
 }

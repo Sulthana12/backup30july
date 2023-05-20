@@ -382,6 +382,11 @@ namespace MileDALibrary.DataRepository
                                     Vehicle_Insurance_Expiry_Date = dr["Vehicle_insurance_Expiry_date"].ToString(),
                                     Regstr_pymt_flg = dr["Regstr_pymt_flg"].ToString(),
                                     referral_code = dr["referral_code"].ToString(),
+                                    Fare_Cash_Today = (decimal?)dr["Fare_In_Cash"],
+                                    Fare_Online_Today = (decimal?)dr["Fare_In_online"],
+                                    Total_Rides_Today = Convert.ToInt32(dr["No_Of_Rides_Today"]),
+                                    AFAR_Balance = (decimal?)dr["Pay_To_AFAR"],
+                                    Wallet_Balance = (decimal?)dr["Wallet_Balance"],
                                 }).ToList();
             }
 
@@ -1648,6 +1653,7 @@ namespace MileDALibrary.DataRepository
 
                     result = SQL_Helper.ExecuteNonQuery<SqlConnection>("usp_taxi_driver_book_post", dbparams, SQL_Helper.ExecutionType.Procedure);
 
+                    
                     insertRowsCount = insertRowsCount + result["RowsAffected"];
 
                     string spOut = DBNull.Value.Equals(result["@response_status"]) ? "" : result["@response_status"];
