@@ -59,5 +59,7 @@ namespace MileAPI.Interfaces
 
         List<BookingDetails> GetOverallUserRides(int user_id, string status_flg, int user_track_id);
         List<ResponseStatus> SaveDriverRequest(BookingDetails bookingDetails);
+
+        List<PushNotifications> GetRegDriversForPushNotifications(string User_type_flg);
     }
 }

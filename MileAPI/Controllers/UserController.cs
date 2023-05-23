@@ -772,6 +772,27 @@ namespace MileAPI.Controllers
                 return NotFound("{\"status\": \"Insertion Failed\"}");
             }
         }
+        [HttpGet("GetRegDriversForPushNotifications")]
+        public IActionResult GetRegDriversForPushNotifications(string User_type_flg)
+        {
+            try
+            {
+                List<PushNotifications> result = _userService.GetRegDriversForPushNotifications( User_type_flg);
+                if (result == null)
+                {
+                    return Unauthorized("{\"status\": \"Authentication Failed\"}");
+                }
+                if (result.Count == 0)
+                {
+                    return NotFound("{\"status\": \"No Data Found\"}");
+                }
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return NotFound("{\"status\": \"Not Found\"}");
+            }
+        }
     }
 }
 

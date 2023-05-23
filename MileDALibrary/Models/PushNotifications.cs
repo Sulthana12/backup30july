@@ -26,7 +26,7 @@ namespace MileDALibrary.Models
         public string? body { get; set; }
         public string? notification_token { get; set; }
         public int? Routed_driver_id { get; set; }
-
+        public string? Image_Path { get; set; }
       
     }
 }

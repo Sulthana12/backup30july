@@ -179,5 +179,10 @@ namespace MileAPI.DataServices
         {
             return _userRepository.SaveDriverRequest(bookingDetails);
         }
+
+        public List<PushNotifications> GetRegDriversForPushNotifications(string User_type_flg)
+        {
+            return _userRepository.GetRegDriversForPushNotifications(User_type_flg);
+        }
     }
 }

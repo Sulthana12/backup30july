@@ -1672,5 +1672,42 @@ namespace MileDALibrary.DataRepository
             }
         }
 
+        public List<PushNotifications> GetRegDriversForPushNotifications( string User_type_flg)
+        {
+            List<PushNotifications> Notifications = new List<PushNotifications>();
+            DataTable dt = new DataTable();
+            List<DbParameter> dbparamsUserInfo = new List<DbParameter>();
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@query_name", Value = "GetDriversNotSubmittedProfiles", SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            //dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@fare_status", Value = Fare_Status, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@loc_type", Value = User_type_flg, SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input });
+            //dbparamsUserInfo.Add(new SqlParameter { ParameterName = "@user_id", Value = User_Id, SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input });
+
+            dt = SQL_Helper.ExecuteSelect<SqlConnection>("usp_taxi_usr_profile_get", dbparamsUserInfo, SQL_Helper.ExecutionType.Procedure);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                Notifications = (from DataRow dr in dt.Rows
+                                 select new PushNotifications()
+                                 {
+                                     User_id = Convert.ToInt32(dr["user_id"]),
+                                     //User_track_id = Convert.ToInt32(dr["fetch_id"]),
+                                     //Fare_status = dr["fare_status"].ToString(),
+                                     //User_Name = dr["User_Name"].ToString(),
+                                     //Routed_driver_id = Convert.ToInt32(dr["routed_driver_id"]),
+                                     //User_Phone_Num = dr["User_Phone_Num"].ToString(),
+                                     Driver_Name = dr["Driver_Name"].ToString(),
+                                     Driver_Phone_Num = dr["Driver_Phone_Num"].ToString(),
+                                     Driver_Email = dr["Driver_Email"].ToString(),
+                                     //User_Email = dr["email_id"].ToString(),
+                                     title = dr["title"].ToString(),
+                                     body = dr["body"].ToString(),
+                                     notification_token = dr["notification_token"].ToString(),
+                                     Image_Path = dr["image_path"].ToString(),
+                                 }).ToList();
+            }
+
+            return Notifications;
+        }
+
     }
 }
